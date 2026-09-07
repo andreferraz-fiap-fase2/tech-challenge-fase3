@@ -1,0 +1,6 @@
+# Preserve bytes of audit CSVs; CRLF is part of the original preparation files.
+config/*.csv -text whitespace=cr-at-eol
+reports/*.csv -text
+# Preserve Matplotlib's generated SVG formatting and reproducibility hashes.
+images/*.svg -text -whitespace
+images/*.png binary

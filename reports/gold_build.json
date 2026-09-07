@@ -1,0 +1,46 @@
+{
+  "status": "gold_built_test_not_evaluated",
+  "context_municipalities": 5570,
+  "partitions": [
+    {
+      "silver_rows": 1748957,
+      "simulated_removed": 1518,
+      "batch_rows": 1747439,
+      "after_network_series": 1747439,
+      "after_presence": 1503058,
+      "after_finite_score": 1502809,
+      "eligible_rows": 1502809,
+      "year": 2023,
+      "gold_rows": 1502809,
+      "municipalities": 4871,
+      "features": [
+        "rede_nome",
+        "sigla_uf",
+        "populacao_2021",
+        "pib_per_capita_2020",
+        "participacao_agropecuaria_2020",
+        "participacao_servicos_publicos_2020"
+      ]
+    },
+    {
+      "silver_rows": 2122042,
+      "simulated_removed": 1482,
+      "batch_rows": 2120560,
+      "after_network_series": 2120535,
+      "after_presence": 1852764,
+      "after_finite_score": 1851828,
+      "eligible_rows": 1851828,
+      "year": 2024,
+      "gold_rows": 1851828,
+      "municipalities": 5517,
+      "features": [
+        "rede_nome",
+        "sigla_uf",
+        "populacao_2021",
+        "pib_per_capita_2020",
+        "participacao_agropecuaria_2020",
+        "participacao_servicos_publicos_2020"
+      ]
+    }
+  ]
+}

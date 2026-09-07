@@ -1,0 +1,40 @@
+{
+  "version": "0.1",
+  "files": [
+    {
+      "source": "fontes-fase2/alunos-original.parquet",
+      "destination": "fase2/alunos-original.parquet",
+      "sha256": "b851559b91587ae729608d02a76c8e5167b705aaf2124d8e3f86b10e6bacf49e"
+    },
+    {
+      "source": "fontes-fase2/alunos-silver-2023.parquet",
+      "destination": "fase2/alunos-silver-2023.parquet",
+      "sha256": "2ace8c4a456876b07f9dc52876ea5bcf600c5e3fa5f79dc31a4e02fa73fb7e85"
+    },
+    {
+      "source": "fontes-fase2/alunos-silver-2024.parquet",
+      "destination": "fase2/alunos-silver-2024.parquet",
+      "sha256": "86ec76cb8e22ec571368fd89b048db09f695ddeaaff7c818f0fcf0ff2c358295"
+    },
+    {
+      "source": "fontes-fase2/diretorio_municipio.parquet",
+      "destination": "fase2/diretorio_municipio.parquet",
+      "sha256": "8fc2972050a118c17d46b67d812ace598eed64ae9b5db20ef7f731f0857ddf06"
+    },
+    {
+      "source": "fontes-fase2/diretorio_uf.parquet",
+      "destination": "fase2/diretorio_uf.parquet",
+      "sha256": "67371051c9e2586c1792919ff13e2484452660a159dc8db857e659a93843f468"
+    },
+    {
+      "source": "fontes-externas/pib-municipios-2010-2020.zip",
+      "destination": "ibge/pib-municipios-2010-2020.zip",
+      "sha256": "53f99a0346e00f43a1c4a5f69d103f67ce6707a968b582ec14e8e0925743e014"
+    },
+    {
+      "source": "fontes-externas/populacao-dou-2021.ods",
+      "destination": "ibge/populacao-dou-2021.ods",
+      "sha256": "57746ed3f495f1f3111ed4ed33ee59d6e9ddd4f7023c25434fc79cd1e5b6a8bb"
+    }
+  ]
+}

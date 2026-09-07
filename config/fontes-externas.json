@@ -1,0 +1,22 @@
+[
+  {
+    "file": "pib-municipios-2010-2020.zip",
+    "url": "https://ftp.ibge.gov.br/Pib_Municipios/2020/base/base_de_dados_2010_2020_txt.zip",
+    "reference_year": "2020",
+    "release_date": "2022-12-16",
+    "http_last_modified": "Fri, 16 Dec 2022 13:00:01 GMT",
+    "downloaded_at": "2026-09-06T22:39:50.745276+00:00",
+    "bytes": 6461281,
+    "sha256": "53f99a0346e00f43a1c4a5f69d103f67ce6707a968b582ec14e8e0925743e014"
+  },
+  {
+    "file": "populacao-dou-2021.ods",
+    "url": "https://ftp.ibge.gov.br/Estimativas_de_Populacao/Estimativas_2021/estimativa_dou_2021.ods",
+    "reference_year": "2021",
+    "release_date": "2021-08-27",
+    "http_last_modified": "Fri, 27 Aug 2021 12:00:04 GMT",
+    "downloaded_at": "2026-09-06T22:39:50.812152+00:00",
+    "bytes": 193832,
+    "sha256": "57746ed3f495f1f3111ed4ed33ee59d6e9ddd4f7023c25434fc79cd1e5b6a8bb"
+  }
+]

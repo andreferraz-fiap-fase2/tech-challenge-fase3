@@ -1,0 +1,55 @@
+{
+  "verified_at_utc": "2026-09-06T23:49:38.064074+00:00",
+  "status": "passed",
+  "scope": "Fresh output directory; verified source inputs; same locked Python environment",
+  "python": "3.12.13",
+  "platform": "Linux-6.6.114.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+  "packages": {
+    "pandas": "2.3.2",
+    "numpy": "2.3.3",
+    "pyarrow": "21.0.0",
+    "scikit-learn": "1.7.2",
+    "matplotlib": "3.10.6",
+    "pytest": "8.4.2",
+    "ruff": "0.13.1"
+  },
+  "test_2024_gold_file_removed_during_eda_and_baseline": true,
+  "test_2024_model_evaluation_performed": false,
+  "command_elapsed_seconds": {
+    "prepare": 1.507,
+    "gold": 41.414,
+    "eda": 3.101,
+    "baseline": 2.816
+  },
+  "max_child_resident_memory_mib_linux": 4005.5,
+  "identical_files_sha256": {
+    "data/gold/contexto_municipal.parquet": "d29b8c31de19c20f36c4707705a6a6c48630339a6260a436d2cdfcc3922121c7",
+    "data/gold/ml_aluno/ano=2023/alunos.parquet": "a9bfd5749fbbf5cb52b2d3be34650f7021230139286ab95ed51accd127628241",
+    "data/gold/ml_aluno/ano=2024/alunos.parquet": "5d74435f5e314e333218c48096cd713d6d752e79f33086f4b3f2a7abeea5f8e7",
+    "artifacts/dummy_prior_oof_2023.parquet": "9ba1da57561b1d98f3d593142b03e89b40322f485b66cb9d32910b4522754a53",
+    "images/01_alvo_2023.png": "281108e59dcc1bd106a4c581206bee88edf19813db5141ee2e6d3ae71dc26c3b",
+    "images/01_alvo_2023.svg": "8f787ec98353cb815df5247506e31369edfbc4edfbf09c724f006c4f88b05b03",
+    "images/02_regioes_2023.png": "2939639306ce2cc59867c1c69e227390ce8e1b1bd892ebe21570e5a44f573852",
+    "images/02_regioes_2023.svg": "0c3c360e7ce51b63458c19dd5abece8a952c3718b16fff610e9c22ae34360a1e",
+    "images/03_contexto_municipal_2023.png": "4a60b0176d45aa30eb71841dd99b01959ce0d2df9ea4e10ebfca648cc0ad991a",
+    "images/03_contexto_municipal_2023.svg": "39d37ae5fb5bf71b990a7adfd3696fd1d897583f1df7d3f187046bab726adcc5",
+    "images/04_folds_2023.png": "9d176b1dae12bb5401ed35a14987c54693722da0da6e321ed342886e598d524a",
+    "images/04_folds_2023.svg": "9abed58259203d35ff592504f8eee98e238b0583fb9beff6d52b5ad55a9aeb3a",
+    "reports/eda_development.json": "96c9341cb6fe01384ad93d50e0c868072164337637ca3c186eb9c540a6381766",
+    "reports/eda_development.md": "39256db1703ea8a99016375c1aa4db342ee35f003677e77200a9ded11bcccc7b",
+    "reports/eda_fold_validacao_2023.csv": "b2c43fb590f36eeb2788ac1086a97f13ab60316d3c3a6a641e769f5be918e918",
+    "reports/eda_numericas_municipios_2023.csv": "e68983f785f7c9443fcebc98eeedc43be3f85e42ceb28cb0fddcf950689967fc",
+    "reports/eda_rede_nome_2023.csv": "b2dae4637a156d029150f13f7dc8d79cab26eb64e283ddd3b3fdb568d6ba5db8",
+    "reports/eda_regiao_2023.csv": "4b2d6c464b87076c8cde4bc75ea94878c92f2f294a6694106bc55857e8ab40cd",
+    "reports/eda_sigla_uf_2023.csv": "a3fcae49f5ff471b4b7e94e86a630db033765c07a45ddf31f28056fa5ca4f3db",
+    "reports/gold_build.json": "5758ccac0ae229cadfc3d6c652927d5080f6cbecb576da820eb1414905332435",
+    "reports/baseline_development.json": "daa9fe57ad0b1c5269c3eb92068f1c0227c9bfb263b43a4d0dcf22f5f8af762a",
+    "reports/baseline_development.md": "bdfb7ba80b2213fb7f848bc4a73d40b6e14c737a391cf1a98464016cc7180ad3"
+  },
+  "unit_tests": {
+    "passed": 30,
+    "command": "uv run pytest -q",
+    "elapsed_seconds": 0.76
+  },
+  "ruff": "format and lint passed"
+}

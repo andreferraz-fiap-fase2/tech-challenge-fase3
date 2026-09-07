@@ -1,0 +1,20 @@
+{
+  "year": 2023,
+  "rows": 1502809,
+  "municipalities": 4871,
+  "school_codes_within_year": 36525,
+  "literate": 877427,
+  "non_literate": 625382,
+  "non_literate_pct": 41.6142038010153,
+  "feature_missing": {
+    "rede_nome": 0,
+    "sigla_uf": 0,
+    "populacao_2021": 0,
+    "pib_per_capita_2020": 0,
+    "participacao_agropecuaria_2020": 0,
+    "participacao_servicos_publicos_2020": 0
+  },
+  "distinct_feature_profiles": 5881,
+  "numeric_distribution_unit": "one row per municipality, not repeated per student",
+  "test_2024_evaluated": false
+}

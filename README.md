@@ -2,7 +2,7 @@
 
 **André Mohallem Ferraz · Trabalho individual · Entrega: 15/09/2026**
 
-Estado em 06/09/2026: **Gold, EDA, baseline e duas variantes de Regressão Logística executados**.
+Estado em 07/09/2026: **Gold, EDA, baseline e duas variantes de Regressão Logística executados**.
 A comparação mede o ganho de rede/UF e do enriquecimento numérico nos folds de 2023.
 Gradient Boosting, otimização, avaliação final e vídeo permanecem nas próximas etapas.
 
@@ -187,12 +187,14 @@ com disponibilidade histórica verificada.
 1. Gradient Boosting e busca limitada de parâmetros, usando somente desenvolvimento.
 2. Seleção, calibração/limiar, interpretação e avaliação temporal congelada.
 3. Análises estratégicas, relatório técnico, apresentação e vídeo de até cinco minutos.
-4. Publicação do repositório, PRs reais e revisão individual documentada.
+4. Conferência de acesso ao repositório e ao vídeo para a entrega acadêmica.
 
-O repositório Git desta etapa é local: `main` contém o scaffold, e
-`feature/gold-eda-baseline` preserva a primeira execução. A branch atual,
-`feature/logistica-comparacao`, acrescenta esta rodada. Ainda não há repositório remoto
-ou pull request da Fase 3 publicado.
+Repositório privado: [andreferraz-fiap-fase2/tech-challenge-fase3](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3).
+A branch `main` reúne a implementação integrada. `feature/gold-eda-baseline` preserva
+a primeira execução e `feature/logistica-comparacao` registra a rodada logística.
+A integração fica registrada nos [pull requests](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/pulls?q=is%3Apr).
+O trabalho é individual; as verificações são documentadas sem simular revisão por terceiros.
+Antes da entrega, conferir o acesso dos avaliadores ao repositório privado.
 
 ## Como reproduzir
 

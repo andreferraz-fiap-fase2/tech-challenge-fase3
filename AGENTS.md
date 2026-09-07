@@ -28,3 +28,13 @@ enunciado; `usecase` orquestra e `pipeline.py` expõe a CLI.
 - Alterações no contrato/protocolo precisam de decisão documentada e nova versão.
 - Documentação e arquivos de entrega em português; manter resultados de desenvolvimento
   explicitamente separados de avaliação temporal final, ainda não realizada.
+
+## Estado após a comparação logística
+
+- `logistic` compara rede/UF e seis atributos; `run-all` inclui essa comparação.
+- Configuração e hashes em `config/experimento-logistica.json`. Parâmetros fixos nesta rodada.
+- AP: baseline 0,4161; rede/UF 0,5333; completa 0,5381. Não escolher modelo final ainda.
+- Pipelines em `artifacts/logistica/` são de validação, uma por variante/fold; não há ajuste final.
+- Próxima etapa: Gradient Boosting e busca limitada, exclusivamente no desenvolvimento.
+- Há cópia privada em `G:\Meu Drive\FIAP\Fase3\tech-challenge-fase3`; verificar alterações
+  nessa cópia antes de sobrescrever arquivos. A pasta no WSL é a raiz de trabalho.

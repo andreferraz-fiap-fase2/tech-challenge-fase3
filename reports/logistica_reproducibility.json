@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "verified_at_utc": "2026-09-07T01:24:07.567785+00:00",
+  "scope": "Fresh outputs with only Gold 2023; same locked dependency environment",
+  "test_2024_gold_absent": true,
+  "test_2024_evaluated": false,
+  "metric_configuration_iteration_equality": "exact excluding elapsed times",
+  "comparison_csv_equality": "exact excluding elapsed times",
+  "oof_rows": 1502809,
+  "oof_unique_keys": true,
+  "reloaded_models": 6,
+  "sample_predictions_compared_per_model": 100,
+  "serialization_probability_absolute_tolerance": 1e-12,
+  "identical_files_sha256": {
+    "artifacts/logistica_oof_2023.parquet": "450b6d101e693ad736093d5a3c03678c02e2cbc3b3b1b9498c6c833bec34bdc7",
+    "artifacts/dummy_prior_oof_2023.parquet": "9ba1da57561b1d98f3d593142b03e89b40322f485b66cb9d32910b4522754a53",
+    "reports/logistica_coeficientes_2023.csv": "3c2beceaaf762daa9093945ed2822d1ba1f0e842409dac0463188d3d49b98113",
+    "reports/logistica_delta_enriquecimento_2023.csv": "4166c8c34c77a13fb6b4161758f00ca00444411019fda1aa8730624a30b07cda",
+    "reports/logistica_development.md": "2fd59568f1011fabb2f8a68c3c6b79d141b58ecafec9aa41851579aa7c1e8a28",
+    "reports/baseline_development.json": "daa9fe57ad0b1c5269c3eb92068f1c0227c9bfb263b43a4d0dcf22f5f8af762a",
+    "artifacts/logistica/completa/fold_0.joblib": "dfad29e3b9c01e0097be12bf5d09d5f9832fae620a3afb71d4186b6eb92fae1a",
+    "artifacts/logistica/completa/fold_1.joblib": "05650396b8304d30c0d626e0c627b186a029fda132a8de7d834c284ecd29761b",
+    "artifacts/logistica/completa/fold_2.joblib": "abea41d729315557b19124736578e237a4415d93e27751aa0e8ad66bb011032b",
+    "artifacts/logistica/rede_uf/fold_0.joblib": "fafa8b928db6b8c7044247968842fc8ae90acd1c1d11d330378a38e7509d9dca",
+    "artifacts/logistica/rede_uf/fold_1.joblib": "3a992731c208196dac62983a3ffe9893953b9e059c4110463c71d435b44f75ae",
+    "artifacts/logistica/rede_uf/fold_2.joblib": "d13431b5e9282c0161f5b6642c7186e7550e2ed67492b6e69498c97584cc1954",
+    "images/05_comparacao_logistica_2023.png": "d580314f0b789031bcd7aae044e2785e64e5a9210f3580e433d80e6b5f73454d",
+    "images/05_comparacao_logistica_2023.svg": "60829748a9f24109573f4c6ccc6b2386a8814eaec0412f8ad53a51632c35a114",
+    "images/06_coeficientes_numericos_2023.png": "9e1a02a8583cfa2af772cdbffec0c19a0d8180bdcd84481a31f808aadb85ce8b",
+    "images/06_coeficientes_numericos_2023.svg": "b435328b43e90539381e47951df510160c87817d7cea11800d7da8601df051f7"
+  },
+  "tests": {
+    "passed": 43,
+    "third_party_deprecation_warnings": 14,
+    "convergence_warnings": 0,
+    "command": "uv run pytest -q"
+  },
+  "lint_format": "passed"
+}

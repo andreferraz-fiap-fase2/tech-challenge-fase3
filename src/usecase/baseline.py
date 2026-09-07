@@ -9,6 +9,7 @@ from numpy.typing import NDArray
 from src.domain.contract import ExperimentContract, JsonObject, JsonValue
 from src.evaluation.development import require_development
 from src.evaluation.metrics import risk_metrics
+from src.evaluation.summary import summarize_folds
 from src.infrastructure.files import FileStore
 from src.modeling.baseline import PriorBaseline
 from src.preprocessing.gold import select_predictors
@@ -38,7 +39,7 @@ def evaluate_baseline(
         "threshold_risk": 0.5,
         "test_2024_evaluated": False,
         "folds": results,
-        "summary": _summarize_folds(results),
+        "summary": summarize_folds(results),
     }
     return report, predictions
 
@@ -56,32 +57,6 @@ def _fold_metrics(
         "unweighted": risk_metrics(labels, risk),
         "weighted_evaluation_only": risk_metrics(labels, risk, weights),
     }
-
-
-def _summarize_folds(results: list[JsonValue]) -> JsonObject:
-    metrics = (
-        "roc_auc_risk",
-        "average_precision_risk",
-        "brier_risk",
-        "recall_risk",
-        "precision_risk",
-        "f1_risk",
-        "accuracy",
-        "balanced_accuracy",
-    )
-    summary: JsonObject = {}
-    for weighting in ("unweighted", "weighted_evaluation_only"):
-        group: JsonObject = {}
-        for metric in metrics:
-            values = [
-                float(cast(JsonObject, cast(JsonObject, row)[weighting])[metric]) for row in results
-            ]
-            group[metric] = {
-                "mean": float(np.mean(values)),
-                "std_between_folds": float(np.std(values, ddof=1)),
-            }
-        summary[weighting] = group
-    return summary
 
 
 def run_baseline(store: FileStore) -> JsonObject:

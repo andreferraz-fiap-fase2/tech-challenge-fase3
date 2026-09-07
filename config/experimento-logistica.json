@@ -1,0 +1,27 @@
+{
+  "version": "0.1",
+  "scope": "initial_logistic_ablation_development_2023_only",
+  "variants": ["rede_uf", "completa"],
+  "C": 1.0,
+  "solver": "lbfgs",
+  "penalty": "l2",
+  "max_iter": 1000,
+  "tol": 0.000001,
+  "random_state": 42,
+  "threads": 1,
+  "class_weight": null,
+  "sample_weight_fit": false,
+  "threshold_risk": 0.5,
+  "hyperparameter_search_performed": false,
+  "test_2024_evaluated": false,
+  "numeric_imputation": "training median before log1p; keep empty features",
+  "categorical_imputation": "constant __AUSENTE__",
+  "encoding": "one-hot; unknown ignored; no category dropped",
+  "scaling": "StandardScaler on numeric training columns only",
+  "expected_sha256": {
+    "config/folds-municipios-2023.csv": "ec48d312554e14ec2db0a76383dd93d8c465aa038fd1454b65f474aad6b3e20f",
+    "config/contrato-ml-aluno.json": "7af52859f26a330fa3a3b0cc7c24dc91c2c0a60861737556ed3fde21e1ff5496",
+    "data/gold/ml_aluno/ano=2023/alunos.parquet": "a9bfd5749fbbf5cb52b2d3be34650f7021230139286ab95ed51accd127628241",
+    "reports/baseline_development.json": "daa9fe57ad0b1c5269c3eb92068f1c0227c9bfb263b43a4d0dcf22f5f8af762a"
+  }
+}

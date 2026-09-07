@@ -2,13 +2,15 @@
 
 **André Mohallem Ferraz · Trabalho individual · Entrega: 15/09/2026**
 
-Estado em 06/09/2026: **Gold individual construída, EDA de 2023 e primeiro baseline executados**.
-Os classificadores com atributos, a seleção de hiperparâmetros, a avaliação final e o vídeo
-serão desenvolvidos nas próximas etapas. Esta versão ainda não é a entrega final.
+Estado em 06/09/2026: **Gold, EDA, baseline e duas variantes de Regressão Logística executados**.
+A comparação mede o ganho de rede/UF e do enriquecimento numérico nos folds de 2023.
+Gradient Boosting, otimização, avaliação final e vídeo permanecem nas próximas etapas.
 
 Leitura dos resultados: [EDA e quatro figuras](reports/eda_development.md),
 [baseline](reports/baseline_development.md), [auditoria da Gold](reports/gold_build.json)
-e [verificação de reprodução](reports/reproducibility.json).
+e [verificação da primeira reprodução](reports/reproducibility.json).
+Resultado atual: [comparação logística e coeficientes](reports/logistica_development.md)
+e [reprodução da logística](reports/logistica_reproducibility.json).
 
 ## 1. Contexto do problema
 
@@ -82,10 +84,13 @@ com semente 42 para desempate, sem usar rótulos.
 | 1 | 1.625 | 500.942 |
 | 2 | 1.624 | 500.933 |
 
-Pendente: integrar imputação, encoding e transformações ao estimador; comparar atributos;
-ajustar poucos hiperparâmetros; escolher e congelar modelo/limiar; avaliar 2024 uma vez.
-Para o modelo linear, estão previstos `log1p` para população/PIB e padronização.
-Todas as transformações serão ajustadas exclusivamente nos folds de treino.
+Implementado na logística: imputação categórica constante, one-hot com categoria inédita
+ignorada, imputação numérica pela mediana, `log1p` para população/PIB e padronização das
+numéricas. Cada fold ajusta sua própria pipeline exclusivamente nos municípios de treino.
+A matriz real teve 25 atributos codificados na versão rede/UF e 29 na versão completa.
+
+Pendente: Gradient Boosting, busca limitada, escolha/congelamento de modelo e limiar,
+avaliação temporal e interpretação final. O limiar desta rodada é a referência 0,5.
 
 ## 5. Escolha do algoritmo
 
@@ -93,26 +98,27 @@ O primeiro modelo é `DummyClassifier(strategy="prior")`: aprende a proporção 
 nos dois folds de treino e a usa no terceiro. Ele estabelece a referência sem poder de
 discriminação contextual. Não utiliza pesos no ajuste.
 
-Próximos candidatos definidos no protocolo: Regressão Logística e
-`HistGradientBoostingClassifier`. Comparar a versão rede/UF com a versão de seis
-atributos permitirá medir a contribuição do enriquecimento. Ainda não há modelo final.
+Foram executadas Regressões Logísticas com rede/UF e com seis atributos, usando L2,
+C=1, solver `lbfgs`, tolerância 1e-6, máximo de 1.000 iterações e uma thread. Não houve
+busca de parâmetros nem ponderação do ajuste. Todas as seis pipelines convergiram:
+22–25 iterações para rede/UF e 59–68 para os seis atributos. Parâmetros e hashes estão
+em [experimento-logistica.json](config/experimento-logistica.json).
+O próximo candidato é `HistGradientBoostingClassifier`. Ainda não há modelo final.
 
 ## 6. Métricas de avaliação
 
-Resultados do baseline em **2023**, média simples das métricas dos três folds:
+Resultados em **2023**, média simples das métricas dos três folds, para não alfabetizado:
 
-| Métrica da classe não alfabetizado | Resultado |
-| --- | ---: |
-| ROC-AUC | 0,5000 |
-| Average precision (critério principal) | 0,4161 |
-| Brier score | 0,2431 |
-| Acurácia no limiar 0,5 | 58,39% |
-| Recall no limiar 0,5 | 0,00% |
-| Balanced accuracy | 0,5000 |
+| Modelo | Average precision | ROC-AUC | Brier ↓ | Recall a 0,5 | Precisão a 0,5 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Baseline constante | 0,4161 | 0,5000 | 0,2431 | 0,00% | 0,00% |
+| Logística: rede/UF | 0,5333 | 0,6361 | 0,2288 | 31,67% | 57,71% |
+| Logística: seis atributos | 0,5381 | 0,6394 | 0,2284 | 36,75% | 56,14% |
 
-O [JSON de avaliação](reports/baseline_development.json) registra cada fold, desvios
-entre folds, matrizes de confusão e métricas ponderadas por `peso_aluno` como visão
-suplementar. Os pesos não são preditores nem pesos de balanceamento de classe.
+Os JSONs do [baseline](reports/baseline_development.json) e da
+[logística](reports/logistica_development.json) registram cada fold, desvios,
+matrizes de confusão e métricas ponderadas por `peso_aluno` como visão suplementar.
+Os pesos não são preditores nem pesos de balanceamento de classe.
 Não calcular uma ROC-AUC única juntando probabilidades constantes diferentes dos folds:
 essa medida pode refletir o efeito da partição. A comparação usa métricas por fold.
 
@@ -121,11 +127,15 @@ essa medida pode refletir o efeito da partição. A comparação usa métricas p
 
 ## 7. Interpretação dos resultados
 
-ROC-AUC de 0,50 significa que este baseline não ordena os casos por risco. A average
-precision acompanha a prevalência da classe de interesse. No limiar 0,5, o baseline
-classifica todos como alfabetizados: a acurácia de 58,39% vem da classe majoritária,
-com recall zero dos não alfabetizados. Essa é a referência que os próximos modelos
-precisam superar sob o mesmo protocolo.
+As duas variantes superaram o baseline em AP, ROC-AUC e Brier. O ganho médio de AP
+dos seis atributos sobre rede/UF foi de **0,004819**, ou **0,482 ponto percentual**,
+positivo nos três folds. É uma contribuição pequena dos quatro atributos numéricos
+para este modelo linear. Não foi estimado intervalo de confiança para o ganho.
+
+No limiar 0,5, a versão completa recupera 36,75% dos não alfabetizados e perde a
+maioria dos casos de interesse. Seu recall supera rede/UF, acompanhado de menor
+precisão. A acurácia, isoladamente, não deve orientar a seleção. Estes são resultados
+de desenvolvimento em municípios separados, sem evidência ainda de desempenho em 2024.
 
 ## 8. Insights obtidos
 
@@ -136,8 +146,14 @@ Essas são taxas descritivas sem ponderação, e não indicadores oficiais nacio
 Há **5.881 perfis distintos dos seis atributos** entre 1.502.809 avaliações. Os gráficos
 de contexto usam uma observação por município para não repetir o mesmo valor milhares
 de vezes. População e PIB apresentam assimetria, representada em escala logarítmica na
-EDA. Essas observações sustentam a avaliação territorial e as transformações previstas;
-não demonstram causalidade nem ganho preditivo do enriquecimento.
+EDA. Essas observações sustentam a avaliação territorial e as transformações implementadas.
+O ganho preditivo do enriquecimento foi medido na comparação logística, separadamente.
+
+A leitura inicial dos coeficientes numéricos indica associação condicional positiva
+de população e participação dos serviços públicos com risco; PIB per capita tem
+coeficiente negativo nos três folds e agropecuária muda de sinal entre folds. São
+coeficientes padronizados do modelo, sem interpretação causal. A [figura de coeficientes](images/06_coeficientes_numericos_2023.png)
+mostra média e desvio entre folds, que não equivalem a intervalo de confiança.
 
 ## 9. Limitações
 
@@ -150,8 +166,9 @@ não demonstram causalidade nem ganho preditivo do enriquecimento.
 - Não há chave escolar externa validada nem identidade longitudinal de aluno comprovada.
 - Cobertura muda entre anos. A existência de pesos não demonstra representatividade
   nacional; a documentação da fonte precisa orientar sua interpretação.
-- Até aqui há somente um baseline constante: não há evidência de capacidade de antecipar
-  risco individual, evolução de crianças ou efeito de políticas públicas.
+- Até aqui há baseline e comparação linear em 2023. A generalização temporal, a
+  calibração e a utilidade operacional ainda precisam de avaliação. O experimento
+  não mede evolução de crianças ou efeito de políticas públicas.
 
 ## 10. Aplicação em políticas públicas
 
@@ -167,14 +184,14 @@ com disponibilidade histórica verificada.
 
 ## 11. Evoluções futuras
 
-1. Regressão Logística: rede/UF e seis atributos, mesmos folds de 2023.
-2. Gradient Boosting e busca limitada de parâmetros, usando somente desenvolvimento.
-3. Seleção, calibração/limiar, interpretação e avaliação temporal congelada.
-4. Análises estratégicas, relatório técnico, apresentação e vídeo de até cinco minutos.
-5. Publicação do repositório, PRs reais e revisão individual documentada.
+1. Gradient Boosting e busca limitada de parâmetros, usando somente desenvolvimento.
+2. Seleção, calibração/limiar, interpretação e avaliação temporal congelada.
+3. Análises estratégicas, relatório técnico, apresentação e vídeo de até cinco minutos.
+4. Publicação do repositório, PRs reais e revisão individual documentada.
 
 O repositório Git desta etapa é local: `main` contém o scaffold, e
-`feature/gold-eda-baseline` contém a implementação. Ainda não há repositório remoto
+`feature/gold-eda-baseline` preserva a primeira execução. A branch atual,
+`feature/logistica-comparacao`, acrescenta esta rodada. Ainda não há repositório remoto
 ou pull request da Fase 3 publicado.
 
 ## Como reproduzir
@@ -208,12 +225,14 @@ Para executar etapas separadas:
 uv run python -m src.pipeline gold
 uv run python -m src.pipeline eda
 uv run python -m src.pipeline baseline
+uv run python -m src.pipeline logistic
 uv run ruff check .
 uv run ruff format --check .
 ```
 
-`gold` reconstrói as duas partições; `eda` e `baseline` leem exclusivamente o caminho
-de 2023. A CLI permite `--root /outro/diretorio` antes do subcomando; nesse caso, copiar
+`gold` reconstrói as duas partições; `eda`, `baseline` e `logistic` leem exclusivamente
+o caminho de 2023. `run-all` inclui a comparação logística. A CLI permite
+`--root /outro/diretorio` antes do subcomando; nesse caso, copiar
 primeiro a pasta `config/` para essa raiz e executar `prepare`.
 
 Alternativa sem `uv`, com Python 3.12: criar um ambiente virtual e instalar
@@ -231,20 +250,24 @@ notebooks/              Orientação; nesta etapa a EDA usa scripts
 src/domain/             Contrato do experimento
 src/infrastructure/     Leitura, escrita e verificação de arquivos
 src/preprocessing/      Contexto, população elegível, junções e Gold
-src/modeling/           Baseline
+src/modeling/           Baseline e Regressão Logística
 src/evaluation/         Métricas e resumos de desenvolvimento
 src/visualization/      Figuras em PNG e SVG
 src/usecase/            Orquestração das etapas
 src/pipeline.py         CLI
 reports/                Métricas, auditorias e análise em Markdown/CSV/JSON
-images/                 Quatro figuras, cada uma em PNG e SVG
-artifacts/              Probabilidades fora de fold de 2023 (fora do Git)
+images/                 Seis figuras, cada uma em PNG e SVG
+artifacts/              Probabilidades e seis pipelines por fold (fora do Git)
 tests/                  Testes de integridade, vazamento e orientação do alvo
 ```
 
-Verificações: 30 testes aprovados, lint/formatação aprovados e reprodução em diretório
-de saídas vazio. Nesse ensaio, o arquivo Gold de 2024 ficou indisponível durante EDA e
-baseline; ambos concluíram. Hashes, ambiente e tempos estão no relatório de reprodução.
+Verificações atuais: **43 testes aprovados**, lint/formatação aprovados. Há 14 avisos
+de depreciação de Matplotlib/Pyparsing na suíte; nenhum aviso de convergência do modelo.
+A reprodução da logística usa saídas vazias e somente a Gold de 2023. Compara métricas,
+iterações, previsões, coeficientes, pipelines e figuras; tempos de execução são excluídos
+da comparação de igualdade. A releitura de seis pipelines reproduz 100 previsões de
+validação por modelo com tolerância absoluta 1e-12. Consulte os relatórios de reprodução
+das etapas 04 e 05. Os modelos salvos são dos folds, não um ajuste final em todo 2023.
 Dados individuais, ambientes virtuais, credenciais e artefatos por aluno não vão ao Git.
 
 ### Referências técnicas
@@ -254,7 +277,9 @@ Dados individuais, ambientes virtuais, credenciais e artefatos por aluno não v�
 - [Scikit-learn: DummyClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html).
 - [Scikit-learn: average precision](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html).
 - [Scikit-learn: prevenção de vazamento](https://scikit-learn.org/stable/common_pitfalls.html).
+- [Scikit-learn 1.7: Regressão Logística](https://scikit-learn.org/1.7/modules/generated/sklearn.linear_model.LogisticRegression.html).
+- [Scikit-learn 1.7: OneHotEncoder](https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.OneHotEncoder.html).
 
 Documentos de referência: enunciado `[IAST] - Tech Challenge - Fase 3.pdf`, entrega
-da Fase 2 e documentos 01–03 em `FIAP/Fase3/Planejamento`. Relatório consolidado desta
-etapa: `04-Primeira-Execucao-Fase3-v0.1`, na mesma pasta. Vídeo final: pendente.
+da Fase 2 e documentos 01–04 em `FIAP/Fase3/Planejamento`. Relatório consolidado desta
+etapa: `05-Regressao-Logistica-Fase3-v0.1`, na mesma pasta. Vídeo final: pendente.

@@ -1,0 +1,91 @@
+{
+  "version": "0.1",
+  "defined_at": "2026-09-06",
+  "status": "definition_verified_gold_not_built",
+  "grain": [
+    "ano",
+    "id_aluno"
+  ],
+  "target": {
+    "column": "alfabetizado",
+    "positive_label": 1,
+    "risk_label": 0,
+    "risk_probability": "1 - p_alfabetizado"
+  },
+  "features": {
+    "categorical": [
+      "rede_nome",
+      "sigla_uf"
+    ],
+    "numeric": [
+      "populacao_2021",
+      "pib_per_capita_2020",
+      "participacao_agropecuaria_2020",
+      "participacao_servicos_publicos_2020"
+    ],
+    "log1p": [
+      "populacao_2021",
+      "pib_per_capita_2020"
+    ]
+  },
+  "external_context_cutoff": "2022-12-31",
+  "same_external_snapshot_for_both_years": true,
+  "validation": {
+    "development_year": 2023,
+    "test_year": 2024,
+    "fold_group": "id_municipio",
+    "folds_file": "folds-municipios-2023.csv",
+    "fold_count": 3,
+    "seed": 42,
+    "allocation": "greedy descending training group size; hash tie-break; no labels",
+    "selection_metric": "average_precision_non_literate",
+    "threshold_policy": "maximize F2 non-literate using development OOF predictions; also report 0.5",
+    "test_for_tuning": false
+  },
+  "eligibility": {
+    "origin": "batch",
+    "series": "2",
+    "networks": [
+      "Estadual",
+      "Municipal"
+    ],
+    "present": true,
+    "valid_target_required": true,
+    "finite_proficiency_required_for_label_audit": true
+  },
+  "expected_eligible_rows": {
+    "2023": 1502809,
+    "2024": 1851828
+  },
+  "explicitly_not_predictors": [
+    "ano",
+    "id_aluno",
+    "id_escola",
+    "id_municipio",
+    "regiao",
+    "nome_municipio",
+    "nome_uf",
+    "alfabetizado",
+    "proficiencia",
+    "presente",
+    "presenca",
+    "preenchimento_caderno",
+    "caderno",
+    "peso_aluno",
+    "origem",
+    "taxa_alfabetizacao",
+    "media_portugues",
+    "gap_meta",
+    "atingiu_meta",
+    "meta_alfabetizacao",
+    "taxa_ano_anterior"
+  ],
+  "known_limitations": [
+    "contextual prediction, not longitudinal student follow-up",
+    "baseline input records do not prove pre-exam enrollment snapshot",
+    "no absent-student observed outcomes",
+    "constant 2020/2021 external context for both years",
+    "no validated external school key",
+    "no performance measured yet"
+  ]
+}

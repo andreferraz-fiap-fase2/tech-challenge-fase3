@@ -1,0 +1,14 @@
+﻿coluna,tipo,papel,definicao,fonte,disponibilidade,tratamento
+rede_nome,categoria,preditor,Rede Estadual/Municipal,Fase 2; cadastro do ciclo,disponível na matrícula: premissa a declarar,OneHotEncoder; categoria desconhecida tratada
+sigla_uf,categoria,preditor,UF do município,Fase 2; dimensão territorial,contexto territorial anterior à prova,OneHotEncoder; categoria desconhecida tratada
+populacao_2021,inteiro,preditor,Habitantes estimados,IBGE; edição original 27/08/2021,2021-08-27,log1p; imputação; escala no modelo linear
+pib_per_capita_2020,float,preditor,"R$ por habitante, a preços de 2020",IBGE; edição 16/12/2022,2022-12-16,log1p; imputação; escala no modelo linear
+participacao_agropecuaria_2020,float,preditor,100 x VAB agro / VAB total,IBGE; edição 16/12/2022,2022-12-16,imputação; escala no modelo linear
+participacao_servicos_publicos_2020,float,preditor,"100 x VAB administração, defesa, educação/saúde públicas e seguridade / VAB total",IBGE; edição 16/12/2022,2022-12-16,imputação; escala no modelo linear
+alfabetizado,booleano,alvo,1 alfabetizado; 0 não alfabetizado,Fase 2; resultado da avaliação,posterior à avaliação,não imputar; nunca incluir em X
+ano,inteiro,partição e chave,Ano de avaliação,Fase 2,não é preditor,2023 desenvolvimento; 2024 teste
+id_aluno,string,chave com ano,Código de observação; não longitudinal,Fase 2,não é preditor,preservar junto ao ano
+id_escola,string,auditoria,Código escolar da avaliação; junção externa não validada,Fase 2,não é preditor,não ligar ao Censo Escolar sem validação
+id_municipio,string,junção e fold,Código municipal de sete dígitos,Fase 2 / IBGE,não é preditor,preservar como string; junção muitos para um
+regiao,categoria,relatório,Região da UF,Fase 2,não é preditor inicial,recortes de avaliação
+peso_aluno,float,avaliação e agregação,Peso amostral,Fase 2,não é preditor,positivo e finito; sem imputação silenciosa

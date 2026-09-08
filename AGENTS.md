@@ -38,6 +38,6 @@ enunciado; `usecase` orquestra e `pipeline.py` expõe a CLI.
 - Próxima etapa: Gradient Boosting e busca limitada, exclusivamente no desenvolvimento.
 - Há cópia privada em `G:\Meu Drive\FIAP\Fase3\tech-challenge-fase3`; verificar alterações
   nessa cópia antes de sobrescrever arquivos. A pasta no WSL é a raiz de trabalho.
-- GitHub privado: `andreferraz-fiap-fase2/tech-challenge-fase3`. A conta correspondente
+- GitHub público: `andreferraz-fiap-fase2/tech-challenge-fase3`. A conta correspondente
   está autenticada no GitHub CLI do Windows. O WSL usa outra conta; não trocar o destino.
   Ao usar a conta da Fase 2 no Windows, restaurar a conta ativa anterior ao concluir.

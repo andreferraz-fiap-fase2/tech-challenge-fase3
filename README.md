@@ -189,12 +189,12 @@ com disponibilidade histórica verificada.
 3. Análises estratégicas, relatório técnico, apresentação e vídeo de até cinco minutos.
 4. Conferência de acesso ao repositório e ao vídeo para a entrega acadêmica.
 
-Repositório privado: [andreferraz-fiap-fase2/tech-challenge-fase3](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3).
+Repositório público: [andreferraz-fiap-fase2/tech-challenge-fase3](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3).
 A branch `main` reúne a implementação integrada. `feature/gold-eda-baseline` preserva
 a primeira execução e `feature/logistica-comparacao` registra a rodada logística.
 A integração fica registrada nos [pull requests](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/pulls?q=is%3Apr).
 O trabalho é individual; as verificações são documentadas sem simular revisão por terceiros.
-Antes da entrega, conferir o acesso dos avaliadores ao repositório privado.
+O repositório pode ser consultado sem autenticação.
 
 ## Como reproduzir
 

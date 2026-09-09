@@ -29,13 +29,19 @@ enunciado; `usecase` orquestra e `pipeline.py` expõe a CLI.
 - Documentação e arquivos de entrega em português; manter resultados de desenvolvimento
   explicitamente separados de avaliação temporal final, ainda não realizada.
 
-## Estado após a comparação logística
+## Estado após Gradient Boosting e busca limitada
 
-- `logistic` compara rede/UF e seis atributos; `run-all` inclui essa comparação.
+- `logistic` e `boosting` comparam rede/UF e seis atributos; `run-all` inclui ambos.
 - Configuração e hashes em `config/experimento-logistica.json`. Parâmetros fixos nesta rodada.
 - AP: baseline 0,4161; rede/UF 0,5333; completa 0,5381. Não escolher modelo final ainda.
 - Pipelines em `artifacts/logistica/` são de validação, uma por variante/fold; não há ajuste final.
-- Próxima etapa: Gradient Boosting e busca limitada, exclusivamente no desenvolvimento.
+- Busca boosting v0.1: 150 mil alunos por hash (50 mil/fold), seis candidatos/variante.
+  Vencedores: rede/UF 31 folhas/100 iterações; completa 7/100. AP na base completa:
+  0,533581 e 0,543776. CV não aninhada: resultados sujeitos a viés de seleção.
+  `reports/boosting_protocolo.md` registra a decisão anterior à execução.
+- `uv run python -m src.usecase.reproduce_boosting` repete busca e confirmação sem Gold 2024.
+- Próxima etapa: consolidar escolha com 2023, interpretar e congelar limiar antes de
+  ajustar todo 2023 e avaliar 2024 uma única vez. Ainda não há modelo final ou limiar escolhido.
 - Há cópia privada em `G:\Meu Drive\FIAP\Fase3\tech-challenge-fase3`; verificar alterações
   nessa cópia antes de sobrescrever arquivos. A pasta no WSL é a raiz de trabalho.
 - GitHub público: `andreferraz-fiap-fase2/tech-challenge-fase3`. A conta correspondente

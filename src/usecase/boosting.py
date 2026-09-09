@@ -9,6 +9,7 @@ import pandas as pd
 from src.domain.boosting import BoostingCandidate, BoostingSettings
 from src.domain.contract import ExperimentContract, JsonObject, JsonValue
 from src.domain.logistic import VARIANTS, FeatureVariant
+from src.evaluation.boosting_report import boosting_markdown
 from src.evaluation.development import require_development
 from src.evaluation.logistic import comparison_table, validation_scores
 from src.evaluation.summary import summarize_folds
@@ -17,6 +18,7 @@ from src.infrastructure.models import ModelStore
 from src.modeling.boosting import BoostingModel
 from src.preprocessing.search_sample import development_sample
 from src.usecase.logistic import verify_logistic_inputs
+from src.visualization.boosting import BoostingPlots
 
 
 def boosting_fold(
@@ -163,4 +165,8 @@ def _save_outputs(
     store.write_csv("reports/boosting_busca_2023.csv", search)
     store.write_csv("reports/modelos_comparacao_2023.csv", table)
     store.write_parquet("artifacts/boosting_oof_2023.parquet", predictions)
+    store.write_text("reports/boosting_development.md", boosting_markdown(table, report))
+    plots = BoostingPlots(store.root / "images")
+    plots.comparison(table)
+    plots.search(search)
     return report

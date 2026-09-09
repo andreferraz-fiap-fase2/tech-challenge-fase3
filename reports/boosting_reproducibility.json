@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "verified_at_utc": "2026-09-09T19:32:06.757404+00:00",
+  "scope": "Fresh outputs, same locked environment, only Gold 2023 present",
+  "test_2024_gold_absent": true,
+  "test_2024_evaluated": false,
+  "configuration_metrics_search_selection_equality": "exact excluding elapsed times",
+  "identical_files_sha256": {
+    "artifacts/boosting_amostra_2023.parquet": "3ec631fe2043b5ec2189658e5c11795d216ae80088d6b856c4bb4bc6ed94065b",
+    "artifacts/boosting_oof_2023.parquet": "281a20e17bc0d7af9c0fc77af45cf70bec20619cec28e66aa193977f8bd512cf",
+    "reports/boosting_development.md": "8019086f6a42902bea90a6b3bd0441d490ba0408e4feb4f65ab4140e42fbe78f",
+    "artifacts/boosting/rede_uf/fold_0.joblib": "16727f65cac3505084628705dceb5a80d983545961836d237ae86a7ef565abf2",
+    "artifacts/boosting/rede_uf/fold_1.joblib": "72fab314f5e587ad0d24d57dc0c6ab73deaeeb16018f72c876732383e7a60872",
+    "artifacts/boosting/rede_uf/fold_2.joblib": "ec5bdf4cd253104caca1142faf6dcf79d7a6c3321fa6602b1f9f3ad35dfb7f22",
+    "artifacts/boosting/completa/fold_0.joblib": "50d16ea78611744d27a95896851aff79b940ae239e6adef478f6f0d1b1515312",
+    "artifacts/boosting/completa/fold_1.joblib": "8fae2ed4d755c6ea79ee62fe1dc5ed7c2357ca9ae24ea3363f4b20f22fa8331d",
+    "artifacts/boosting/completa/fold_2.joblib": "fdecb3364e8046982ead6d6bea53c8c7dd638fb3d24e061b697c384497e4eef3",
+    "images/07_comparacao_modelos_2023.png": "b6d3ba46e3fd39e12ff8e74a245baf727c1b1f09b1dced4a9908e3b0afcbd2fe",
+    "images/07_comparacao_modelos_2023.svg": "53a7ecaa37fad4038d382e06e13b94bc2b6a5d4ecf0526ccd9121c78ac9a306a",
+    "images/08_busca_boosting_2023.png": "5b614b52192b457148bebe89bda77edb08c821e4841091a1325e22b7d131cd10",
+    "images/08_busca_boosting_2023.svg": "781f9a382123da22619bead95855db4e7e742254d07202199ead8eda220edb42"
+  },
+  "oof_rows": 1502809,
+  "oof_unique_keys": true,
+  "reloaded_models": 6,
+  "sample_predictions_compared_per_model": 100,
+  "serialization_probability_absolute_tolerance": 1e-12
+}

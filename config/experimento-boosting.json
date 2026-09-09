@@ -1,0 +1,65 @@
+{
+  "version": "0.1",
+  "protocol_date": "2026-09-09",
+  "development_year": 2023,
+  "variants": [
+    "rede_uf",
+    "completa"
+  ],
+  "estimator": "HistGradientBoostingClassifier",
+  "test_2024_evaluated": false,
+  "early_stopping": false,
+  "sample_weight_fit": false,
+  "class_weight": null,
+  "threshold_risk": 0.5,
+  "sample_per_fold": 50000,
+  "sampling": "lowest_sha256_seed_year_student_per_fixed_fold",
+  "selection": "mean_average_precision_risk_then_fewer_leaves_then_fewer_iterations",
+  "learning_rate": 0.05,
+  "min_samples_leaf": 100,
+  "l2_regularization": 1.0,
+  "random_state": 42,
+  "threads": 1,
+  "candidates": [
+    {
+      "name": "leaves7_iter100",
+      "max_leaf_nodes": 7,
+      "max_iter": 100
+    },
+    {
+      "name": "leaves7_iter200",
+      "max_leaf_nodes": 7,
+      "max_iter": 200
+    },
+    {
+      "name": "leaves15_iter100",
+      "max_leaf_nodes": 15,
+      "max_iter": 100
+    },
+    {
+      "name": "leaves15_iter200",
+      "max_leaf_nodes": 15,
+      "max_iter": 200
+    },
+    {
+      "name": "leaves31_iter100",
+      "max_leaf_nodes": 31,
+      "max_iter": 100
+    },
+    {
+      "name": "leaves31_iter200",
+      "max_leaf_nodes": 31,
+      "max_iter": 200
+    }
+  ],
+  "encoding": "training-only ordinal codes, explicitly marked categorical; unknown -> NaN",
+  "numeric_imputation": "training median; keep empty features; no scaling or log transform",
+  "categorical_imputation": "constant __AUSENTE__",
+  "selection_scope": "separate winner per variant; same sample and folds; no final model or threshold selection",
+  "expected_sha256": {
+    "config/folds-municipios-2023.csv": "ec48d312554e14ec2db0a76383dd93d8c465aa038fd1454b65f474aad6b3e20f",
+    "config/contrato-ml-aluno.json": "7af52859f26a330fa3a3b0cc7c24dc91c2c0a60861737556ed3fde21e1ff5496",
+    "data/gold/ml_aluno/ano=2023/alunos.parquet": "a9bfd5749fbbf5cb52b2d3be34650f7021230139286ab95ed51accd127628241",
+    "reports/baseline_development.json": "daa9fe57ad0b1c5269c3eb92068f1c0227c9bfb263b43a4d0dcf22f5f8af762a"
+  }
+}

@@ -8,6 +8,8 @@ from src.infrastructure.files import FileStore
 from src.usecase.baseline import run_baseline
 from src.usecase.boosting import run_boosting
 from src.usecase.eda import run_eda
+from src.usecase.final_fit import run_final_fit
+from src.usecase.freeze import run_freeze
 from src.usecase.logistic import run_logistic
 from src.usecase.prepare import build_all_gold, import_snapshot
 
@@ -32,6 +34,8 @@ def argument_parser() -> argparse.ArgumentParser:
     subparsers.add_parser(
         "run-all", help="Gold + EDA + baseline + logística + boosting; requer prepare anterior"
     )
+    subparsers.add_parser("freeze", help="Congela modelo e limiar usando apenas 2023")
+    subparsers.add_parser("final-fit", help="Ajusta o modelo congelado em todo 2023")
     return parser
 
 
@@ -49,6 +53,7 @@ def main() -> None:
         "boosting": run_boosting,
     }
     commands = tuple(operations) if args.command == "run-all" else (args.command,)
+    operations.update({"freeze": run_freeze, "final-fit": run_final_fit})
     for command in commands:
         result = operations[command](store)
         print(json.dumps({"stage": command, "result": result}, ensure_ascii=False), flush=True)

@@ -1,0 +1,10 @@
+{
+  "training_year": 2023,
+  "training_rows": 1502809,
+  "test_2024_read": false,
+  "decision_sha256": "4458d9b2ed8c3d8fed0f4dca2f8604c661793dc58b9c8a7a860f31b05ae7df33",
+  "model_sha256": "af9c0953a472ef63edc8bae850c88a39c1814c881b87c53b15f6b37c57733331",
+  "model_path": "artifacts/modelo_final.joblib",
+  "roundtrip_max_absolute_tolerance": 1e-12,
+  "training_prior_non_literate": 0.41614203801015304
+}

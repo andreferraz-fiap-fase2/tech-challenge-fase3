@@ -1,0 +1,300 @@
+{
+  "test_year": 2024,
+  "evaluated_at_utc": "2026-09-12T21:48:00.409791+00:00",
+  "decision_sha256": "4458d9b2ed8c3d8fed0f4dca2f8604c661793dc58b9c8a7a860f31b05ae7df33",
+  "model_sha256": "af9c0953a472ef63edc8bae850c88a39c1814c881b87c53b15f6b37c57733331",
+  "test_gold_sha256": "5d74435f5e314e333218c48096cd713d6d752e79f33086f4b3f2a7abeea5f8e7",
+  "threshold": 0.15016323973380263,
+  "slices": {
+    "todos": {
+      "rows": 1851828,
+      "municipalities": 5517,
+      "unweighted": {
+        "probabilities": {
+          "average_precision_risk": 0.5161645262423841,
+          "roc_auc_risk": 0.6223753667485583,
+          "brier_risk": 0.22884182265279626,
+          "risk_prevalence": 0.40215667977803554
+        },
+        "selected_threshold": {
+          "threshold": 0.15016323973380263,
+          "tp": 739495.0,
+          "fp": 1053802.0,
+          "fn": 5230.0,
+          "tn": 53301.0,
+          "f2": 0.7747951310476077,
+          "recall": 0.9929772734902145,
+          "precision": 0.4123661613218558,
+          "specificity": 0.04814457191426633,
+          "flag_rate": 0.9683928528999454,
+          "accuracy": 0.4281153541257611
+        },
+        "reference_0_5": {
+          "threshold": 0.5,
+          "tp": 191798.0,
+          "fp": 145403.0,
+          "fn": 552927.0,
+          "tn": 961700.0,
+          "f2": 0.28919203606886523,
+          "recall": 0.2575420457215751,
+          "precision": 0.5687942799695137,
+          "specificity": 0.8686635299515943,
+          "flag_rate": 0.18209088533060305,
+          "accuracy": 0.6228969429126248
+        }
+      },
+      "weighted_evaluation_only": {
+        "probabilities": {
+          "average_precision_risk": 0.5176906442012618,
+          "roc_auc_risk": 0.6182296294890056,
+          "brier_risk": 0.23049498543376226,
+          "risk_prevalence": 0.40800377563472684
+        },
+        "selected_threshold": {
+          "threshold": 0.15016323973380263,
+          "tp": 855207.1147111,
+          "fp": 1194334.2105131,
+          "fn": 5334.01,
+          "tn": 54274.57,
+          "f2": 0.7786352201923927,
+          "recall": 0.9938015629389115,
+          "precision": 0.4172675633254424,
+          "specificity": 0.0434680348617255,
+          "flag_rate": 0.971738101757322,
+          "accuracy": 0.4312077024294881
+        },
+        "reference_0_5": {
+          "threshold": 0.5,
+          "tp": 214552.68,
+          "fp": 161863.72999999998,
+          "fn": 645988.4447111001,
+          "tn": 1086745.0505130999,
+          "f2": 0.28093247874238325,
+          "recall": 0.24932298275928347,
+          "precision": 0.5699875836975333,
+          "specificity": 0.8703647351146416,
+          "flag_rate": 0.17846830567502375,
+          "accuracy": 0.6169773553268483
+        }
+      }
+    },
+    "municipios_conhecidos": {
+      "rows": 1423709,
+      "municipalities": 4841,
+      "unweighted": {
+        "probabilities": {
+          "average_precision_risk": 0.529462098663127,
+          "roc_auc_risk": 0.6412792216923775,
+          "brier_risk": 0.22510162503724027,
+          "risk_prevalence": 0.3981838985354451
+        },
+        "selected_threshold": {
+          "threshold": 0.15016323973380263,
+          "tp": 561668.0,
+          "fp": 803510.0,
+          "fn": 5230.0,
+          "tn": 53301.0,
+          "f2": 0.7730574740487287,
+          "recall": 0.9907743544694108,
+          "precision": 0.4114247372870058,
+          "specificity": 0.06220858509052755,
+          "flag_rate": 0.9588883683393166,
+          "accuracy": 0.4319485231883763
+        },
+        "reference_0_5": {
+          "threshold": 0.5,
+          "tp": 191798.0,
+          "fp": 145403.0,
+          "fn": 375100.0,
+          "tn": 711408.0,
+          "f2": 0.3681636122332945,
+          "recall": 0.3383289410087882,
+          "precision": 0.5687942799695137,
+          "specificity": 0.8302974635012855,
+          "flag_rate": 0.23684685564255054,
+          "accuracy": 0.6344035192585001
+        }
+      },
+      "weighted_evaluation_only": {
+        "probabilities": {
+          "average_precision_risk": 0.530297884569279,
+          "roc_auc_risk": 0.6360615909429528,
+          "brier_risk": 0.2270369601339637,
+          "risk_prevalence": 0.4045200152460617
+        },
+        "selected_threshold": {
+          "threshold": 0.15016323973380263,
+          "tp": 651894.3130906001,
+          "fp": 913208.6126944,
+          "fn": 5334.01,
+          "tn": 54274.57,
+          "f2": 0.7771719029958327,
+          "recall": 0.9918840837915857,
+          "precision": 0.41651849367263377,
+          "specificity": 0.05609872189080083,
+          "flag_rate": 0.9633112833953869,
+          "accuracy": 0.43464263075394766
+        },
+        "reference_0_5": {
+          "threshold": 0.5,
+          "tp": 214552.68,
+          "fp": 161863.72999999998,
+          "fn": 442675.6430906,
+          "tn": 805619.4526944,
+          "f2": 0.3569536477667434,
+          "recall": 0.3264507515304138,
+          "precision": 0.5699875836975333,
+          "specificity": 0.8326960789652009,
+          "flag_rate": 0.23168199933324754,
+          "accuracy": 0.6279097113930333
+        }
+      }
+    },
+    "municipios_novos": {
+      "rows": 428119,
+      "municipalities": 676,
+      "unweighted": {
+        "probabilities": {
+          "average_precision_risk": 0.45645120188901667,
+          "roc_auc_risk": 0.5594674810970612,
+          "brier_risk": 0.2412798434064782,
+          "risk_prevalence": 0.41536815698438984
+        },
+        "selected_threshold": {
+          "threshold": 0.15016323973380263,
+          "tp": 177827.0,
+          "fp": 250292.0,
+          "fn": 0.0,
+          "tn": 0.0,
+          "f2": 0.7803352035716198,
+          "recall": 1.0,
+          "precision": 0.41536815698438984,
+          "specificity": 0.0,
+          "flag_rate": 1.0,
+          "accuracy": 0.41536815698438984
+        },
+        "reference_0_5": {
+          "threshold": 0.5,
+          "tp": 0.0,
+          "fp": 0.0,
+          "fn": 177827.0,
+          "tn": 250292.0,
+          "f2": 0.0,
+          "recall": 0.0,
+          "precision": 0.0,
+          "specificity": 1.0,
+          "flag_rate": 0.0,
+          "accuracy": 0.5846318430156101
+        }
+      },
+      "weighted_evaluation_only": {
+        "probabilities": {
+          "average_precision_risk": 0.4603930284141222,
+          "roc_auc_risk": 0.5589917922753911,
+          "brier_risk": 0.24209252497311803,
+          "risk_prevalence": 0.4196876256214636
+        },
+        "selected_threshold": {
+          "threshold": 0.15016323973380263,
+          "tp": 203312.8016205,
+          "fp": 281125.5978187,
+          "fn": 0.0,
+          "tn": 0.0,
+          "f2": 0.7833645299030229,
+          "recall": 1.0,
+          "precision": 0.41968762562146356,
+          "specificity": 0.0,
+          "flag_rate": 1.0,
+          "accuracy": 0.41968762562146356
+        },
+        "reference_0_5": {
+          "threshold": 0.5,
+          "tp": 0.0,
+          "fp": 0.0,
+          "fn": 203312.8016205,
+          "tn": 281125.5978187,
+          "f2": 0.0,
+          "recall": 0.0,
+          "precision": 0.0,
+          "specificity": 1.0,
+          "flag_rate": 0.0,
+          "accuracy": 0.5803123743785364
+        }
+      }
+    }
+  },
+  "baseline_prior_2023": {
+    "rows": 1851828,
+    "municipalities": 5517,
+    "unweighted": {
+      "probabilities": {
+        "average_precision_risk": 0.40215667977803554,
+        "roc_auc_risk": 0.5,
+        "brier_risk": 0.24062227493282284,
+        "risk_prevalence": 0.40215667977803554
+      },
+      "selected_threshold": {
+        "threshold": 0.15016323973380263,
+        "tp": 744725.0,
+        "fp": 1107103.0,
+        "fn": 0.0,
+        "tn": 0.0,
+        "f2": 0.7708206713356662,
+        "recall": 1.0,
+        "precision": 0.40215667977803554,
+        "specificity": 0.0,
+        "flag_rate": 1.0,
+        "accuracy": 0.40215667977803554
+      },
+      "reference_0_5": {
+        "threshold": 0.5,
+        "tp": 0.0,
+        "fp": 0.0,
+        "fn": 744725.0,
+        "tn": 1107103.0,
+        "f2": 0.0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "specificity": 1.0,
+        "flag_rate": 0.0,
+        "accuracy": 0.5978433202219645
+      }
+    },
+    "weighted_evaluation_only": {
+      "probabilities": {
+        "average_precision_risk": 0.40800377563439244,
+        "roc_auc_risk": 0.5,
+        "brier_risk": 0.24160292601702557,
+        "risk_prevalence": 0.40800377563472684
+      },
+      "selected_threshold": {
+        "threshold": 0.15016323973380263,
+        "tp": 860541.1247111,
+        "fp": 1248608.7805130999,
+        "fn": 0.0,
+        "tn": 0.0,
+        "f2": 0.7750787129624679,
+        "recall": 1.0,
+        "precision": 0.40800377563472695,
+        "specificity": 0.0,
+        "flag_rate": 0.9999999999999998,
+        "accuracy": 0.40800377563472684
+      },
+      "reference_0_5": {
+        "threshold": 0.5,
+        "tp": 0.0,
+        "fp": 0.0,
+        "fn": 860541.1247111,
+        "tn": 1248608.7805130999,
+        "f2": 0.0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "specificity": 1.0,
+        "flag_rate": 0.0,
+        "accuracy": 0.591996224365273
+      }
+    }
+  },
+  "test_used_for_tuning": false,
+  "predictions_sha256": "149049a4fde7985c75b79b5c1152737f930647a8635927dc937417b75cbd829a"
+}

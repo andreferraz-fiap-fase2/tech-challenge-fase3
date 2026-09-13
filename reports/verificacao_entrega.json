@@ -1,0 +1,55 @@
+{
+  "author": "André Mohallem Ferraz",
+  "verified_at_utc": "2026-09-13T19:49:30.902896+00:00",
+  "tests_passed": 70,
+  "dependency_deprecation_warnings": 14,
+  "lint_and_format": "passed",
+  "local_markdown_links": "passed",
+  "authorship_verified": true,
+  "documents": [
+    {
+      "file": "Apresentacao-Executiva-Fase3-v1.0.pdf",
+      "pages": 8,
+      "author": "André Mohallem Ferraz",
+      "sha256": "b955b57463bf34a92a2bb797136d845bc21e2174d63266f726fbd97005b5a2ca"
+    },
+    {
+      "file": "Relatorio-Tecnico-Fase3-v1.0.pdf",
+      "pages": 10,
+      "author": "André Mohallem Ferraz",
+      "sha256": "ce66bdd081624e04ca5ea1ae5dcd4afe99c241efafa57ebb8ef9511b254af7b7"
+    },
+    {
+      "file": "Roteiro-Video-Fase3-v1.0.pdf",
+      "pages": 2,
+      "author": "André Mohallem Ferraz",
+      "sha256": "40f726e0ae62c7463201e8b685bf925d843ec958b5fd0fcb949c1643c9db9214"
+    },
+    {
+      "file": "Apresentacao-Executiva-Fase3-v1.0.pptx",
+      "author": "André Mohallem Ferraz",
+      "sha256": "17b71c91501e6381f50f711b3bea53d912afb50a19be21f739a01abe5bacb3eb"
+    },
+    {
+      "file": "Relatorio-Tecnico-Fase3-v1.0.docx",
+      "author": "André Mohallem Ferraz",
+      "sha256": "06922440e623e1a41fdebddd252a31e258e6f2ec7e47a9ee97f36e3d46eff07f"
+    },
+    {
+      "file": "Roteiro-Video-Fase3-v1.0.docx",
+      "author": "André Mohallem Ferraz",
+      "sha256": "51d2b9730e71c46480019ae04e86c109ef0d9acf5555df44a9b547845cf63d1a"
+    }
+  ],
+  "video": {
+    "file": "Video-Executivo-Fase3-v1.0.mp4",
+    "duration_seconds": 288.40999999999997,
+    "resolution": [
+      1280,
+      720
+    ],
+    "full_decode_verified": true,
+    "narration": "synthetic, pt-BR",
+    "sha256": "b46977561ed402cfaa21d6a37efebe86b2314a8af490b7351a1180662649a7e4"
+  }
+}

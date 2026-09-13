@@ -1,16 +1,10 @@
-# Predição e inteligência analítica para alfabetização no Brasil
+# Relatório técnico — alfabetização no Brasil
 
-**Autor: André Mohallem Ferraz · FIAP, Tech Challenge Fase 3 · Trabalho individual · Entrega: 15/09/2026**
+**Autor: André Mohallem Ferraz**
 
-Versão final de 13/09/2026. Modelo, limiar e avaliação temporal concluídos. O modelo supera
-uma referência constante, mas seu poder de discriminação é moderado e o limiar de F2
-sinaliza quase toda a população. A aplicação proposta é apoio exploratório ao planejamento
-territorial, com validação local antes de qualquer uso operacional.
+**FIAP · Tech Challenge Fase 3 · Trabalho individual · Versão 1.0 · 13/09/2026**
 
-- [Relatório técnico completo](docs/Relatorio-Tecnico-Fase3.md).
-- [Roteiro do vídeo executivo](docs/Roteiro-Video-Fase3.md).
-- [Arquivos finais: PDF, Word, apresentação e vídeo](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.0-entrega).
-- [Protocolo antes do teste](reports/protocolo-final.md), [resultado temporal](reports/teste_temporal_2024.json) e [reprodução completa](reports/reproducibilidade_completa.json).
+**Síntese executiva.** O Gradient Boosting supera o baseline no teste temporal, com AP 0,5162 e ROC-AUC 0,6224. Seu limiar acadêmico de F2 sinaliza 96,84% dos alunos. A entrega evidencia potencial para leitura territorial e limites importantes de generalização e seletividade, sem recomendar decisões individuais autônomas.
 
 ## 1. Contexto do problema
 
@@ -23,6 +17,7 @@ O padrão nacional de alfabetização corresponde a 743 pontos na escala Saeb. A
 proficiência define o rótulo e, portanto, não pode ser usada como preditor.
 [Referência: Inep, Avaliação da Alfabetização](https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/avaliacao-da-alfabetizacao).
 
+
 ## 2. Objetivo analítico
 
 Estimar `P(alfabetizado)` para avaliações válidas do 2º ano das redes Estadual e Municipal.
@@ -30,6 +25,8 @@ A classe de interesse na avaliação é não alfabetizado: `p_risco = 1 - P(alfa
 Chave: `(ano, id_aluno)`. Identificadores não permitem acompanhar a mesma criança entre anos.
 Os atributos são contextuais; alunos com os mesmos atributos recebem a mesma probabilidade.
 
+
+<!-- pagebreak -->
 ## 3. Base utilizada
 
 | Recorte auditado | 2023: desenvolvimento | 2024: teste temporal |
@@ -52,9 +49,11 @@ elegíveis. PIB per capita não é renda familiar; VAB de serviços públicos n�
 
 Metas, indicadores contemporâneos, proficiência, rótulos, IDs e peso ficam fora de X.
 A Gold municipal da Fase 2 entra somente na leitura posterior das metas, sem orientar o modelo.
-[Contrato](config/contrato-ml-aluno.json) · [Dicionário](config/dicionario-variaveis.csv) ·
-[Snapshot de oito arquivos](config/snapshot.json) · [Preparação das entradas](data/README.md).
+[Contrato](../config/contrato-ml-aluno.json) · [Dicionário](../config/dicionario-variaveis.csv) ·
+[Snapshot de oito arquivos](../config/snapshot.json) · [Preparação das entradas](../data/README.md).
 
+
+<!-- pagebreak -->
 ## 4. Etapas de modelagem
 
 A EDA usa apenas 2023: distribuições do alvo, regiões, redes, contexto e correlações.
@@ -74,8 +73,12 @@ somente no treino e integra a pipeline persistida.
 
 No boosting, `early_stopping=False` evita uma divisão interna aleatória de municípios.
 Não se usa ponderação ou balanceamento de classes no ajuste. Pesos são suplementares na
-avaliação. [EDA](reports/eda_development.md) · [Correlações](reports/correlacoes_municipais_2023.csv).
+avaliação. [EDA](../reports/eda_development.md) · [Correlações](../reports/correlacoes_municipais_2023.csv).
 
+
+![Distribuições do contexto](../images/03_contexto_municipal_2023.png)
+
+<!-- pagebreak -->
 ## 5. Escolha do algoritmo
 
 A logística foi comparada com rede/UF e com todos os seis atributos. O boosting passou
@@ -97,8 +100,12 @@ Configuração e ajuste final foram registrados no commit `e9d5708`, antes do te
 A CV não é aninhada, pois a busca reutiliza amostra dos folds; seus resultados podem ser
 otimistas. O teste temporal ficou fora de qualquer seleção, inclusive de limiar e calibração.
 
-[Busca e configuração](reports/boosting_protocolo.md) · [Decisão final](config/modelo-final.json).
+[Busca e configuração](../reports/boosting_protocolo.md) · [Decisão final](../config/modelo-final.json).
 
+
+![Escolha do limiar](../images/09_limiar_f2_2023.png)
+
+<!-- pagebreak -->
 ## 6. Métricas de avaliação
 
 AP = average precision da classe não alfabetizado; não é acurácia nem precisão de uma
@@ -118,10 +125,12 @@ classificação binária. Os resultados de teste abaixo são calculados sobre ca
 
 O F2 do baseline que sinaliza todos é 0,770821: o ganho operacional do limiar otimizado
 é pequeno. O teste não foi usado para melhorar esses números após sua observação.
-As métricas ponderadas e todas as matrizes de confusão estão no [JSON temporal](reports/teste_temporal_2024.json).
+As métricas ponderadas e todas as matrizes de confusão estão no [JSON temporal](../reports/teste_temporal_2024.json).
 
-![Curvas do teste temporal](images/11_curvas_teste_2024.png)
+![Curvas do teste temporal](../images/11_curvas_teste_2024.png)
 
+
+<!-- pagebreak -->
 ## 7. Interpretação dos resultados
 
 Permutação em validação de 2023, com 5 repetições em cada fold, mostra maior dependência
@@ -133,8 +142,10 @@ Atributos territoriais foram permutados por município; rede, por aluno. Correla
 combinações pouco plausíveis geradas pela permutação limitam a leitura. Os desvios entre
 repetições não são intervalos de confiança. Importância não é efeito causal.
 
-![Importância por permutação](images/10_importancia_permutacao_2023.png)
+![Importância por permutação](../images/10_importancia_permutacao_2023.png)
 
+
+<!-- pagebreak -->
 ## 8. Insights encontrados
 
 - AC, DF e SP são UFs inéditas em relação ao desenvolvimento, com 427.789 avaliações.
@@ -148,9 +159,13 @@ repetições não são intervalos de confiança. Importância não é efeito cau
   (distância padronizada 0,381), com igual peso por município; isso não implica taxas de
   alfabetização iguais ou padrões individuais semelhantes.
 
-[Municípios](reports/municipios_risco_2024.csv) · [Regiões](reports/regioes_teste_2024.csv) ·
-[Perfis semelhantes](reports/regioes_semelhantes_2023.csv).
+[Municípios](../reports/municipios_risco_2024.csv) · [Regiões](../reports/regioes_teste_2024.csv) ·
+[Perfis semelhantes](../reports/regioes_semelhantes_2023.csv).
 
+
+![Erros por região](../images/12_regioes_teste_2024.png)
+
+<!-- pagebreak -->
 ## 9. Limitações
 
 Só há 5.881 perfis de seis atributos em 2023; milhões de alunos não equivalem a milhões
@@ -163,6 +178,7 @@ A análise não mede efeitos de políticas, evolução de crianças ou desempenh
 O limiar F2 tem baixa seletividade e não é recomendado como mecanismo autônomo de triagem.
 As ponderações reproduzem `peso_aluno` da fonte; não transformam este recorte em ICA oficial
 nem comprovam representatividade nacional. Não foram estimados intervalos de confiança.
+
 
 ## 10. Aplicação prática para políticas públicas
 
@@ -178,8 +194,10 @@ No cenário de referência de 80%, mantendo a composição e os atributos de 202
 municípios ficam abaixo entre os 2.924 publicados. **Não é previsão de 2030** nem
 probabilidade de descumprir uma meta. Uma previsão futura exige população/atributos
 compatíveis com o ciclo e validação temporal adicional.
-[Cenários e cobertura](reports/cenarios_metas_2024.csv).
+[Cenários e cobertura](../reports/cenarios_metas_2024.csv).
 
+
+<!-- pagebreak -->
 ## 11. Possíveis evoluções futuras
 
 Validar chaves para incorporar informações escolares anteriores à prova; ampliar ciclos
@@ -187,17 +205,13 @@ e cobertura; estudar calibração fora do teste já observado; escolher polític
 com capacidade/custos reais; medir incerteza por município e monitorar erro regional.
 Qualquer novo experimento deve reservar outro teste, mantendo esta versão como registro.
 
+
 ## Como reproduzir
 
 Python 3.12, dependências diretas e transitivas fixadas em `pyproject.toml` e `uv.lock`.
-Com os oito arquivos de entrada descritos em [data/README.md](data/README.md):
+Com os oito arquivos de entrada descritos em [data/README.md](../data/README.md):
 
-```bash
-uv sync --frozen
-uv run pytest -q
-uv run python -m src.pipeline prepare --source "/caminho/para/apoio"
-uv run python -m src.usecase.reproduce_all
-```
+
 
 O último comando reconstrói a Gold, EDA, baseline, logística, busca de boosting, ajuste
 final e teste em pastas temporárias. Mantém os recibos históricos depois de confrontar
@@ -212,25 +226,18 @@ a proveniência; a reprodução completa executa essas funções em uma raiz tem
 
 Verificação: **70 testes aprovados**. Reprodução final com métricas exatamente iguais,
 quatro arquivos idênticos por SHA-256 e 1.000 previsões conferidas após reabrir o modelo.
-Veja [reprodução completa](reports/reproducibilidade_completa.json) e [final](reports/reproducibilidade_final.json).
+Veja [reprodução completa](../reports/reproducibilidade_completa.json) e [final](../reports/reproducibilidade_final.json).
 As 14 advertências remanescentes são de depreciação de Matplotlib/Pyparsing.
 
-```text
-config/          Contrato, snapshot, folds e decisão congelada
-src/             Domínio, I/O, preprocessing, modeling, evaluation, visualization e usecase
-reports/         Métricas e tabelas agregadas; protocolo e reprodução
-docs/            Relatório, roteiro e mapa dos entregáveis
-images/          Quatorze figuras em PNG e SVG
-notebooks/       Orientações; os experimentos utilizam scripts
-artifacts/       Modelos e previsões individuais, fora do Git
-data/            Entradas e Gold, fora do Git; instruções públicas
-```
+
 
 O repositório público contém código, documentação e agregados. Os dados individuais e
 modelos ficam na cópia privada e no pacote completo de entrega. As fontes originais são
 públicas, mas este snapshot precisa ser preparado conforme o manifesto; executar os testes
 não exige os arquivos reais. O vídeo e os documentos finais são publicados como arquivos da versão.
 
+
+<!-- pagebreak -->
 ## Referências
 
 - [Fase 2: engenharia de dados e Gold municipal](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase2).
@@ -241,3 +248,7 @@ não exige os arquivos reais. O vídeo e os documentos finais são publicados co
 
 Os documentos de etapas anteriores registram o estado na data de sua elaboração. Este
 README, o relatório final e a decisão congelada representam o estado da entrega.
+
+## Apêndice — perfis regionais
+
+![Perfis regionais](../images/14_perfis_regionais_2023.png)

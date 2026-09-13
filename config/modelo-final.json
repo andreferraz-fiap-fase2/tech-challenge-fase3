@@ -1,0 +1,65 @@
+{
+  "version": "1.0",
+  "author": "André Mohallem Ferraz",
+  "frozen_at_utc": "2026-09-12T21:44:42.185427+00:00",
+  "model": "HistGradientBoostingClassifier",
+  "variant": "completa",
+  "candidate": {
+    "name": "leaves7_iter100",
+    "max_iter": 100,
+    "max_leaf_nodes": 7
+  },
+  "features": [
+    "rede_nome",
+    "sigla_uf",
+    "populacao_2021",
+    "pib_per_capita_2020",
+    "participacao_agropecuaria_2020",
+    "participacao_servicos_publicos_2020"
+  ],
+  "development_year": 2023,
+  "test_year": 2024,
+  "selection": "highest mean unweighted AP across fixed municipality folds in complete development",
+  "threshold_policy": "maximize pooled development OOF F2; exact ties prefer higher threshold",
+  "risk_threshold": 0.15016323973380263,
+  "calibration": "none; probabilities preserved",
+  "development_oof": {
+    "selected": {
+      "threshold": 0.15016323973380263,
+      "tp": 619299.0,
+      "fp": 822563.0,
+      "fn": 6083.0,
+      "tn": 54864.0,
+      "f2": 0.7852368140102804,
+      "recall": 0.9902731450537432,
+      "precision": 0.4295133653567401,
+      "specificity": 0.06252827870580686,
+      "flag_rate": 0.95944461338733,
+      "accuracy": 0.4486019181412941
+    },
+    "reference_0_5": {
+      "threshold": 0.5,
+      "tp": 217578.0,
+      "fp": 159522.0,
+      "fn": 407804.0,
+      "tn": 717905.0,
+      "f2": 0.3779196200412141,
+      "recall": 0.34791215609019766,
+      "precision": 0.5769769291964996,
+      "specificity": 0.8181934223587831,
+      "flag_rate": 0.2509300915818311,
+      "accuracy": 0.6224896177757786
+    }
+  },
+  "expected_sha256": {
+    "data/gold/ml_aluno/ano=2023/alunos.parquet": "a9bfd5749fbbf5cb52b2d3be34650f7021230139286ab95ed51accd127628241",
+    "artifacts/boosting_oof_2023.parquet": "281a20e17bc0d7af9c0fc77af45cf70bec20619cec28e66aa193977f8bd512cf",
+    "config/experimento-boosting.json": "52008d4fbe7a40666530f2cdd82c247268d762af64aa52e262ad8d0d7dec6b51",
+    "config/contrato-ml-aluno.json": "7af52859f26a330fa3a3b0cc7c24dc91c2c0a60861737556ed3fde21e1ff5496",
+    "config/folds-municipios-2023.csv": "ec48d312554e14ec2db0a76383dd93d8c465aa038fd1454b65f474aad6b3e20f",
+    "reports/modelos_comparacao_2023.csv": "162521a3ad4c9b2e35306d5bc63f00fba76016a7bb6975c75003f203fb59b940",
+    "reports/boosting_development.json": "dccca05612c9bc5e788a9fda8aa2f187bed79d693b9993833fab878939e9dd87"
+  },
+  "test_gold_sha256": "5d74435f5e314e333218c48096cd713d6d752e79f33086f4b3f2a7abeea5f8e7",
+  "test_2024_evaluated_at_freeze": false
+}

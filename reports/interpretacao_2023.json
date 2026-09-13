@@ -1,0 +1,10 @@
+{
+  "year": 2023,
+  "rows": 150000,
+  "repetitions": 5,
+  "folds": 3,
+  "metric": "decrease in unweighted average precision of non-literate class",
+  "permutation_unit": "municipality for contextual features; student for network",
+  "causal_interpretation": false,
+  "test_2024_read": false
+}

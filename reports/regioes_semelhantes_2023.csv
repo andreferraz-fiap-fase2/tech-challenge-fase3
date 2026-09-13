@@ -1,0 +1,11 @@
+﻿regiao_a,regiao_b,distancia_euclidiana
+Centro-Oeste,Sul,0.3812112585898581
+Norte,Sudeste,0.9196589374961823
+Nordeste,Norte,0.9941340283417543
+Nordeste,Sudeste,1.1773957364726773
+Sudeste,Sul,1.3957047741165731
+Centro-Oeste,Sudeste,1.3965615751431661
+Centro-Oeste,Norte,1.5123206000515013
+Norte,Sul,1.7255561934346006
+Centro-Oeste,Nordeste,2.3584912729013743
+Nordeste,Sul,2.468569341880107

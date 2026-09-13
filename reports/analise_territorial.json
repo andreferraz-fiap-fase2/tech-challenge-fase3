@@ -1,0 +1,12 @@
+{
+  "municipalities_total": 5517,
+  "municipalities_public_min100": 2924,
+  "minimum_evaluations_for_public_municipality": 100,
+  "municipalities_with_2024_target": 2819,
+  "conditional_below_reference_2024": 1592,
+  "conditional_below_80pct": 2767,
+  "unseen_state_students": 427789,
+  "reference_gold_fase2_sha256": "d3bed3b8330c6b2d317a3fadaa618aa227c806676b50145e48e2b8241d1c3c74",
+  "target_gap_is_probability": false,
+  "future_year_forecast_performed": false
+}

@@ -15,20 +15,46 @@ territorial, com validação local antes de qualquer uso operacional.
 ## 1. Contexto do problema
 
 A Fase 2 construiu a engenharia de dados do Indicador Criança Alfabetizada (ICA), dos
-territórios e das metas. Esta entrega reconstrói uma Gold por aluno/ano a partir das
-fontes auditadas daquela pipeline e utiliza sua Gold municipal na análise posterior de
-metas. O projeto é independente e preserva a entrega anterior.
+territórios e das metas. Sua Gold municipal reúne indicadores agregados e não preserva
+o desfecho de cada aluno necessário à classificação individual. Esta entrega reconstrói
+uma **Gold por aluno/ano** a partir da Silver e das fontes originais auditadas daquela
+pipeline, aplica os filtros de elegibilidade e acrescenta o contexto do IBGE. A Gold
+municipal original participa da análise posterior de metas. Essa adaptação de grão
+preserva a entrega anterior e explicita a origem dos dados usados no treinamento.
 
-O padrão nacional de alfabetização corresponde a 743 pontos na escala Saeb. A própria
-proficiência define o rótulo e, portanto, não pode ser usada como preditor.
+O critério observado é **proficiência maior ou igual a 743 pontos = alfabetizado**;
+proficiência válida abaixo de 743 = não alfabetizado. A própria nota define o rótulo
+e, portanto, fica fora dos preditores. Ausência na prova ou nota inválida não equivale
+a não alfabetização e leva à exclusão do registro desta população de estudo.
 [Referência: Inep, Avaliação da Alfabetização](https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/avaliacao-da-alfabetizacao).
 
 ## 2. Objetivo analítico
 
-Estimar `P(alfabetizado)` para avaliações válidas do 2º ano das redes Estadual e Municipal.
-A classe de interesse na avaliação é não alfabetizado: `p_risco = 1 - P(alfabetizado)`.
-Chave: `(ano, id_aluno)`. Identificadores não permitem acompanhar a mesma criança entre anos.
-Os atributos são contextuais; alunos com os mesmos atributos recebem a mesma probabilidade.
+**Pergunta principal:** qual é a probabilidade estimada de um aluno avaliado do 2º ano
+da rede Estadual ou Municipal ser considerado alfabetizado pelo critério de proficiência
+maior ou igual a 743 pontos, considerando sua rede de ensino e o contexto territorial
+e socioeconômico do município?
+
+O modelo estima `P(alfabetizado)`. A classe de interesse na avaliação é não alfabetizado:
+`p_risco = 1 - P(alfabetizado)`. A classificação binária solicitada pelo desafio é obtida
+aplicando um limiar a essa probabilidade. **O corte de 743 pontos define o alvo observado;
+o limiar de probabilidade define a decisão do modelo.** São critérios distintos.
+
+Na referência de 0,5, `p_risco >= 0,5` resulta em previsão de não alfabetizado; abaixo
+disso, alfabetizado. A política F2 congelada sinaliza risco a partir de
+`p_risco >= 0,15016323973380263`, priorizando a identificação de não alfabetizados.
+Esse limiar tem baixa seletividade e não representa um novo padrão de alfabetização.
+As duas decisões usam as mesmas probabilidades, sem modificar o critério observado.
+
+**Pergunta complementar:** quais variáveis mais contribuem para as estimativas produzidas
+pelo modelo? A importância por permutação descreve contribuição preditiva, sem estabelecer
+que alterar uma variável causará melhora na alfabetização.
+
+A chave é `(ano, id_aluno)`; os identificadores não permitem acompanhar a mesma criança
+entre anos. Os atributos são contextuais: alunos com os mesmos atributos recebem a mesma
+probabilidade. A ampliação com indicadores educacionais do Inep será examinada em estudo
+complementar de 2023, separado do modelo final 1.0 e de seu teste temporal já observado.
+[Pergunta, critérios e linhagem da Gold](docs/Pergunta-e-Linhagem.md).
 
 ## 3. Base utilizada
 

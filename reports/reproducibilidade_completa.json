@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "verified_at_utc": "2026-09-13T19:08:47.574353+00:00",
+  "input_files": 8,
+  "gold_rebuilt": true,
+  "baseline_logistic_boosting_search_recomputed": true,
+  "development_metrics_equal_excluding_times": true,
+  "test_metrics_equal_excluding_timestamp": true,
+  "decision_reselected": false,
+  "test_absent_during_final_fit": true,
+  "frozen_receipts": "Published development reports preserved after independent metric comparison; timestamps are historical provenance",
+  "identical_final_files_sha256": {
+    "artifacts/modelo_final.joblib": "af9c0953a472ef63edc8bae850c88a39c1814c881b87c53b15f6b37c57733331",
+    "reports/ajuste_final.json": "cf38433a4e6b32e5ee6aad1b8ec6693fed5941d9c91cdcb9909a6c7caa2ed2a5",
+    "artifacts/previsoes_teste_2024.parquet": "149049a4fde7985c75b79b5c1152737f930647a8635927dc937417b75cbd829a",
+    "reports/calibracao_teste_2024.csv": "06b462c8253694f589f5e1195ac644ed207ebdca3580f0df2a333d4d11d7e366"
+  }
+}

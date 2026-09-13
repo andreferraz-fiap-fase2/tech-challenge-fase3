@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "verified_at_utc": "2026-09-13T19:04:50.138165+00:00",
+  "decision_sha256": "4458d9b2ed8c3d8fed0f4dca2f8604c661793dc58b9c8a7a860f31b05ae7df33",
+  "test_absent_during_final_training": true,
+  "selection_repeated": false,
+  "temporal_metrics_equality": "exact excluding execution timestamp",
+  "identical_files_sha256": {
+    "artifacts/modelo_final.joblib": "af9c0953a472ef63edc8bae850c88a39c1814c881b87c53b15f6b37c57733331",
+    "reports/ajuste_final.json": "cf38433a4e6b32e5ee6aad1b8ec6693fed5941d9c91cdcb9909a6c7caa2ed2a5",
+    "artifacts/previsoes_teste_2024.parquet": "149049a4fde7985c75b79b5c1152737f930647a8635927dc937417b75cbd829a",
+    "reports/calibracao_teste_2024.csv": "06b462c8253694f589f5e1195ac644ed207ebdca3580f0df2a333d4d11d7e366"
+  },
+  "test_rows": 1851828,
+  "reloaded_prediction_checks": 1000,
+  "tolerance": 1e-12
+}

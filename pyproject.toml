@@ -1,6 +1,7 @@
 [project]
 name = "tech-challenge-fase3"
-version = "0.1.0"
+version = "1.0.0"
+authors = [{name = "André Mohallem Ferraz"}]
 description = "Classificação da alfabetização com contexto territorial — FIAP Fase 3"
 requires-python = ">=3.12,<3.14"
 dependencies = [

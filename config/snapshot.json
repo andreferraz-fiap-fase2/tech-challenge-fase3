@@ -1,5 +1,5 @@
 {
-  "version": "0.1",
+  "version": "0.2",
   "files": [
     {
       "source": "fontes-fase2/alunos-original.parquet",
@@ -35,6 +35,11 @@
       "source": "fontes-externas/populacao-dou-2021.ods",
       "destination": "ibge/populacao-dou-2021.ods",
       "sha256": "57746ed3f495f1f3111ed4ed33ee59d6e9ddd4f7023c25434fc79cd1e5b6a8bb"
+    },
+    {
+      "source": "fontes-fase2/ml_features.parquet",
+      "destination": "fase2/ml_features.parquet",
+      "sha256": "d3bed3b8330c6b2d317a3fadaa618aa227c806676b50145e48e2b8241d1c3c74"
     }
   ]
 }

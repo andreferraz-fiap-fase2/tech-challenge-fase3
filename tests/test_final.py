@@ -10,8 +10,10 @@ from sklearn.metrics import fbeta_score
 from src.domain.contract import ContractError
 from src.evaluation.threshold import decision_metrics, f2_curve
 from src.infrastructure.files import FileStore
+from src.pipeline import main
 from src.usecase.final_fit import run_final_fit
-from src.usecase.freeze import DECISION, GOLD, OOF, run_freeze
+from src.usecase.freeze import DECISION, GOLD, OOF, TEST_GOLD, run_freeze
+from src.usecase.temporal import evaluate_locked_test
 
 
 @pytest.fixture
@@ -97,3 +99,41 @@ def test_changed_inputs_cannot_fit_frozen_model(final_store: FileStore) -> None:
     final_store.write_text("config/folds-municipios-2023.csv", "modified")
     with pytest.raises(ContractError, match="SHA-256"):
         run_final_fit(final_store)
+
+
+def test_temporal_slices_and_reexecution_guard(final_store: FileStore) -> None:
+    run_freeze(final_store)
+    frame = final_store.load_development().assign(ano=2024, particao="teste_reservado")
+    frame.loc[frame["id_municipio"].eq("m2"), "id_municipio"] = "new"
+    final_store.write_parquet(TEST_GOLD, frame)
+    decision = final_store.read_json(DECISION)
+    decision["test_gold_sha256"] = final_store.digest(TEST_GOLD)
+    final_store.write_json(DECISION, decision)
+    run_final_fit(final_store)
+    report = evaluate_locked_test(final_store, 9)
+    assert report["slices"]["municipios_novos"]["rows"] == 3
+    assert report["slices"]["municipios_conhecidos"]["rows"] == 6
+    assert report["test_used_for_tuning"] is False
+    with pytest.raises(ContractError, match="Teste já executado"):
+        evaluate_locked_test(final_store, 9)
+
+
+def test_decision_change_after_fit_is_blocked_before_test_read(final_store: FileStore) -> None:
+    run_freeze(final_store)
+    run_final_fit(final_store)
+    decision = final_store.read_json(DECISION)
+    decision["risk_threshold"] = 0.99
+    final_store.write_json(DECISION, decision)
+    with pytest.raises(ContractError, match="SHA-256"):
+        evaluate_locked_test(final_store, 9)
+
+
+def test_cli_preserves_frozen_development(
+    final_store: FileStore, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    final_store.write_json(DECISION, {"frozen": True})
+    for command in ("run-all", "logistic", "boosting"):
+        monkeypatch.setattr("sys.argv", ["pipeline", "--root", str(final_store.root), command])
+        with pytest.raises(ContractError, match="Entrega congelada"):
+            main()
+    assert final_store.read_json(DECISION) == {"frozen": True}

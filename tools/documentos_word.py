@@ -17,8 +17,11 @@ NAVY, GOLD, GRAY, WHITE = "183650", "B78C31", "596573", "FFFFFF"
 
 
 class WordDocuments:
-    def __init__(self, output: Path) -> None:
+    def __init__(self, output: Path, version: str = "1.0") -> None:
         self.output = output
+        if not re.fullmatch(r"\d+\.\d+", version):
+            raise ValueError(f"Versão {version!r}; esperado formato numérico N.N")
+        self.version = version
         output.mkdir(parents=True, exist_ok=True)
 
     def inline(self, paragraph: Paragraph, text: str) -> None:
@@ -71,7 +74,7 @@ class WordDocuments:
         normal = document.styles["Normal"]
         normal.font.name = "Calibri"
         normal.font.size = Pt(10.5)
-        normal.paragraph_format.space_after = Pt(6)
+        normal.paragraph_format.space_after = Pt(4)
         normal.paragraph_format.line_spacing = 1.04
         for name in ("Title", "Heading 1", "Heading 2"):
             document.styles[name].font.color.rgb = RGBColor.from_string(NAVY)
@@ -83,19 +86,20 @@ class WordDocuments:
         header.runs[0].font.color.rgb = RGBColor.from_string(GOLD)
         footer = section.footer.paragraphs[0]
         footer.alignment = 2
-        footer.add_run(AUTHOR + " · v1.0 · 13/09/2026  |  ").font.size = Pt(8)
+        footer.add_run(AUTHOR + f" · v{self.version} · 13/09/2026  |  ").font.size = Pt(8)
         field = OxmlElement("w:fldSimple")
         field.set(qn("w:instr"), "PAGE")
         footer._p.append(field)
         lines = markdown.splitlines()
         i = 0
+        pending_page_break = False
         while i < len(lines):
             line = lines[i].strip()
             i += 1
             if not line:
                 continue
             if line == "<!-- pagebreak -->":
-                document.add_page_break()
+                pending_page_break = True
                 continue
             image = re.fullmatch(r"!\[.*?\]\((.*?)\)", line)
             if image:
@@ -125,7 +129,10 @@ class WordDocuments:
                             cell._tc.get_or_add_tcPr().append(shade)
                     table.rows[index]._tr.get_or_add_trPr().append(OxmlElement("w:cantSplit"))
                 continue
-            if line.startswith("# "):
+            if line.startswith("### "):
+                paragraph = document.add_paragraph(style="Heading 2")
+                text = line[4:]
+            elif line.startswith("# "):
                 paragraph = document.add_paragraph(style="Title")
                 text = line[2:]
             elif line.startswith("## "):
@@ -137,6 +144,9 @@ class WordDocuments:
             else:
                 paragraph = document.add_paragraph()
                 text = line
+            if pending_page_break:
+                paragraph.paragraph_format.page_break_before = True
+                pending_page_break = False
             self.inline(paragraph, text)
         document.core_properties.author = AUTHOR
         document.core_properties.last_modified_by = AUTHOR
@@ -152,7 +162,7 @@ class WordDocuments:
         title = (
             "# Relatório técnico — alfabetização no Brasil\n\n**Autor: "
             + AUTHOR
-            + "**\n\n**FIAP · Tech Challenge Fase 3 · Trabalho individual · Versão 1.0 · 13/09/2026**\n\n"
+            + f"**\n\n**FIAP · Tech Challenge Fase 3 · Trabalho individual · Revisão documental {self.version} · 13/09/2026**\n\n"
         )
         abstract = "**Síntese executiva.** O Gradient Boosting supera o baseline no teste temporal, com AP 0,5162 e ROC-AUC 0,6224. Seu limiar acadêmico de F2 sinaliza 96,84% dos alunos. A entrega evidencia potencial para leitura territorial e limites importantes de generalização e seletividade, sem recomendar decisões individuais autônomas.\n\n"
         groups = [
@@ -169,19 +179,24 @@ class WordDocuments:
         ]
         pages = []
         extras = {
-            2: "\n![Distribuições do contexto](images/03_contexto_municipal_2023.png)\n",
             3: "\n![Escolha do limiar](images/09_limiar_f2_2023.png)\n",
             6: "\n![Erros por região](images/12_regioes_teste_2024.png)\n",
             9: "\n## Apêndice — perfis regionais\n\n![Perfis regionais](images/14_perfis_regionais_2023.png)\n",
         }
         for index, group in enumerate(groups):
             page = "\n".join(sections[name] for name in group)
+            if index == 2:
+                page = page.replace("### 4.2.", "<!-- pagebreak -->\n\n### 4.2.")
             if index == 8:
                 page = re.sub(r"```.*?```", "", page, flags=re.S)
             pages.append(page + extras.get(index, ""))
+        pages.append(
+            "## Apêndice — distribuições do contexto\n\nUma observação por município no desenvolvimento de 2023. A escala log10 desta figura é apenas visual; o modelo logístico utiliza log1p.\n\n![Distribuições do contexto](images/03_contexto_municipal_2023.png)\n"
+        )
         markdown = title + abstract + "\n<!-- pagebreak -->\n".join(pages)
         (ROOT / "docs/Relatorio-Tecnico-Fase3.md").write_text(
             re.sub(r"\]\((?!https?://)([^)]+)\)", lambda match: "](../" + match[1] + ")", markdown)
         )
-        self.word(markdown, "Relatorio-Tecnico-Fase3-v1.0.docx")
-        (self.output / "Relatorio-Tecnico-Fase3-v1.0.md").write_text(markdown)
+        filename = f"Relatorio-Tecnico-Fase3-v{self.version}"
+        self.word(markdown, filename + ".docx")
+        (self.output / (filename + ".md")).write_text(markdown)

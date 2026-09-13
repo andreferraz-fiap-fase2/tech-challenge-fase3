@@ -1,0 +1,33 @@
+{
+  "author": "André Mohallem Ferraz",
+  "document_revision": "1.1",
+  "experiment_version": "1.0",
+  "verified_at_utc": "2026-09-13T23:01:30.478110+00:00",
+  "pages": 12,
+  "changes": [
+    "Explicit IBGE provenance",
+    "EDA evidence, hypotheses and modeling decisions",
+    "Imputation and validation caveats",
+    "Chronology of complementary correlations"
+  ],
+  "markdown_section4_matches_readme": true,
+  "local_links_checked": true,
+  "model_refit": false,
+  "frozen_files_verified": {
+    "artifacts/modelo_final.joblib": "af9c0953a472ef63edc8bae850c88a39c1814c881b87c53b15f6b37c57733331",
+    "reports/ajuste_final.json": "cf38433a4e6b32e5ee6aad1b8ec6693fed5941d9c91cdcb9909a6c7caa2ed2a5",
+    "artifacts/previsoes_teste_2024.parquet": "149049a4fde7985c75b79b5c1152737f930647a8635927dc937417b75cbd829a",
+    "reports/calibracao_teste_2024.csv": "06b462c8253694f589f5e1195ac644ed207ebdca3580f0df2a333d4d11d7e366",
+    "data/gold/ml_aluno/ano=2023/alunos.parquet": "a9bfd5749fbbf5cb52b2d3be34650f7021230139286ab95ed51accd127628241",
+    "artifacts/boosting_oof_2023.parquet": "281a20e17bc0d7af9c0fc77af45cf70bec20619cec28e66aa193977f8bd512cf",
+    "config/experimento-boosting.json": "52008d4fbe7a40666530f2cdd82c247268d762af64aa52e262ad8d0d7dec6b51",
+    "config/contrato-ml-aluno.json": "7af52859f26a330fa3a3b0cc7c24dc91c2c0a60861737556ed3fde21e1ff5496",
+    "config/folds-municipios-2023.csv": "ec48d312554e14ec2db0a76383dd93d8c465aa038fd1454b65f474aad6b3e20f",
+    "reports/modelos_comparacao_2023.csv": "162521a3ad4c9b2e35306d5bc63f00fba76016a7bb6975c75003f203fb59b940",
+    "reports/boosting_development.json": "dccca05612c9bc5e788a9fda8aa2f187bed79d693b9993833fab878939e9dd87"
+  },
+  "documents_sha256": {
+    "Relatorio-Tecnico-Fase3-v1.1.pdf": "1b76de3821c056fa4f7e14d07ea426154d2f2d2e61ce6497b64039cf8e0c0c8a",
+    "Relatorio-Tecnico-Fase3-v1.1.docx": "f72e4a1651e939fe67a77e2a2c515ef94c0bf48d547cca3a4c18e4c497e4c555"
+  }
+}

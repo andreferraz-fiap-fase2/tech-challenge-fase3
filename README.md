@@ -2,14 +2,15 @@
 
 **Autor: André Mohallem Ferraz · FIAP, Tech Challenge Fase 3 · Trabalho individual · Entrega: 15/09/2026**
 
-Versão final de 13/09/2026. Modelo, limiar e avaliação temporal concluídos. O modelo supera
+Entrega 1.2 de 13/09/2026. Modelo de referência 1.0, limiar e avaliação temporal concluídos. O modelo supera
 uma referência constante, mas seu poder de discriminação é moderado e o limiar de F2
 sinaliza quase toda a população. A aplicação proposta é apoio exploratório ao planejamento
 territorial, com validação local antes de qualquer uso operacional.
 
-- [Relatório técnico completo](docs/Relatorio-Tecnico-Fase3.md), com revisão documental 1.1 em [PDF](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.0-entrega/Relatorio-Tecnico-Fase3-v1.1.pdf) e [Word](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.0-entrega/Relatorio-Tecnico-Fase3-v1.1.docx).
+- [Relatório técnico completo](docs/Relatorio-Tecnico-Fase3.md), versão 1.2 em [PDF](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.2-entrega/Relatorio-Tecnico-Fase3-v1.2.pdf) e [Word](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.2-entrega/Relatorio-Tecnico-Fase3-v1.2.docx).
 - [Roteiro do vídeo executivo](docs/Roteiro-Video-Fase3.md).
-- [Arquivos finais: PDF, Word, apresentação e vídeo](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.0-entrega).
+- [Arquivos finais: PDF, Word, apresentação e vídeo](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.2-entrega).
+- [Demonstração da probabilidade](docs/Demonstracao-Previsao.md) e [protocolo do estudo educacional complementar](docs/Protocolo-Estudo-Educacional.md).
 - [Protocolo antes do teste](reports/protocolo-final.md), [resultado temporal](reports/teste_temporal_2024.json) e [reprodução completa](reports/reproducibilidade_completa.json).
 
 ## 1. Contexto do problema
@@ -52,7 +53,7 @@ que alterar uma variável causará melhora na alfabetização.
 
 A chave é `(ano, id_aluno)`; os identificadores não permitem acompanhar a mesma criança
 entre anos. Os atributos são contextuais: alunos com os mesmos atributos recebem a mesma
-probabilidade. A ampliação com indicadores educacionais do Inep será examinada em estudo
+probabilidade. A ampliação com indicadores educacionais do Inep é examinada em estudo
 complementar de 2023, separado do modelo final 1.0 e de seu teste temporal já observado.
 [Pergunta, critérios e linhagem da Gold](docs/Pergunta-e-Linhagem.md).
 
@@ -94,6 +95,16 @@ Metas, indicadores contemporâneos, proficiência, rótulos, IDs e peso ficam fo
 A Gold municipal da Fase 2 entra somente na leitura posterior das metas, sem orientar o modelo.
 [Contrato](config/contrato-ml-aluno.json) · [Dicionário](config/dicionario-variaveis.csv) ·
 [Snapshot de oito arquivos](config/snapshot.json) · [Preparação das entradas](data/README.md).
+
+**Expansão educacional complementar — Inep.** Três bases municipais de 2021 acrescentam
+média de alunos por turma, percentual de docentes com curso superior e média de horas
+de aula, para os anos iniciais. As páginas das edições foram publicadas em 31/01/2022.
+A junção por município e rede Estadual/Municipal usa a localização Total e mantém os
+1.502.809 alunos de 2023. A cobertura é 99,9858% para turmas/horas e 99,9885% para docentes.
+Restam 213, 213 e 173 alunos com ausência, respectivamente, tratada dentro dos folds.
+O modelo de referência conserva seus seis atributos; os nove atributos pertencem ao
+estudo complementar. [Fontes e definições](docs/Fontes-Educacionais.md) ·
+[Manifesto educacional](config/fontes-educacionais.json).
 
 ## 4. Etapas de modelagem
 
@@ -168,6 +179,42 @@ municipal de não alfabetização: **+0,182** para população, **−0,266** par
 município. Essas associações complementam a interpretação exploratória; não demonstram
 causalidade e não são justificativas retrospectivas para a seleção inicial do modelo.
 [Matriz de correlações](reports/correlacoes_municipais_2023.csv).
+
+### 4.4. Estudo complementar com indicadores educacionais
+
+A pergunta complementar é se o contexto educacional dos anos iniciais acrescenta
+informação aos seis atributos. O protocolo foi registrado no commit `038bdcd` antes
+da comparação. A EDA dos novos atributos foi gravada antes dos ajustes, com distribuição
+e correlação por município × rede; os alunos e os três folds de 2023 foram preservados.
+
+As duas variantes utilizam o mesmo boosting de sete folhas e 100 iterações. A expansão
+inclui três atributos do Inep e mediana no treino para as ausências residuais. Não houve
+busca, calibração ou escolha de limiar nessa comparação.
+
+| CV exploratória de 2023 | AP média | ROC-AUC média | Brier médio ↓ |
+| --- | ---: | ---: | ---: |
+| IBGE + rede/UF: seis atributos | 0,543776 | 0,642578 | 0,227481 |
+| IBGE + rede/UF + Inep: nove atributos | 0,544307 | 0,643154 | 0,227355 |
+
+O ganho médio de AP foi **+0,000531**, com melhora em dois folds e piora em um.
+O Brier diminuiu **0,000126**, com melhora nos três folds. O ganho é pequeno e não
+há demonstração de significância estatística. A referência de seis atributos reproduziu
+exatamente as 1.502.809 probabilidades de validação originais; as seis pipelines novas
+foram persistidas e suas previsões conferidas após reabertura.
+
+O teste temporal de 2024 já havia sido observado e não foi carregado para esta análise.
+Este estudo reutiliza desenvolvimento conhecido, permanece exploratório e não promove
+a expansão a modelo final. O modelo de referência, o limiar e a avaliação temporal 1.0
+permanecem os mesmos. Os indicadores representam contexto da rede no município;
+não demonstram efeitos causais nem características individuais de cada escola ou aluno.
+
+![Comparação educacional por fold](images/15_estudo_educacional_2023.png)
+
+[Protocolo](docs/Protocolo-Estudo-Educacional.md) ·
+[Resultados e diferenças por fold](reports/estudo_educacional_2023.md) ·
+[EDA anterior ao ajuste](reports/estudo_educacional_eda_2023.json) ·
+[Distribuições](reports/estudo_educacional_distribuicoes_2023.csv) ·
+[Registro de integridade](reports/estudo_educacional_2023.json).
 
 ## 5. Escolha do algoritmo
 
@@ -278,7 +325,34 @@ compatíveis com o ciclo e validação temporal adicional.
 Validar chaves para incorporar informações escolares anteriores à prova; ampliar ciclos
 e cobertura; estudar calibração fora do teste já observado; escolher políticas de decisão
 com capacidade/custos reais; medir incerteza por município e monitorar erro regional.
-Qualquer novo experimento deve reservar outro teste, mantendo esta versão como registro.
+Uma nova versão candidata ao uso final exige outro teste independente. O estudo educacional
+complementar reutiliza somente desenvolvimento e é identificado como exploratório.
+
+## Demonstração da previsão
+
+A demonstração recebe município e rede de um perfil histórico válido e executa o modelo
+de referência 1.0. Os hashes são conferidos antes de carregar a pipeline; a consulta
+seleciona apenas atributos contextuais da Gold de 2023.
+
+```bash
+uv run python -m src.usecase.predict_profiles --municipio 3106200 --rede Municipal
+uv run python -m src.usecase.predict_profiles --input examples/perfis-demonstracao.csv
+```
+
+| Perfil histórico | P(alfabetizado) estimada | Referência de risco 0,5 | Política F2 |
+| --- | ---: | --- | --- |
+| Belo Horizonte — Municipal | 58,6568% | Alfabetizado | Sinalizado |
+| Salvador — Municipal | 39,0830% | Não alfabetizado | Sinalizado |
+| Porto Alegre — Estadual | 54,6025% | Alfabetizado | Sinalizado |
+
+As probabilidades são as mesmas nas duas regras de decisão. O baixo limiar F2 explica
+a sinalização de perfis cuja probabilidade estimada de alfabetização supera 50%.
+Esses exemplos demonstram o funcionamento da inferência em contextos conhecidos;
+não são avaliação independente, diagnóstico individual ou previsão para 2026.
+Os indicadores adicionais do Inep não alimentam essa pipeline de referência.
+[Instruções e leitura da saída](docs/Demonstracao-Previsao.md) ·
+[Entradas públicas dos exemplos](examples/perfis-demonstracao.csv) ·
+[Resultados completos](examples/resultado-demonstracao.json).
 
 ## Como reproduzir
 
@@ -303,7 +377,20 @@ o teste. `run-all`, `logistic` e `boosting` são bloqueados na raiz congelada pa
 a proveniência; a reprodução completa executa essas funções em uma raiz temporária.
 `interpret`, `strategy` e `final-figures` exportam análises sem retreinar o modelo final.
 
-Verificação: **70 testes aprovados**. Reprodução final com métricas exatamente iguais,
+Para reproduzir a expansão, preparar também os três ZIPs descritos em
+[Fontes Educacionais](docs/Fontes-Educacionais.md) e executar o estudo em uma **nova pasta
+externa ao projeto**. A rotina recusa sobrescrever resultados e preserva a versão 1.0:
+
+```bash
+uv run python -m src.infrastructure.education_sources download
+uv run python -m src.usecase.education_study --root . --output-root ../estudo-educacional-reproducao
+```
+
+O estudo registra EDA antes do ajuste, cobertura, métricas pareadas, modelos e hashes.
+Seus resultados publicados são exploratórios; não representam novo teste independente.
+
+Verificação atual: **122 testes aprovados**, incluindo fontes educacionais, estudo e
+demonstração. Reprodução final original com métricas exatamente iguais,
 quatro arquivos idênticos por SHA-256 e 1.000 previsões conferidas após reabrir o modelo.
 Veja [reprodução completa](reports/reproducibilidade_completa.json) e [final](reports/reproducibilidade_final.json).
 As 14 advertências remanescentes são de depreciação de Matplotlib/Pyparsing.
@@ -313,7 +400,8 @@ config/          Contrato, snapshot, folds e decisão congelada
 src/             Domínio, I/O, preprocessing, modeling, evaluation, visualization e usecase
 reports/         Métricas e tabelas agregadas; protocolo e reprodução
 docs/            Relatório, roteiro e mapa dos entregáveis
-images/          Quatorze figuras em PNG e SVG
+images/          Figuras da EDA, modelagem, linhagem e estudo complementar
+examples/        Perfis contextuais e exemplos de inferência
 notebooks/       Orientações; os experimentos utilizam scripts
 artifacts/       Modelos e previsões individuais, fora do Git
 data/            Entradas e Gold, fora do Git; instruções públicas
@@ -330,6 +418,9 @@ não exige os arquivos reais. O vídeo e os documentos finais são publicados co
 - [IBGE: população DOU 2021](https://ftp.ibge.gov.br/Estimativas_de_Populacao/Estimativas_2021/estimativa_dou_2021.ods).
 - [IBGE: PIB dos Municípios, edição 2020](https://ftp.ibge.gov.br/Pib_Municipios/2020/base/base_de_dados_2010_2020_txt.zip).
 - [Inep: ICA e metas](https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/avaliacao-da-alfabetizacao).
+- [Inep: média de alunos por turma, 2021](https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/media-de-alunos-por-turma/2021).
+- [Inep: percentual de docentes com curso superior, 2021](https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/percentual-de-docentes-com-curso-superior/2021).
+- [Inep: média de horas-aula diária, 2021](https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/media-de-horas-aula-diaria/2021).
 - [Scikit-learn 1.7: HistGradientBoostingClassifier](https://scikit-learn.org/1.7/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html).
 
 Os documentos de etapas anteriores registram o estado na data de sua elaboração. Este

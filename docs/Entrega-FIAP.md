@@ -3,13 +3,15 @@
 **Autor: André Mohallem Ferraz · Trabalho individual · Prazo informado: 15/09/2026**
 
 [Repositório público](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3) ·
-[Versão final com documentos e vídeo](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.0-entrega).
+[Versão final com documentos e vídeo](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.2-entrega).
 
 ## Mapa do enunciado
 
 | Item solicitado | Evidência na entrega |
 | --- | --- |
 | Evolução da Fase 2, Gold e enriquecimento | [README, seções 1–3](../README.md), [contrato](../config/contrato-ml-aluno.json), [entradas](../data/README.md) |
+| Pergunta probabilística, critério observado e classificação | [Pergunta e linhagem](Pergunta-e-Linhagem.md), [demonstração executável](Demonstracao-Previsao.md) |
+| Enriquecimento educacional complementar | [Fontes Inep](Fontes-Educacionais.md), [protocolo exploratório](Protocolo-Estudo-Educacional.md) |
 | EDA, distribuições, padrões e correlações | [EDA](../reports/eda_development.md), [correlações municipais](../reports/correlacoes_municipais_2023.csv), [figuras](../images/) |
 | Imputação, transformação e pré-processamento integrado | [Preprocessing](../src/preprocessing/), [modelos](../src/modeling/) |
 | Treino, validação, prevenção de vazamento e reprodutibilidade | [Folds municipais](../config/folds-municipios-2023.csv), [protocolo final](../reports/protocolo-final.md), [reprodução completa](../reports/reproducibilidade_completa.json) |
@@ -29,13 +31,15 @@ previsão validada de 2030 nem probabilidade de descumprimento de meta.
 
 ## Arquivos para submissão
 
-- `Relatorio-Tecnico-Fase3-v1.1.pdf`: relatório técnico revisado; Word disponível para edição.
-- `Apresentacao-Executiva-Fase3-v1.0.pptx`: oito slides, com roteiro nas notas.
-- `Video-Executivo-Fase3-v1.0.mp4`: apresentação executiva com narração sintética em português.
-- `Roteiro-Video-Fase3-v1.0.pdf`: texto para apresentação ou regravação com a voz do autor.
+- `Relatorio-Tecnico-Fase3-v1.2.pdf`: relatório técnico revisado; Word disponível para edição.
+- `Apresentacao-Executiva-Fase3-v1.2.pptx`: oito slides, com roteiro nas notas.
+- `Video-Executivo-Fase3-v1.2.mp4`: apresentação executiva com narração sintética em português.
+- `Roteiro-Video-Fase3-v1.2.pdf`: texto para apresentação ou regravação com a voz do autor.
 - Pacote completo privado: código, entradas auditadas, Gold, modelos e entregáveis.
   Dados individuais e modelos serializados não integram o repositório público.
 
 O repositório e a versão publicada fornecem os links de acesso aos avaliadores. A submissão
 no portal da FIAP precisa ser realizada pelo autor até o prazo da turma. Os documentos de
-planejamento anteriores são históricos; utilizar a pasta `Entrega-Final` para a submissão.
+planejamento anteriores são históricos; utilizar a pasta `Entrega-Final/Revisao-1.2` para
+a submissão. Entrega 1.2 inclui o experimento validado 1.0, o estudo complementar
+exploratório e a demonstração; essas três finalidades estão identificadas nos materiais.

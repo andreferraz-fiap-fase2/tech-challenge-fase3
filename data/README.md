@@ -34,6 +34,20 @@ dados da Fase 2: ela contém arquivos alheios a este experimento. Preservar os o
 Saídas principais: `gold/contexto_municipal.parquet`,
 `gold/ml_aluno/ano=2023/alunos.parquet` e `gold/ml_aluno/ano=2024/alunos.parquet`.
 O desenvolvimento utiliza somente 2023; o modelo congelado é avaliado em 2024.
+
+## Entradas adicionais da entrega 1.2
+
+O estudo educacional acrescenta três ZIPs do Inep em `data/input/inep/`, com nomes,
+URLs, edição, tamanho e SHA-256 em [fontes-educacionais.json](../config/fontes-educacionais.json).
+São ATU, DSU e HAD de 2021, publicados em janeiro de 2022. O contexto usa município,
+rede e anos iniciais; a documentação de recorte e download está em
+[Fontes Educacionais](../docs/Fontes-Educacionais.md).
+
+As onze entradas pertencem a dois escopos: oito reproduzem o experimento 1.0 e três
+alimentam a comparação exploratória adicional. O comando `reproduce_all` preserva seu
+escopo original. `src.usecase.education_study` reproduz o estudo novo em uma pasta externa
+vazia, somente com 2023. Os dados individuais e os artefatos complementares também ficam
+no pacote privado; o Git recebe apenas código, manifestos e resultados agregados.
 A reprodução usa pastas temporárias para preservar os resultados publicados.
 A Gold municipal `ml_features.parquet` é utilizada apenas na análise posterior das metas,
 executada por `uv run python -m src.pipeline strategy` na cópia que contém as previsões finais.

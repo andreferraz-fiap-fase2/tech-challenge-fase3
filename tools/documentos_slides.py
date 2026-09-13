@@ -13,20 +13,21 @@ from pptx.util import Inches as PInches
 from pptx.util import Pt as PPt
 
 NARRATIONS = [
-    "A alfabetização é um desafio educacional e de planejamento. Este projeto de André Mohallem Ferraz transforma a engenharia de dados construída na Fase dois em uma análise de risco contextual. O objetivo é estimar a probabilidade de um aluno avaliado ser alfabetizado e apoiar a leitura dos territórios. O resultado é um instrumento exploratório: ele não substitui o diagnóstico pedagógico nem demonstra as causas das dificuldades de aprendizagem.",
-    "A análise utiliza três milhões e trezentas e cinquenta mil avaliações reais elegíveis, distribuídas entre dois mil e vinte e três e dois mil e vinte e quatro. Foram retirados eventos simulados, ausências e avaliações inválidas. As fontes da fase anterior foram auditadas e enriquecidas com população e economia municipais do IBGE. São seis atributos: rede, estado, população, PIB por habitante e duas participações econômicas. A nota da própria prova ficou fora dos preditores, pois ela determina o resultado que queremos prever.",
+    "Este projeto de André Mohallem Ferraz responde a uma pergunta: qual é a probabilidade estimada de um aluno do segundo ano ser considerado alfabetizado, dado seu contexto? O resultado observado segue o critério de setecentos e quarenta e três pontos de proficiência. O modelo estima uma probabilidade; uma regra de decisão produz a classificação. Essa diferença é importante: mudar o limiar de probabilidade não muda o padrão de alfabetização. A previsão é contextual, sem substituir uma avaliação pedagógica individual.",
+    "A análise utiliza três milhões e trezentas e cinquenta mil avaliações reais elegíveis em dois ciclos. Eventos simulados, ausências e avaliações inválidas foram excluídos. A Gold anterior era municipal. Por isso, reconstruímos uma Gold por aluno a partir da Silver e dos originais da Fase dois, com auditoria e enriquecimento do IBGE. O modelo de referência usa seis atributos: rede, estado e quatro indicadores demográficos e econômicos. A nota da prova determina o alvo e fica fora dos preditores.",
     "A comparação respeitou uma separação por município. O treinamento e a escolha do modelo usaram somente dois mil e vinte e três, com três divisões fixas. Comparamos uma referência constante, regressão logística e Gradient Boosting. Uma busca limitada escolheu a configuração com melhor ordenação do risco. O modelo e o limiar foram congelados antes de abrir o teste de dois mil e vinte e quatro. Isso permite avaliar a generalização sem adaptar as decisões ao resultado final.",
     "No teste temporal, a average precision foi de zero vírgula cinco um seis, acima de zero vírgula quatro zero dois da referência constante. Essa métrica avalia a ordenação do risco e não deve ser confundida com acurácia. A capacidade de discriminação é moderada. Nos municípios novos, a performance caiu. Quase todos os alunos desse grupo estão no Acre, Distrito Federal e São Paulo, estados ausentes do desenvolvimento. Isso evidencia o risco de extrapolar o modelo para contextos pouco conhecidos.",
     "O critério acadêmico de escolha do limiar deu prioridade à recuperação dos casos de não alfabetização. No teste, ele identificou mais de noventa e nove por cento desses casos, mas sinalizou quase noventa e sete por cento de todos os alunos. Assim, há pouca seletividade para uma equipe com capacidade limitada. O limiar de referência, zero vírgula cinco, sinaliza menos alunos, porém recupera apenas um quarto dos casos. A conclusão é que o modelo ainda não serve como triagem individual autônoma.",
-    "A análise de importância mostrou que o estado é a variável de maior influência preditiva. Os indicadores econômicos municipais agregam informação, mas com contribuição menor. Essa dependência explica por que os primeiros municípios no ranking previsto se concentram em Sergipe. Aracaju e Nossa Senhora do Socorro aparecem no topo do recorte analisado. Isso deve orientar perguntas e verificações locais, e não ser apresentado como ranking oficial ou como evidência de que o território causa o desfecho de uma criança.",
-    "Os erros também mudam entre regiões. No Sul, o risco médio foi subestimado em aproximadamente sete pontos percentuais; no Centro-Oeste, foi superestimado em quase seis. Na comparação dos perfis de contexto, Centro-Oeste e Sul ficaram mais próximos, mas isso não significa resultados educacionais iguais. A análise de metas usa taxas previstas e referências municipais da fase anterior. Um cenário de oitenta por cento é apenas uma simulação com a composição de dois mil e vinte e quatro, e não uma previsão para dois mil e trinta.",
-    "Para gestores, a recomendação é combinar risco contextual, quantidade de alunos, cobertura dos dados e evidências pedagógicas locais. O projeto oferece uma base auditável para planejar investigações e discutir apoio territorial. Antes de orientar atendimento ou orçamento, é necessário ampliar dados escolares, validar a cobertura e definir custos e capacidade reais. A entrega inclui código versionado, testes, documentação e reprodução do experimento. O valor está em apresentar evidências e limites com clareza para apoiar decisões responsáveis.",
+    "A importância por permutação mostra maior dependência do estado. Isso é contribuição preditiva, sem demonstrar causalidade. Os erros variam entre regiões: no Sul, o risco foi subestimado em cerca de sete pontos percentuais; no Centro-Oeste, superestimado em quase seis. As metas municipais da Gold anterior entram somente na análise posterior. O cenário de oitenta por cento mantém o contexto de dois mil e vinte e quatro e não constitui previsão validada para dois mil e trinta.",
+    "Para investigar a dimensão educacional, acrescentamos três indicadores históricos do Inep: tamanho das turmas, funções docentes com curso superior e horas de aula. A cobertura supera noventa e nove vírgula noventa e oito por cento. A comparação exploratória usa os mesmos três grupos municipais de dois mil e vinte e três e passa de seis para nove atributos. O ganho de average precision foi pequeno: melhorou em dois grupos e piorou em um. Esse estudo não tem novo teste independente e não substitui o modelo de referência.",
+    "A entrega também demonstra a previsão em perfis históricos de município e rede. Para Belo Horizonte, rede municipal, o modelo estima cinquenta e oito vírgula sessenta e seis por cento de probabilidade de alfabetização. A regra de cinquenta por cento classifica como alfabetizado, enquanto a política sensível de F dois sinaliza atenção. As probabilidades são iguais; as decisões refletem objetivos diferentes. Para gestores, a recomendação é combinar contexto, volume, cobertura e evidência pedagógica local. Código, fontes, testes e reprodução acompanham os materiais da entrega.",
 ]
 
 
 class SlideDocuments:
-    def __init__(self, output: Path) -> None:
+    def __init__(self, output: Path, version: str = "1.0") -> None:
         self.output = output
+        self.version = WordDocuments(output, version).version
         output.mkdir(parents=True, exist_ok=True)
 
     def textbox(
@@ -99,10 +100,10 @@ class SlideDocuments:
         p = Presentation()
         p.slide_width = PInches(13.333)
         p.slide_height = PInches(7.5)
-        s = self.slide_base(p, "Onde antecipar apoio à alfabetização?", 1)
+        s = self.slide_base(p, "Qual é a probabilidade de alfabetização?", 1)
         self.textbox(
             s,
-            "Risco contextual, evidências territoriais\ne limites para a tomada de decisão",
+            "Critério observado: proficiência ≥743 pontos\nEstimativa condicionada ao contexto do aluno",
             0.65,
             2.5,
             11.8,
@@ -124,7 +125,7 @@ class SlideDocuments:
         )
         self.textbox(
             s,
-            "Gold da Fase 2 + contexto histórico do IBGE · seis atributos\nEventos simulados e avaliações inválidas excluídos",
+            "Gold por aluno reconstruída das fontes da Fase 2 + IBGE · seis atributos\nGold municipal original utilizada na análise posterior de metas",
             0.65,
             5.5,
             12,
@@ -198,18 +199,18 @@ class SlideDocuments:
             height=PInches(4.75),
         )
         importance.left = int((p.slide_width - importance.width) / 2)
-        s = self.slide_base(p, "A média nacional esconde erros territoriais", 7)
+        s = self.slide_base(p, "Inep: mais contexto educacional, ganho pequeno", 7)
         self.cards(
             s,
             [
-                ("Sul", "Risco subestimado em 6,98 pontos percentuais"),
-                ("Centro-Oeste", "Risco superestimado em 5,81 pontos percentuais"),
-                ("Metas", "Cenários condicionais; sem previsão validada de 2030"),
+                ("3 indicadores", "Turmas, funções docentes com nível superior e horas de aula"),
+                (">99,98%", "Cobertura dos alunos no desenvolvimento de 2023"),
+                ("+0,000531", "Ganho médio de AP; melhora em dois dos três folds"),
             ],
         )
         self.textbox(
             s,
-            "Validar localmente antes de definir prioridades.\nO ranking previsto é contextual e não substitui indicadores oficiais.",
+            "Estudo exploratório: seis versus nove atributos nos mesmos folds de 2023.\nSem novo teste independente; o modelo de referência permanece 1.0.",
             0.65,
             5.5,
             12,
@@ -217,19 +218,18 @@ class SlideDocuments:
             21,
             GRAY,
         )
-        s = self.slide_base(p, "Transformar a análise em perguntas e ações verificáveis", 8)
+        s = self.slide_base(p, "Demonstrar a probabilidade e interpretar a decisão", 8)
         self.cards(
             s,
             [
-                ("Planejar", "Combinar risco, volume, cobertura e evidência local"),
-                ("Validar", "Conferir capacidade, custos e qualidade pedagógica"),
-                ("Evoluir", "Ampliar ciclos, dados escolares e monitoramento"),
+                ("58,66%", "P(alfabetizado) no perfil histórico Belo Horizonte / Municipal"),
+                ("Probabilidade", "Mesma estimativa; classificação depende do limiar adotado"),
+                ("Aplicação", "Combinar contexto, volume e evidência pedagógica local"),
             ],
         )
         self.textbox(
             s,
-            "Código, documentação e reprodução disponíveis no repositório público.\nAutoria: "
-            + AUTHOR,
+            "Demonstração contextual do modelo 1.0; não é previsão para 2026.\nAutoria: " + AUTHOR,
             0.65,
             5.45,
             12,
@@ -240,7 +240,7 @@ class SlideDocuments:
         p.core_properties.author = AUTHOR
         p.core_properties.last_modified_by = AUTHOR
         p.core_properties.title = "Alfabetização: inteligência analítica para decisões territoriais"
-        p.save(self.output / "Apresentacao-Executiva-Fase3-v1.0.pptx")
+        p.save(self.output / f"Apresentacao-Executiva-Fase3-v{self.version}.pptx")
         script = (
             "# Roteiro do vídeo executivo — Fase 3\n\n**Autor: "
             + AUTHOR
@@ -250,8 +250,10 @@ class SlideDocuments:
             script += f"## Slide {i}\n\n{narration}\n\n"
         script += "## Orientação de apresentação\n\nApresentar como reunião executiva. Explicar AP sem confundir com acurácia; enfatizar a baixa seletividade e os limites de generalização. A versão base usa narração sintética em português; os slides e o roteiro permitem regravar a apresentação com a voz do autor.\n"
         (ROOT / "docs/Roteiro-Video-Fase3.md").write_text(script)
-        (self.output / "Roteiro-Video-Fase3-v1.0.md").write_text(script)
-        WordDocuments(self.output).word(script, "Roteiro-Video-Fase3-v1.0.docx")
+        (self.output / f"Roteiro-Video-Fase3-v{self.version}.md").write_text(script)
+        WordDocuments(self.output, self.version).word(
+            script, f"Roteiro-Video-Fase3-v{self.version}.docx"
+        )
         (self.output / "narracao.json").write_text(
             json.dumps(
                 [{"slide": i, "text": t} for i, t in enumerate(NARRATIONS, 1)],

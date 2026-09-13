@@ -77,7 +77,9 @@ flowchart TD
 ```
 
 O fluxo do modelo 1.0 está implementado. O ramo do Inep representa a ampliação complementar
-em estudo; sua análise não muda a avaliação temporal já concluída.
+concluída em 2023; sua análise não muda a avaliação temporal já concluída.
+
+![Diagrama exportável da linhagem](../images/15_linhagem_gold.png)
 
 O [snapshot de entradas](../config/snapshot.json), a [auditoria da Gold](../reports/gold_build.json)
 e a [reprodução completa](../reports/reproducibilidade_completa.json) registram essa linhagem.
@@ -94,9 +96,9 @@ Os identificadores não comprovam acompanhamento da mesma criança entre anos e 
 externa escolar validada. Assim, uma expansão por município e rede acrescenta contexto
 educacional, mas não equivale a conhecer a escola, a família ou a trajetória individual.
 
-O estudo complementar do Inep deve avaliar indicadores educacionais históricos com vínculo
-territorial válido e período de publicação compatível. Seu papel é testar se acrescentam
-informação aos atributos atuais. Como 2024 já foi observado, uma comparação adicional em
-2023 será apresentada como exploratória; uma nova alegação de generalização exige outro
+O [estudo complementar do Inep](../reports/estudo_educacional_2023.md) avaliou três indicadores
+históricos com vínculo territorial válido e período de publicação compatível. O ganho médio
+de AP foi pequeno (+0,000531), com melhora em dois dos três folds. Como 2024 já foi observado,
+a comparação adicional em 2023 é exploratória; uma nova alegação de generalização exige outro
 teste reservado e protocolo apropriado. A [decisão do modelo final 1.0](../config/modelo-final.json)
 e seus resultados permanecem preservados.

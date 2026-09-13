@@ -1,0 +1,10 @@
+{
+  "completed_at_utc": "2026-09-13T23:34:20.934310+00:00",
+  "before_model_fit": true,
+  "year": 2023,
+  "students": 1502809,
+  "contexts": 5881,
+  "distribution_unit": "município × rede, sem ponderação pelo número de alunos",
+  "correlation": "Pearson contextual com taxa de alfabetização; associação não causal",
+  "coverage_minimum_passed": true
+}

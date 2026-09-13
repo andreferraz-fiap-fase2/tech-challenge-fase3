@@ -2,7 +2,7 @@
 
 **Autor: André Mohallem Ferraz**
 
-**FIAP · Tech Challenge Fase 3 · Trabalho individual · Versão 1.0 · 13/09/2026**
+**FIAP · Tech Challenge Fase 3 · Trabalho individual · Revisão documental 1.1 · 13/09/2026**
 
 **Síntese executiva.** O Gradient Boosting supera o baseline no teste temporal, com AP 0,5162 e ROC-AUC 0,6224. Seu limiar acadêmico de F2 sinaliza 96,84% dos alunos. A entrega evidencia potencial para leitura territorial e limites importantes de generalização e seletividade, sem recomendar decisões individuais autônomas.
 
@@ -70,14 +70,38 @@ A Gold municipal da Fase 2 entra somente na leitura posterior das metas, sem ori
 <!-- pagebreak -->
 ## 4. Etapas de modelagem
 
-A EDA usa apenas 2023: distribuições do alvo, regiões, redes, contexto e correlações.
-As quatro correlações de Spearman com a taxa municipal de não alfabetização são +0,182
-(população), −0,266 (PIB per capita), −0,196 (agropecuária) e +0,284 (serviços públicos).
-São associações com uma observação por município; não demonstram causalidade.
+A EDA inicial examinou exclusivamente 2023: distribuição do alvo, diferenças por região,
+UF e rede, distribuições numéricas, valores ausentes e repetição dos perfis de atributos.
+A síntese abaixo relaciona essas evidências e a hipótese de contribuição do IBGE às
+decisões adotadas. As correlações, calculadas posteriormente na interpretação, são
+apresentadas separadamente na seção 4.3.
+
+### 4.1. Da EDA às hipóteses e decisões
+
+| Evidência no desenvolvimento de 2023 | Hipótese ou justificativa | Decisão e forma de avaliação |
+| --- | --- | --- |
+| Os quatro atributos do IBGE variam entre municípios. | H1: o contexto numérico pode acrescentar informação além de rede e UF. | Comparar variantes rede/UF e completa nos mesmos três folds, mantendo a população de validação. |
+| População: média 33.245,10 e mediana 11.563 habitantes. PIB per capita: média R$ 26.098,86 e mediana R$ 18.256,44. | Caudas à direita e escalas diferentes justificam transformar os dados no modelo linear. | Aplicar log1p em população/PIB e padronizar os quatro numéricos na logística. O boosting usa valores sem log ou padronização. |
+| Não alfabetizados: 625.382 avaliações, ou 41,61%. | A classe de interesse tem volume expressivo; não há justificativa inicial para gerar exemplos artificiais. | Usar baseline de prevalência e AP da classe de risco; comparar modelos sem reamostragem ou ponderação de classes nesta rodada. |
+| Norte: 48,89% de não alfabetização; Sul: 32,27%. Apenas 5.881 perfis em 1.502.809 avaliações. | Heterogeneidade territorial e contextos repetidos limitam a independência entre alunos. | Separar folds por município, usar uma linha por município nas distribuições econômicas e avaliar erros regionais e municípios novos. |
+| Nenhum valor ausente nos quatro preditores numéricos. | A imputação precisa estar definida, embora não seja necessária nos dados utilizados. | Incluir mediana aprendida somente no treino. A pipeline contém o mecanismo; a construção atual da Gold exige contexto completo. |
+
+O comparativo da logística deu suporte descritivo a H1: AP média de **0,533285** com
+rede/UF e **0,538103** com os seis atributos, diferença **+0,004819**, positiva nos três
+folds. Isso não demonstra causalidade nem significância estatística. Também não foi
+realizado um experimento isolando o efeito do log1p, da padronização ou da reamostragem;
+essas escolhas não são apresentadas como causas comprovadas de melhora.
+
+[EDA inicial](../reports/eda_development.md) · [Distribuições numéricas](../reports/eda_numericas_municipios_2023.csv) ·
+[Diferenças por região](../reports/eda_regiao_2023.csv) · [Ganho do enriquecimento por fold](../reports/logistica_delta_enriquecimento_2023.csv).
+
+<!-- pagebreak -->
+
+### 4.2. Pipeline integrada e controles de validação
 
 Três folds fixos separam municípios inteiros: 500.934, 500.942 e 500.933 alunos.
-Não há divisão aleatória de alunos entre treino e validação. Pré-processamento é aprendido
-somente no treino e integra a pipeline persistida.
+O mapa de folds foi definido antes da modelagem, sem consultar rótulos. Em cada rodada,
+dois folds treinam e o terceiro valida. Os municípios de validação não aparecem no treino.
 
 | Família | Pré-processamento e ajuste |
 | --- | --- |
@@ -85,12 +109,41 @@ somente no treino e integra a pipeline persistida.
 | Logística | Imputação constante categórica, one-hot, mediana numérica, log1p em população/PIB, StandardScaler; L2, C=1 |
 | Gradient Boosting | Imputação categórica constante; códigos explicitamente nominais, inéditos como NaN; mediana numérica, sem escala ou log |
 
-No boosting, `early_stopping=False` evita uma divisão interna aleatória de municípios.
+No boosting, `early_stopping=False` evita uma divisão interna aleatória de alunos que
+poderia repartir um mesmo município entre treino e validação interna.
 Não se usa ponderação ou balanceamento de classes no ajuste. Pesos são suplementares na
-avaliação. [EDA](../reports/eda_development.md) · [Correlações](../reports/correlacoes_municipais_2023.csv).
+avaliação. A imputação está implementada e testada, mas nenhum valor numérico precisou
+ser preenchido no snapshot utilizado. Uma nova carga com contexto incompleto é bloqueada
+pela validação da Gold e exige revisão da origem dos dados.
 
+O `ColumnTransformer` organiza as transformações numéricas e categóricas dentro da
+`Pipeline` do Scikit-learn, junto com o classificador. Medianas, categorias e parâmetros
+de escala são aprendidos apenas no treino de cada fold. O objeto persistido contém
+pré-processamento e modelo; as mesmas transformações são reaplicadas na previsão.
 
-![Distribuições do contexto](../images/03_contexto_municipal_2023.png)
+Para prevenir vazamento, uma lista explícita limita X aos seis preditores. Proficiência,
+rótulos, resultados contemporâneos, metas, pesos e identificadores não entram no modelo.
+Os dados externos são anteriores a 2023. Modelo e limiar foram congelados com o
+desenvolvimento antes da avaliação temporal de 2024.
+
+A **reprodutibilidade foi verificada computacionalmente**, com métricas e arquivos finais
+reproduzidos. A **generalização foi avaliada empiricamente** por validação entre municípios
+e teste temporal reservado; apresentou limitações, principalmente em municípios e UFs
+novos. Os resultados não garantem desempenho equivalente em qualquer população futura.
+
+[Pré-processamento](../src/preprocessing/) · [Modelos integrados](../src/modeling/) ·
+[Reprodução completa](../reports/reproducibilidade_completa.json) · [Teste temporal](../reports/teste_temporal_2024.json).
+
+### 4.3. Correlações na interpretação complementar
+
+As correlações municipais foram calculadas na etapa posterior de interpretação,
+exclusivamente com 2023, sem redefinir atributos, modelo ou limiar. Spearman com a taxa
+municipal de não alfabetização: **+0,182** para população, **−0,266** para PIB per capita,
+**−0,196** para agropecuária e **+0,284** para serviços públicos. Há uma observação por
+município. Essas associações complementam a interpretação exploratória; não demonstram
+causalidade e não são justificativas retrospectivas para a seleção inicial do modelo.
+[Matriz de correlações](../reports/correlacoes_municipais_2023.csv).
+
 
 <!-- pagebreak -->
 ## 5. Escolha do algoritmo
@@ -266,3 +319,10 @@ README, o relatório final e a decisão congelada representam o estado da entreg
 ## Apêndice — perfis regionais
 
 ![Perfis regionais](../images/14_perfis_regionais_2023.png)
+
+<!-- pagebreak -->
+## Apêndice — distribuições do contexto
+
+Uma observação por município no desenvolvimento de 2023. A escala log10 desta figura é apenas visual; o modelo logístico utiliza log1p.
+
+![Distribuições do contexto](../images/03_contexto_municipal_2023.png)

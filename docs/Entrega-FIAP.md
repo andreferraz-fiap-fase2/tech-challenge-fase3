@@ -29,7 +29,7 @@ previsão validada de 2030 nem probabilidade de descumprimento de meta.
 
 ## Arquivos para submissão
 
-- `Relatorio-Tecnico-Fase3-v1.0.pdf`: relatório técnico; Word disponível para edição.
+- `Relatorio-Tecnico-Fase3-v1.1.pdf`: relatório técnico revisado; Word disponível para edição.
 - `Apresentacao-Executiva-Fase3-v1.0.pptx`: oito slides, com roteiro nas notas.
 - `Video-Executivo-Fase3-v1.0.mp4`: apresentação executiva com narração sintética em português.
 - `Roteiro-Video-Fase3-v1.0.pdf`: texto para apresentação ou regravação com a voz do autor.

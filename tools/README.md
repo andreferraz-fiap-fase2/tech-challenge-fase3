@@ -6,6 +6,10 @@ Essas ferramentas editoriais usam ambiente separado da modelagem. As dependênci
 em `requirements-entrega.txt`. A exportação utiliza Word e PowerPoint instalados no Windows;
 a narração usa a voz genérica Microsoft Maria Desktop (pt-BR), sem imitar a voz do autor.
 
+Para gerar somente a revisão documental do relatório, acrescentar
+`--report-only --report-version 1.1` ao comando abaixo. Essa revisão explicita as fontes
+IBGE e a ligação entre EDA, hipóteses e decisões, preservando o experimento congelado.
+
 ```bash
 uv run --no-project --python 3.13 --isolated --with python-docx==1.2.0 --with python-pptx==1.0.2 python tools/gerar_documentos.py --output /caminho/Entrega-Final
 ```

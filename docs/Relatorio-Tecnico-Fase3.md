@@ -42,10 +42,24 @@ Os dez campos de origem auditados da Silver batch foram confrontados com os orig
 As primeiras estimativas dos documentos de planejamento 01/02 foram corrigidas na definição
 analítica 03 e na construção da Gold. A contagem acima é a versão válida da entrega.
 
-Preditores: rede, UF, população 2021, PIB per capita 2020, participação da agropecuária
-no VAB 2020 e participação dos serviços públicos no VAB 2020. As edições externas foram
-publicadas até 31/12/2022 e são iguais nos dois ciclos, com cobertura integral dos municípios
-elegíveis. PIB per capita não é renda familiar; VAB de serviços públicos não é gasto em educação.
+**Enriquecimento com bases externas do IBGE.** A base de alunos da Fase 2 foi cruzada
+com duas bases públicas do Instituto Brasileiro de Geografia e Estatística (IBGE):
+
+| Base externa e arquivo de origem | Ano de referência | Atributos acrescentados ao modelo |
+| --- | --- | --- |
+| [IBGE — Estimativas da População, publicação no DOU](https://ftp.ibge.gov.br/Estimativas_de_Populacao/Estimativas_2021/estimativa_dou_2021.ods) | 2021 | População do município |
+| [IBGE — Produto Interno Bruto dos Municípios, edição 2020](https://ftp.ibge.gov.br/Pib_Municipios/2020/base/base_de_dados_2010_2020_txt.zip) | 2020, selecionado no arquivo da série 2010–2020 | PIB per capita; participação da agropecuária no VAB; participação dos serviços públicos no VAB |
+
+O cruzamento usa o **código IBGE do município (`id_municipio`)**, com cobertura de 100%
+dos municípios elegíveis de 2023 e 2024. As participações econômicas são calculadas como
+percentual do valor adicionado bruto (VAB) total. O enriquecimento é municipal: cada aluno
+recebe o contexto de seu município.
+
+São **quatro atributos externos do IBGE**, somados à **rede de ensino e à UF da Fase 2**,
+totalizando os seis preditores. As edições externas foram publicadas até 31/12/2022 e
+são mantidas iguais nos dois ciclos. PIB per capita não é renda familiar; VAB de serviços
+públicos não é gasto em educação. URLs, datas de publicação e hashes dos arquivos estão
+no [manifesto das fontes externas](../config/fontes-externas.json).
 
 Metas, indicadores contemporâneos, proficiência, rótulos, IDs e peso ficam fora de X.
 A Gold municipal da Fase 2 entra somente na leitura posterior das metas, sem orientar o modelo.

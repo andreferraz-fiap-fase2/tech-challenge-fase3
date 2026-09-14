@@ -1,8 +1,8 @@
-# Roteiro do vídeo executivo — Fase 3
+# Roteiro de preparação do vídeo executivo — Fase 3
 
-**Autor: André Mohallem Ferraz · Revisão 1.3 · Duração planejada: 5 minutos**
+**Autor: André Mohallem Ferraz · Revisão 1.4 · Duração planejada: 5 minutos**
 
-As janelas abaixo somam 5 minutos e incluem pausas e transições. São uma estimativa para ensaio, não uma duração de gravação medida. Esta revisão atualiza o roteiro e os slides; o vídeo narrado 1.2 permanece preservado.
+As janelas abaixo somam 5 minutos e incluem pausas e transições. São uma estimativa para ensaio, não uma duração de gravação medida. Material de apoio, fora do ZIP e da pasta oficial de entrega. O vídeo oficial deverá ser gravado com a voz do autor.
 
 ## 00:00–00:30 — Slide 1
 
@@ -38,4 +38,4 @@ A demonstração recebe perfis históricos de município e rede. Para Belo Horiz
 
 ## Orientação de apresentação
 
-Apresentar como reunião executiva. Ensaiar dentro das janelas de tempo e ajustar as pausas para concluir em até 5 minutos. Explicar AP sem confundir com acurácia e correlação sem atribuir causalidade. Enfatizar a baixa seletividade e os limites de generalização. O vídeo 1.2 corresponde à revisão anterior e não foi regravado para esta atualização documental.
+Apresentar como reunião executiva. Ensaiar dentro das janelas de tempo e ajustar as pausas para concluir em até 5 minutos. Explicar AP sem confundir com acurácia e correlação sem atribuir causalidade. Enfatizar a baixa seletividade e os limites de generalização. Gravar com a voz do autor. Narração sintética e versões de ensaio são materiais privados de preparação e não integram a entrega oficial.

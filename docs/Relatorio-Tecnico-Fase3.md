@@ -2,7 +2,7 @@
 
 **Autor: André Mohallem Ferraz**
 
-**FIAP · Tech Challenge Fase 3 · Trabalho individual · Revisão documental 1.3 · 13/09/2026**
+**FIAP · Tech Challenge Fase 3 · Trabalho individual · Revisão documental 1.4 · 14/09/2026**
 
 **Síntese executiva.** O Gradient Boosting supera o baseline no teste temporal, com AP 0,5162 e ROC-AUC 0,6224. Seu limiar acadêmico de F2 sinaliza 96,84% dos alunos. A entrega evidencia potencial para leitura territorial e limites importantes de generalização e seletividade, sem recomendar decisões individuais autônomas.
 
@@ -544,10 +544,14 @@ As 14 advertências remanescentes são de depreciação de Matplotlib/Pyparsing.
 
 
 
-O repositório público contém código, documentação e agregados. Os dados individuais e
-modelos ficam na cópia privada e no pacote completo de entrega. As fontes originais são
-públicas, mas este snapshot precisa ser preparado conforme o manifesto; executar os testes
-não exige os arquivos reais. O vídeo e os documentos finais são publicados como arquivos da versão.
+O repositório público contém código, documentação e agregados. Dados individuais,
+modelos e materiais de apoio ficam no arquivo privado de preparação, fora da entrega
+oficial. As fontes originais são públicas, mas este snapshot precisa ser preparado
+conforme o manifesto; executar os testes não exige os arquivos reais.
+
+A pasta oficial reúne o PDF técnico, o PowerPoint e o ZIP com esses dois documentos.
+O vídeo executivo de até cinco minutos, com a voz do autor, permanece pendente.
+Roteiros, narrações, guias de preparação e verificadores ficam em `Preparacao`.
 
 
 <!-- pagebreak -->

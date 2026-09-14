@@ -2,17 +2,21 @@
 
 **Autor: André Mohallem Ferraz · FIAP, Tech Challenge Fase 3 · Trabalho individual · Entrega: 15/09/2026**
 
-Entrega 1.3 de 13/09/2026. Modelo de referência 1.0, limiar e avaliação temporal concluídos. O modelo supera
+Organização da entrega 1.4. Modelo de referência 1.0, limiar e avaliação temporal concluídos. O modelo supera
 uma referência constante, mas seu poder de discriminação é moderado e o limiar de F2
 sinaliza quase toda a população. A aplicação proposta é apoio exploratório ao planejamento
 territorial, com validação local antes de qualquer uso operacional.
 
-- [Relatório técnico completo](docs/Relatorio-Tecnico-Fase3.md), versão 1.3 em [PDF](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.3-entrega/Relatorio-Tecnico-Fase3-v1.3.pdf) e [Word](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.3-entrega/Relatorio-Tecnico-Fase3-v1.3.docx).
-- [Roteiro executivo atualizado](docs/Roteiro-Video-Fase3.md) e [vídeo existente 1.2](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.2-entrega/Video-Executivo-Fase3-v1.2.mp4), preservado.
-- [Arquivos finais 1.3: PDF, Word, apresentação e roteiro](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.3-entrega).
+- [Visão técnica em PDF](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.4-entrega/VisaoTecnica-TechChallengeFase3.pdf) e [relatório no repositório](docs/Relatorio-Tecnico-Fase3.md).
+- [Apresentação em PowerPoint](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.4-entrega/Apresentacao-TechChallenge-Fase3.pptx).
+- [Pacote oficial TechChallenge-Fase3.zip](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.4-entrega/TechChallenge-Fase3.zip), contendo somente o PDF e o PowerPoint; [publicação 1.4](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.4-entrega).
 - [Análise exploratória dos dados enriquecidos](#4-análise-exploratória-e-entendimento-do-problema), com distribuições, cobertura, associações e hipóteses.
 - [Demonstração da probabilidade](docs/Demonstracao-Previsao.md) e [protocolo do estudo educacional complementar](docs/Protocolo-Estudo-Educacional.md).
 - [Protocolo antes do teste](reports/protocolo-final.md), [resultado temporal](reports/teste_temporal_2024.json) e [reprodução completa](reports/reproducibilidade_completa.json).
+
+**Pendente para concluir a submissão:** gravar o vídeo executivo com a voz de André
+Mohallem Ferraz, com duração de até cinco minutos. O código e as evidências analíticas
+estão neste repositório; os materiais de preparação ficam fora da pasta e do ZIP oficiais.
 
 ## 1. Contexto do problema
 
@@ -525,10 +529,14 @@ artifacts/       Modelos e previsões individuais, fora do Git
 data/            Entradas e Gold, fora do Git; instruções públicas
 ```
 
-O repositório público contém código, documentação e agregados. Os dados individuais e
-modelos ficam na cópia privada e no pacote completo de entrega. As fontes originais são
-públicas, mas este snapshot precisa ser preparado conforme o manifesto; executar os testes
-não exige os arquivos reais. O vídeo e os documentos finais são publicados como arquivos da versão.
+O repositório público contém código, documentação e agregados. Dados individuais,
+modelos e materiais de apoio ficam no arquivo privado de preparação, fora da entrega
+oficial. As fontes originais são públicas, mas este snapshot precisa ser preparado
+conforme o manifesto; executar os testes não exige os arquivos reais.
+
+A pasta oficial reúne o PDF técnico, o PowerPoint e o ZIP com esses dois documentos.
+O vídeo executivo de até cinco minutos, com a voz do autor, permanece pendente.
+Roteiros, narrações, guias de preparação e verificadores ficam em `Preparacao`.
 
 ## Referências
 

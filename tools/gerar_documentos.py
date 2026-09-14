@@ -1,4 +1,4 @@
-"""Autor: André Mohallem Ferraz. Gera Word, PowerPoint e roteiro da entrega."""
+"""Autor: André Mohallem Ferraz. Gera documentos de preparação em pasta separada."""
 
 import argparse
 from pathlib import Path
@@ -15,6 +15,9 @@ def main() -> None:
         "--report-only", action="store_true", help="Gera somente o relatório técnico"
     )
     args = parser.parse_args()
+    args.output = args.output.resolve()
+    if "entrega-final" in {part.casefold() for part in args.output.parts}:
+        parser.error("Use uma pasta de Preparacao: arquivos intermediários não são entregáveis")
     WordDocuments(args.output, args.report_version).report()
     if args.report_only:
         print("Relatório técnico gerado:", args.output)

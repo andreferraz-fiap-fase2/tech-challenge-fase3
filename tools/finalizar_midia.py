@@ -132,6 +132,8 @@ def main() -> None:
     if not re.fullmatch(r"\d+\.\d+", args.version):
         parser.error("Versão inválida; esperado N.N")
     output = args.output.resolve()
+    if "entrega-final" in {part.casefold() for part in output.parts}:
+        parser.error("Use uma pasta de Preparacao; recibos e mídia de apoio ficam fora da entrega")
     pdfs = stamp_pdfs(output)
     if not args.generate_video:
         receipt = {

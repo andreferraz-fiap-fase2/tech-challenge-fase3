@@ -125,11 +125,26 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--version", default="1.0")
+    parser.add_argument(
+        "--generate-video", action="store_true", help="Gera vídeo somente quando solicitado"
+    )
     args = parser.parse_args()
     if not re.fullmatch(r"\d+\.\d+", args.version):
         parser.error("Versão inválida; esperado N.N")
     output = args.output.resolve()
     pdfs = stamp_pdfs(output)
+    if not args.generate_video:
+        receipt = {
+            "author": AUTHOR,
+            "version": args.version,
+            "pdfs": pdfs,
+            "video_generated": False,
+        }
+        (output / "verificacao-documentos.json").write_text(
+            json.dumps(receipt, ensure_ascii=False, indent=2) + "\n"
+        )
+        print(json.dumps(receipt, ensure_ascii=False), flush=True)
+        return
     durations = audio_durations(output)
     ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
     clips = [encode_clip(ffmpeg, output, i, seconds) for i, seconds in enumerate(durations, 1)]

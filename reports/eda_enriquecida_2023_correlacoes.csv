@@ -1,0 +1,8 @@
+﻿attribute,method,observation_unit,complete_contexts,target,correlation_literacy
+populacao_2021,spearman,município,4871,taxa observada de alfabetização,-0.18216630663466468
+pib_per_capita_2020,spearman,município,4871,taxa observada de alfabetização,0.2661342692024425
+participacao_agropecuaria_2020,spearman,município,4871,taxa observada de alfabetização,0.19618881359819595
+participacao_servicos_publicos_2020,spearman,município,4871,taxa observada de alfabetização,-0.28439963325717676
+alunos_por_turma_ai_2021,pearson,município × rede,5871,taxa observada de alfabetização,-0.15453562802995605
+docentes_superior_ai_2021,pearson,município × rede,5872,taxa observada de alfabetização,0.2041371008459328
+horas_aula_ai_2021,pearson,município × rede,5871,taxa observada de alfabetização,-0.024770255295994636

@@ -2,14 +2,15 @@
 
 **Autor: André Mohallem Ferraz · FIAP, Tech Challenge Fase 3 · Trabalho individual · Entrega: 15/09/2026**
 
-Entrega 1.2 de 13/09/2026. Modelo de referência 1.0, limiar e avaliação temporal concluídos. O modelo supera
+Entrega 1.3 de 13/09/2026. Modelo de referência 1.0, limiar e avaliação temporal concluídos. O modelo supera
 uma referência constante, mas seu poder de discriminação é moderado e o limiar de F2
 sinaliza quase toda a população. A aplicação proposta é apoio exploratório ao planejamento
 territorial, com validação local antes de qualquer uso operacional.
 
-- [Relatório técnico completo](docs/Relatorio-Tecnico-Fase3.md), versão 1.2 em [PDF](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.2-entrega/Relatorio-Tecnico-Fase3-v1.2.pdf) e [Word](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.2-entrega/Relatorio-Tecnico-Fase3-v1.2.docx).
-- [Roteiro do vídeo executivo](docs/Roteiro-Video-Fase3.md).
-- [Arquivos finais: PDF, Word, apresentação e vídeo](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.2-entrega).
+- [Relatório técnico completo](docs/Relatorio-Tecnico-Fase3.md), versão 1.3 em [PDF](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.3-entrega/Relatorio-Tecnico-Fase3-v1.3.pdf) e [Word](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.3-entrega/Relatorio-Tecnico-Fase3-v1.3.docx).
+- [Roteiro executivo atualizado](docs/Roteiro-Video-Fase3.md) e [vídeo existente 1.2](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.2-entrega/Video-Executivo-Fase3-v1.2.mp4), preservado.
+- [Arquivos finais 1.3: PDF, Word, apresentação e roteiro](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.3-entrega).
+- [Análise exploratória dos dados enriquecidos](#4-análise-exploratória-e-entendimento-do-problema), com distribuições, cobertura, associações e hipóteses.
 - [Demonstração da probabilidade](docs/Demonstracao-Previsao.md) e [protocolo do estudo educacional complementar](docs/Protocolo-Estudo-Educacional.md).
 - [Protocolo antes do teste](reports/protocolo-final.md), [resultado temporal](reports/teste_temporal_2024.json) e [reprodução completa](reports/reproducibilidade_completa.json).
 
@@ -106,34 +107,158 @@ O modelo de referência conserva seus seis atributos; os nove atributos pertence
 estudo complementar. [Fontes e definições](docs/Fontes-Educacionais.md) ·
 [Manifesto educacional](config/fontes-educacionais.json).
 
-## 4. Etapas de modelagem
+## 4. Análise exploratória e entendimento do problema
 
-A EDA inicial examinou exclusivamente 2023: distribuição do alvo, diferenças por região,
-UF e rede, distribuições numéricas, valores ausentes e repetição dos perfis de atributos.
-A síntese abaixo relaciona essas evidências e a hipótese de contribuição do IBGE às
-decisões adotadas. As correlações, calculadas posteriormente na interpretação, são
-apresentadas separadamente na seção 4.3.
+A análise exploratória apresenta **quem está representado, como os atributos variam,
+onde faltam informações e quais associações ajudam a formular hipóteses**. Toda a EDA
+desta seção utiliza o desenvolvimento de 2023. O teste de 2024 não participa da exploração
+dos atributos nem da consolidação apresentada aqui.
 
-### 4.1. Da EDA às hipóteses e decisões
+### 4.1. População, unidades de análise e cronologia
 
-| Evidência no desenvolvimento de 2023 | Hipótese ou justificativa | Decisão e forma de avaliação |
+São **1.502.809 avaliações reais elegíveis**, em **4.871 municípios** e **5.881 contextos
+município × rede**. O enriquecimento passa de seis para nove atributos, preservando
+os mesmos alunos e folds. Não acrescenta observações nem informações individuais
+da turma, do professor ou da família de cada criança.
+
+| O que é examinado | Unidade de análise | Interpretação |
 | --- | --- | --- |
-| Os quatro atributos do IBGE variam entre municípios. | H1: o contexto numérico pode acrescentar informação além de rede e UF. | Comparar variantes rede/UF e completa nos mesmos três folds, mantendo a população de validação. |
-| População: média 33.245,10 e mediana 11.563 habitantes. PIB per capita: média R$ 26.098,86 e mediana R$ 18.256,44. | Caudas à direita e escalas diferentes justificam transformar os dados no modelo linear. | Aplicar log1p em população/PIB e padronizar os quatro numéricos na logística. O boosting usa valores sem log ou padronização. |
-| Não alfabetizados: 625.382 avaliações, ou 41,61%. | A classe de interesse tem volume expressivo; não há justificativa inicial para gerar exemplos artificiais. | Usar baseline de prevalência e AP da classe de risco; comparar modelos sem reamostragem ou ponderação de classes nesta rodada. |
-| Norte: 48,89% de não alfabetização; Sul: 32,27%. Apenas 5.881 perfis em 1.502.809 avaliações. | Heterogeneidade territorial e contextos repetidos limitam a independência entre alunos. | Separar folds por município, usar uma linha por município nas distribuições econômicas e avaliar erros regionais e municípios novos. |
-| Nenhum valor ausente nos quatro preditores numéricos. | A imputação precisa estar definida, embora não seja necessária nos dados utilizados. | Incluir mediana aprendida somente no treino. A pipeline contém o mecanismo; a construção atual da Gold exige contexto completo. |
+| Distribuição do alvo e diferenças por região, UF ou rede | Uma avaliação por aluno/ano | Frequências e taxas no recorte elegível, sem pressupor representatividade nacional. |
+| População, PIB e composição econômica do IBGE | Uma observação por município: 4.871 | Cada município tem o mesmo peso nas distribuições e correlações contextuais. |
+| Turmas, funções docentes e jornada do Inep | Uma observação por município × rede: 5.881 | As redes Estadual e Municipal são contextos distintos dentro de um município. |
+| Cobertura do enriquecimento para a modelagem | Uma avaliação por aluno/ano: 1.502.809 | Quantifica quantos alunos recebem cada atributo antes da imputação. |
+
+O alvo observado é alfabetizado quando a proficiência válida é **maior ou igual a 743**.
+Há 877.427 alfabetizados e **625.382 não alfabetizados, ou 41,61%**, sem ponderação.
+A classe de risco tem volume expressivo; a EDA não indicou necessidade inicial de gerar
+exemplos artificiais. Nas taxas regionais de não alfabetização, Norte apresenta **48,89%**
+e Sul, **32,27%**. Esse contraste e a repetição dos perfis motivam validação por município
+e leitura dos erros por território; não constituem causas comprovadas dos resultados.
+
+![Diferenças regionais no desenvolvimento de 2023](images/02_regioes_2023.png)
+
+**Cronologia das evidências.** A EDA inicial precedeu os modelos; as correlações do IBGE
+vieram na interpretação posterior. No estudo Inep, protocolo e EDA antecederam os novos
+ajustes. Esta seção, seus gráficos e a tabela de hipóteses consolidam as evidências
+**após os experimentos**; não são um registro prospectivo de todas as decisões.
+
+[EDA inicial](reports/eda_development.md) · [Distribuição do alvo](images/01_alvo_2023.png) ·
+[Regiões](reports/eda_regiao_2023.csv) · [UFs](reports/eda_sigla_uf_2023.csv) ·
+[Redes](reports/eda_rede_nome_2023.csv) · [EDA educacional anterior ao ajuste](reports/estudo_educacional_eda_2023.json).
+
+### 4.2. Distribuições e cobertura dos atributos enriquecidos
+
+Os atributos externos descrevem tamanho do município, economia local e condições
+agregadas da oferta educacional. As medianas usam as unidades contextuais, sem repetir
+cada indicador pelo número de alunos.
+
+| Atributo histórico | Mediana em 2023 | Contextos válidos / total | Unidade contextual |
+| --- | ---: | ---: | --- |
+| População 2021 | 11.563 habitantes | 4.871 / 4.871 | Município |
+| PIB per capita 2020 | R$ 18.256,44 | 4.871 / 4.871 | Município |
+| Participação da agropecuária no VAB 2020 | 17,23% | 4.871 / 4.871 | Município |
+| Participação dos serviços públicos no VAB 2020 | 31,62% | 4.871 / 4.871 | Município |
+| Alunos por turma nos anos iniciais 2021 | **19,5 alunos** | 5.871 / 5.881 | Município × rede |
+| Funções docentes com curso superior nos anos iniciais 2021 | **94,4%** | 5.872 / 5.881 | Município × rede |
+| Horas-aula diárias nos anos iniciais 2021 | **4,3 horas** | 5.871 / 5.881 | Município × rede |
+
+A população média de **33.245,10 habitantes** supera a mediana de 11.563; no PIB per
+capita, a média de **R$ 26.098,86** supera a mediana de R$ 18.256,44. As caudas à direita
+e escalas diferentes fundamentam `log1p` em população/PIB e padronização na logística.
+O boosting utiliza os numéricos sem log ou padronização. A escala log10 dos
+[histogramas econômicos](images/03_contexto_municipal_2023.png) serve apenas à visualização.
+
+Os intervalos educacionais são **3,6–34,8 alunos por turma**, **4,7–100% de funções docentes
+com superior** e **3–10,3 horas-aula diárias**. A formação concentra-se próxima de 100%;
+a jornada, perto de quatro horas, com alguns valores maiores. Esses indicadores de 2021
+não comprovam exposição individual, presença efetiva ou qualidade pedagógica.
+
+![Distribuições dos três indicadores educacionais por município e rede](images/16_eda_inep_2023.png)
+
+| Indicador do Inep | Contextos sem indicador | Alunos sem indicador | Cobertura por aluno |
+| --- | ---: | ---: | ---: |
+| Alunos por turma | 10 | 213 | 99,9858% |
+| Funções docentes com superior | 9 | 173 | 99,9885% |
+| Horas-aula diárias | 10 | 213 | 99,9858% |
+
+Os quatro atributos do IBGE estão completos. No Inep, `--` e células vazias são ausências,
+não zeros. A cobertura supera o requisito de 95% do protocolo; nenhum aluno é descartado.
+A mediana é aprendida nos dois folds de treinamento e reaplicada à validação.
+
+[Síntese da EDA enriquecida](reports/eda_enriquecida_2023.md) ·
+[Distribuições do IBGE](reports/eda_numericas_municipios_2023.csv) ·
+[Distribuições do Inep](reports/estudo_educacional_distribuicoes_2023.csv) ·
+[Cobertura por aluno e contexto](reports/estudo_educacional_cobertura_2023.csv) ·
+[Definições das fontes educacionais](docs/Fontes-Educacionais.md).
+
+### 4.3. Associações contextuais e limites de interpretação
+
+O gráfico apresenta associações com a **taxa observada de alfabetização de 2023**.
+Os painéis têm unidades e métodos distintos: Spearman entre municípios no IBGE;
+Pearson entre contextos município × rede no Inep. Os coeficientes não devem ser
+comparados como se medissem importância preditiva pelo mesmo procedimento.
+
+![Associações dos atributos externos com a taxa contextual de alfabetização](images/17_correlacoes_contextuais_2023.png)
+
+Nas correlações do Inep, a taxa de alfabetização tem associação linear **−0,1545**
+com alunos por turma, **+0,2041** com funções docentes com superior e **−0,02477**
+com horas-aula. Cada cálculo usa somente os pares completos: 5.871, 5.872 e 5.871,
+respectivamente. A associação marginal da jornada é próxima de zero; isso não
+demonstra que jornada seja irrelevante, nem autoriza interpretar os outros sinais
+como efeitos de uma intervenção.
+
+Na orientação original do relatório do IBGE, Spearman com a taxa municipal de
+**não alfabetização** é **+0,182** para população, **−0,266** para PIB per capita,
+**−0,196** para agropecuária e **+0,284** para serviços públicos, em 4.871 municípios.
+O painel acima inverte esses sinais para apresentar alfabetização, mantendo os mesmos
+pares e coeficientes em módulo. As associações do IBGE foram calculadas após a modelagem
+original e não justificam retrospectivamente a seleção inicial de atributos ou modelos.
+
+PIB per capita e participação dos serviços públicos no VAB também apresentam forte
+associação inversa entre si: **Spearman −0,9349**. Essa dependência indica possível
+redundância de informação e limita a atribuição de contribuições isoladas. PIB não é
+renda familiar; participação dos serviços públicos não é gasto em educação. Nenhum
+atributo foi removido ou modelo reajustado em decorrência desta leitura.
+
+Correlações não demonstram causalidade e podem refletir outras características dos
+territórios. Tampouco permitem concluir que um aluno individual seguirá o padrão médio
+do município ou da rede. A contribuição preditiva é examinada na comparação dos modelos
+e na importância por permutação, mantendo essas perguntas separadas.
+
+[Correlações originais do IBGE](reports/correlacoes_municipais_2023.csv) ·
+[Correlações do Inep](reports/estudo_educacional_correlacoes_2023.csv) ·
+[Consolidação e unidades de análise](reports/eda_enriquecida_2023_correlacoes.csv).
+
+### 4.4. Das evidências às hipóteses e decisões
+
+A tabela reúne evidências, justificativas e resultados já observados. **É uma síntese
+editorial posterior**, com a cronologia identificada na seção 4.1. O protocolo específico
+da comparação educacional foi registrado previamente no commit `038bdcd`.
+
+| Evidência no desenvolvimento de 2023 | Hipótese ou justificativa | Decisão e resultado verificável |
+| --- | --- | --- |
+| Os quatro atributos do IBGE variam entre municípios. | H1: o contexto numérico pode acrescentar informação além de rede e UF. | Comparar variantes rede/UF e completa nos mesmos três folds e alunos; a logística ganhou +0,004819 de AP média. |
+| População e PIB per capita têm médias acima das medianas e escalas diferentes. | Caudas à direita e escalas justificam transformar os dados no modelo linear. | Aplicar log1p em população/PIB e padronizar os quatro numéricos na logística; boosting sem log ou padronização. |
+| Há 625.382 não alfabetizados, ou 41,61%. | A classe de interesse tem volume expressivo; não há justificativa inicial para gerar exemplos artificiais. | Baseline de prevalência e AP da classe de risco; comparar modelos sem reamostragem ou ponderação de classes. |
+| Norte tem 48,89% de não alfabetização e Sul, 32,27%; há 5.881 perfis em 1.502.809 avaliações. | Heterogeneidade territorial e contextos repetidos limitam a independência entre alunos. | Folds por município, distribuições econômicas com uma linha por município e avaliação por região e municípios novos. |
+| Os quatro numéricos originais não têm ausências; os três do Inep deixam de cobrir 173–213 alunos cada. | A imputação precisa estar definida, com tratamento distinto entre cobertura original completa e expansão incompleta. | Mediana aprendida somente no treino. A Gold original exige contexto completo; o estudo preserva as ausências residuais até cada fold. |
+| Os três indicadores do Inep variam entre redes/municípios e têm cobertura superior a 99,98%. | H2: condições educacionais podem acrescentar informação ao contexto IBGE, rede e UF. | Comparar seis e nove atributos com mesmos folds e hiperparâmetros; ganho exploratório de AP +0,000531, positivo em dois folds e negativo em um. |
+| A associação marginal de horas-aula com alfabetização é próxima de zero; PIB e serviços públicos são fortemente associados. | Uma correlação isolada não estabelece utilidade multivariada, efeito causal ou contribuição independente. | Manter os conjuntos de atributos registrados; interpretar comparações e permutação com cautela, sem nova seleção a partir da consolidação. |
 
 O comparativo da logística deu suporte descritivo a H1: AP média de **0,533285** com
 rede/UF e **0,538103** com os seis atributos, diferença **+0,004819**, positiva nos três
-folds. Isso não demonstra causalidade nem significância estatística. Também não foi
-realizado um experimento isolando o efeito do log1p, da padronização ou da reamostragem;
-essas escolhas não são apresentadas como causas comprovadas de melhora.
+folds. H2 recebeu suporte preditivo pequeno e inconsistente entre folds, detalhado na
+seção 5.2. Esses resultados não demonstram causalidade nem significância estatística.
+Também não foi realizado um experimento isolando o efeito do log1p, da padronização ou
+da reamostragem; essas escolhas não são apresentadas como causas comprovadas de melhora.
 
-[EDA inicial](reports/eda_development.md) · [Distribuições numéricas](reports/eda_numericas_municipios_2023.csv) ·
-[Diferenças por região](reports/eda_regiao_2023.csv) · [Ganho do enriquecimento por fold](reports/logistica_delta_enriquecimento_2023.csv).
+[Ganho do IBGE por fold](reports/logistica_delta_enriquecimento_2023.csv) ·
+[Protocolo educacional](docs/Protocolo-Estudo-Educacional.md) ·
+[Diferenças com o Inep por fold](reports/estudo_educacional_deltas_2023.csv).
 
-### 4.2. Pipeline integrada e controles de validação
+## 5. Etapas de modelagem
+
+### 5.1. Pipeline integrada e controles de validação
 
 Três folds fixos separam municípios inteiros: 500.934, 500.942 e 500.933 alunos.
 O mapa de folds foi definido antes da modelagem, sem consultar rótulos. Em cada rodada,
@@ -148,16 +273,19 @@ dois folds treinam e o terceiro valida. Os municípios de validação não apare
 No boosting, `early_stopping=False` evita uma divisão interna aleatória de alunos que
 poderia repartir um mesmo município entre treino e validação interna.
 Não se usa ponderação ou balanceamento de classes no ajuste. Pesos são suplementares na
-avaliação. A imputação está implementada e testada, mas nenhum valor numérico precisou
-ser preenchido no snapshot utilizado. Uma nova carga com contexto incompleto é bloqueada
-pela validação da Gold e exige revisão da origem dos dados.
+avaliação. Na referência de seis atributos, a imputação está implementada e testada,
+mas nenhum valor numérico precisou ser preenchido. Uma nova carga com esse contexto
+original incompleto é bloqueada pela validação da Gold e exige revisão da origem dos
+dados. A expansão educacional é um estudo separado e imputa as ausências do Inep dentro
+dos folds, conforme a seção 4.2.
 
 O `ColumnTransformer` organiza as transformações numéricas e categóricas dentro da
 `Pipeline` do Scikit-learn, junto com o classificador. Medianas, categorias e parâmetros
 de escala são aprendidos apenas no treino de cada fold. O objeto persistido contém
 pré-processamento e modelo; as mesmas transformações são reaplicadas na previsão.
 
-Para prevenir vazamento, uma lista explícita limita X aos seis preditores. Proficiência,
+Para prevenir vazamento, uma lista explícita limita X aos seis preditores da referência
+ou aos nove do estudo complementar. Proficiência,
 rótulos, resultados contemporâneos, metas, pesos e identificadores não entram no modelo.
 Os dados externos são anteriores a 2023. Modelo e limiar foram congelados com o
 desenvolvimento antes da avaliação temporal de 2024.
@@ -170,17 +298,7 @@ novos. Os resultados não garantem desempenho equivalente em qualquer populaçã
 [Pré-processamento](src/preprocessing/) · [Modelos integrados](src/modeling/) ·
 [Reprodução completa](reports/reproducibilidade_completa.json) · [Teste temporal](reports/teste_temporal_2024.json).
 
-### 4.3. Correlações na interpretação complementar
-
-As correlações municipais foram calculadas na etapa posterior de interpretação,
-exclusivamente com 2023, sem redefinir atributos, modelo ou limiar. Spearman com a taxa
-municipal de não alfabetização: **+0,182** para população, **−0,266** para PIB per capita,
-**−0,196** para agropecuária e **+0,284** para serviços públicos. Há uma observação por
-município. Essas associações complementam a interpretação exploratória; não demonstram
-causalidade e não são justificativas retrospectivas para a seleção inicial do modelo.
-[Matriz de correlações](reports/correlacoes_municipais_2023.csv).
-
-### 4.4. Estudo complementar com indicadores educacionais
+### 5.2. Estudo complementar com indicadores educacionais
 
 A pergunta complementar é se o contexto educacional dos anos iniciais acrescenta
 informação aos seis atributos. O protocolo foi registrado no commit `038bdcd` antes
@@ -216,7 +334,7 @@ não demonstram efeitos causais nem características individuais de cada escola 
 [Distribuições](reports/estudo_educacional_distribuicoes_2023.csv) ·
 [Registro de integridade](reports/estudo_educacional_2023.json).
 
-## 5. Escolha do algoritmo
+## 6. Escolha do algoritmo
 
 A logística foi comparada com rede/UF e com todos os seis atributos. O boosting passou
 por seis configurações por variante, com 150.000 alunos selecionados por hash da chave
@@ -239,7 +357,7 @@ otimistas. O teste temporal ficou fora de qualquer seleção, inclusive de limia
 
 [Busca e configuração](reports/boosting_protocolo.md) · [Decisão final](config/modelo-final.json).
 
-## 6. Métricas de avaliação
+## 7. Métricas de avaliação
 
 AP = average precision da classe não alfabetizado; não é acurácia nem precisão de uma
 classificação binária. Os resultados de teste abaixo são calculados sobre cada recorte completo.
@@ -262,7 +380,7 @@ As métricas ponderadas e todas as matrizes de confusão estão no [JSON tempora
 
 ![Curvas do teste temporal](images/11_curvas_teste_2024.png)
 
-## 7. Interpretação dos resultados
+## 8. Interpretação dos resultados
 
 Permutação em validação de 2023, com 5 repetições em cada fold, mostra maior dependência
 de UF (queda média de AP 0,114826), seguida de serviços públicos/VAB (0,004855), população
@@ -275,7 +393,7 @@ repetições não são intervalos de confiança. Importância não é efeito cau
 
 ![Importância por permutação](images/10_importancia_permutacao_2023.png)
 
-## 8. Insights encontrados
+## 9. Insights encontrados
 
 - AC, DF e SP são UFs inéditas em relação ao desenvolvimento, com 427.789 avaliações.
   Elas concentram 99,92% dos alunos de municípios novos. O desempenho nesse recorte é menor.
@@ -291,7 +409,7 @@ repetições não são intervalos de confiança. Importância não é efeito cau
 [Municípios](reports/municipios_risco_2024.csv) · [Regiões](reports/regioes_teste_2024.csv) ·
 [Perfis semelhantes](reports/regioes_semelhantes_2023.csv).
 
-## 9. Limitações
+## 10. Limitações
 
 Só há 5.881 perfis de seis atributos em 2023; milhões de alunos não equivalem a milhões
 de contextos independentes. Ausentes não têm desfecho observado. O snapshot não comprova
@@ -304,7 +422,7 @@ O limiar F2 tem baixa seletividade e não é recomendado como mecanismo autônom
 As ponderações reproduzem `peso_aluno` da fonte; não transformam este recorte em ICA oficial
 nem comprovam representatividade nacional. Não foram estimados intervalos de confiança.
 
-## 10. Aplicação prática para políticas públicas
+## 11. Aplicação prática para políticas públicas
 
 Usar as tabelas para levantar hipóteses territoriais, verificar cobertura e planejar
 investigação pedagógica. Combinar risco, volume de alunos, evidências locais e capacidade
@@ -320,7 +438,7 @@ probabilidade de descumprir uma meta. Uma previsão futura exige população/atr
 compatíveis com o ciclo e validação temporal adicional.
 [Cenários e cobertura](reports/cenarios_metas_2024.csv).
 
-## 11. Possíveis evoluções futuras
+## 12. Possíveis evoluções futuras
 
 Validar chaves para incorporar informações escolares anteriores à prova; ampliar ciclos
 e cobertura; estudar calibração fora do teste já observado; escolher políticas de decisão

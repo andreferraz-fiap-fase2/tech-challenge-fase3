@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import re
 import subprocess
 import wave
 from pathlib import Path
@@ -83,10 +84,10 @@ def encode_clip(ffmpeg: str, output: Path, index: int, duration: float) -> Path:
     return clip
 
 
-def assemble_video(ffmpeg: str, output: Path, clips: list[Path]) -> Path:
+def assemble_video(ffmpeg: str, output: Path, clips: list[Path], version: str = "1.0") -> Path:
     listing = output / "render/clips.txt"
     listing.write_text("\n".join(f"file '{clip.name}'" for clip in clips) + "\n")
-    video = output / "Video-Executivo-Fase3-v1.0.mp4"
+    video = output / f"Video-Executivo-Fase3-v{version}.mp4"
     subprocess.run(
         [
             ffmpeg,
@@ -123,12 +124,16 @@ def assemble_video(ffmpeg: str, output: Path, clips: list[Path]) -> Path:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
-    output = parser.parse_args().output.resolve()
+    parser.add_argument("--version", default="1.0")
+    args = parser.parse_args()
+    if not re.fullmatch(r"\d+\.\d+", args.version):
+        parser.error("Versão inválida; esperado N.N")
+    output = args.output.resolve()
     pdfs = stamp_pdfs(output)
     durations = audio_durations(output)
     ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
     clips = [encode_clip(ffmpeg, output, i, seconds) for i, seconds in enumerate(durations, 1)]
-    video = assemble_video(ffmpeg, output, clips)
+    video = assemble_video(ffmpeg, output, clips, args.version)
     frames = imageio_ffmpeg.read_frames(str(video))
     metadata = next(frames)
     frames.close()

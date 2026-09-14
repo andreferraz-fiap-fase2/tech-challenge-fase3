@@ -4,11 +4,11 @@
 
 ## Slide 1
 
-A alfabetização é um desafio educacional e de planejamento. Este projeto de André Mohallem Ferraz transforma a engenharia de dados construída na Fase dois em uma análise de risco contextual. O objetivo é estimar a probabilidade de um aluno avaliado ser alfabetizado e apoiar a leitura dos territórios. O resultado é um instrumento exploratório: ele não substitui o diagnóstico pedagógico nem demonstra as causas das dificuldades de aprendizagem.
+Este projeto de André Mohallem Ferraz responde a uma pergunta: qual é a probabilidade estimada de um aluno do segundo ano ser considerado alfabetizado, dado seu contexto? O resultado observado segue o critério de setecentos e quarenta e três pontos de proficiência. O modelo estima uma probabilidade; uma regra de decisão produz a classificação. Essa diferença é importante: mudar o limiar de probabilidade não muda o padrão de alfabetização. A previsão é contextual, sem substituir uma avaliação pedagógica individual.
 
 ## Slide 2
 
-A análise utiliza três milhões e trezentas e cinquenta mil avaliações reais elegíveis, distribuídas entre dois mil e vinte e três e dois mil e vinte e quatro. Foram retirados eventos simulados, ausências e avaliações inválidas. As fontes da fase anterior foram auditadas e enriquecidas com população e economia municipais do IBGE. São seis atributos: rede, estado, população, PIB por habitante e duas participações econômicas. A nota da própria prova ficou fora dos preditores, pois ela determina o resultado que queremos prever.
+A análise utiliza três milhões e trezentas e cinquenta mil avaliações reais elegíveis em dois ciclos. Eventos simulados, ausências e avaliações inválidas foram excluídos. A Gold anterior era municipal. Por isso, reconstruímos uma Gold por aluno a partir da Silver e dos originais da Fase dois, com auditoria e enriquecimento do IBGE. O modelo de referência usa seis atributos: rede, estado e quatro indicadores demográficos e econômicos. A nota da prova determina o alvo e fica fora dos preditores.
 
 ## Slide 3
 
@@ -24,15 +24,15 @@ O critério acadêmico de escolha do limiar deu prioridade à recuperação dos 
 
 ## Slide 6
 
-A análise de importância mostrou que o estado é a variável de maior influência preditiva. Os indicadores econômicos municipais agregam informação, mas com contribuição menor. Essa dependência explica por que os primeiros municípios no ranking previsto se concentram em Sergipe. Aracaju e Nossa Senhora do Socorro aparecem no topo do recorte analisado. Isso deve orientar perguntas e verificações locais, e não ser apresentado como ranking oficial ou como evidência de que o território causa o desfecho de uma criança.
+A importância por permutação mostra maior dependência do estado. Isso é contribuição preditiva, sem demonstrar causalidade. Os erros variam entre regiões: no Sul, o risco foi subestimado em cerca de sete pontos percentuais; no Centro-Oeste, superestimado em quase seis. As metas municipais da Gold anterior entram somente na análise posterior. O cenário de oitenta por cento mantém o contexto de dois mil e vinte e quatro e não constitui previsão validada para dois mil e trinta.
 
 ## Slide 7
 
-Os erros também mudam entre regiões. No Sul, o risco médio foi subestimado em aproximadamente sete pontos percentuais; no Centro-Oeste, foi superestimado em quase seis. Na comparação dos perfis de contexto, Centro-Oeste e Sul ficaram mais próximos, mas isso não significa resultados educacionais iguais. A análise de metas usa taxas previstas e referências municipais da fase anterior. Um cenário de oitenta por cento é apenas uma simulação com a composição de dois mil e vinte e quatro, e não uma previsão para dois mil e trinta.
+Para investigar a dimensão educacional, acrescentamos três indicadores históricos do Inep: tamanho das turmas, funções docentes com curso superior e horas de aula. A cobertura supera noventa e nove vírgula noventa e oito por cento. A comparação exploratória usa os mesmos três grupos municipais de dois mil e vinte e três e passa de seis para nove atributos. O ganho de average precision foi pequeno: melhorou em dois grupos e piorou em um. Esse estudo não tem novo teste independente e não substitui o modelo de referência.
 
 ## Slide 8
 
-Para gestores, a recomendação é combinar risco contextual, quantidade de alunos, cobertura dos dados e evidências pedagógicas locais. O projeto oferece uma base auditável para planejar investigações e discutir apoio territorial. Antes de orientar atendimento ou orçamento, é necessário ampliar dados escolares, validar a cobertura e definir custos e capacidade reais. A entrega inclui código versionado, testes, documentação e reprodução do experimento. O valor está em apresentar evidências e limites com clareza para apoiar decisões responsáveis.
+A entrega também demonstra a previsão em perfis históricos de município e rede. Para Belo Horizonte, rede municipal, o modelo estima cinquenta e oito vírgula sessenta e seis por cento de probabilidade de alfabetização. A regra de cinquenta por cento classifica como alfabetizado, enquanto a política sensível de F dois sinaliza atenção. As probabilidades são iguais; as decisões refletem objetivos diferentes. Para gestores, a recomendação é combinar contexto, volume, cobertura e evidência pedagógica local. Código, fontes, testes e reprodução acompanham os materiais da entrega.
 
 ## Orientação de apresentação
 

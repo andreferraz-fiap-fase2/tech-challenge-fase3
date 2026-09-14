@@ -1,0 +1,87 @@
+{
+  "author": "André Mohallem Ferraz",
+  "delivery_version": "1.2",
+  "reference_model_version": "1.0",
+  "verified_at_utc": "2026-09-13T23:47:21.624488+00:00",
+  "tests_passed": 122,
+  "lint_and_format_passed": true,
+  "local_links_verified": 152,
+  "document_visual_review_passed": true,
+  "current_repository_auxiliary_files_removed": true,
+  "documents": [
+    {
+      "file": "Apresentacao-Executiva-Fase3-v1.2.pdf",
+      "bytes": 123683,
+      "sha256": "a1b97beda678058f026ee5601b94a6b0543a9d1160b8179bd4737ef74eec5881"
+    },
+    {
+      "file": "Relatorio-Tecnico-Fase3-v1.2.pdf",
+      "bytes": 1021064,
+      "sha256": "26187ad6d6d681da3162b4d6ee7a637a9a7a4a629e8dc8c8e6a303ba85e45e4f"
+    },
+    {
+      "file": "Roteiro-Video-Fase3-v1.2.pdf",
+      "bytes": 200207,
+      "sha256": "4c785a1092d3db980aaf919b3c19876486fc3390e90ac829fd5804b04bbca990"
+    },
+    {
+      "file": "Relatorio-Tecnico-Fase3-v1.2.docx",
+      "bytes": 851342,
+      "sha256": "4e6dfaf7646d2c40ae3792435534b6c00f3f9db941a99030215004ada8005a32"
+    },
+    {
+      "file": "Roteiro-Video-Fase3-v1.2.docx",
+      "bytes": 40153,
+      "sha256": "3b46115871ed8e149a4c0f43711701657c10a91e36c2a2cd1d13c0ada191b7d7"
+    },
+    {
+      "file": "Apresentacao-Executiva-Fase3-v1.2.pptx",
+      "bytes": 117489,
+      "sha256": "ef4e85ff005125e7769e3bf16c2a1b0a688a9154752c373d80c82e3ebb8c3cf7"
+    }
+  ],
+  "pdfs": [
+    {
+      "file": "Apresentacao-Executiva-Fase3-v1.2.pdf",
+      "pages": 8,
+      "author": "André Mohallem Ferraz"
+    },
+    {
+      "file": "Relatorio-Tecnico-Fase3-v1.2.pdf",
+      "pages": 16,
+      "author": "André Mohallem Ferraz"
+    },
+    {
+      "file": "Roteiro-Video-Fase3-v1.2.pdf",
+      "pages": 2,
+      "author": "André Mohallem Ferraz"
+    }
+  ],
+  "video": {
+    "file": "Video-Executivo-Fase3-v1.2.mp4",
+    "duration_seconds": 293.1,
+    "sha256": "21a03353645cfdb588cda1f1f3104201aa3572f592c88cd9d3de599ac556e0bd",
+    "full_decode_verified": true
+  },
+  "educational_study": {
+    "students": 1502809,
+    "new_independent_test": false,
+    "reference_oof_identical": true,
+    "model_promoted": false,
+    "report_sha256": "d6a2bc42f04602de6c2e9ef2b366d69a2f05bff3dc073a43eb713341626ed6e6"
+  },
+  "frozen_files_verified": {
+    "artifacts/modelo_final.joblib": "af9c0953a472ef63edc8bae850c88a39c1814c881b87c53b15f6b37c57733331",
+    "reports/ajuste_final.json": "cf38433a4e6b32e5ee6aad1b8ec6693fed5941d9c91cdcb9909a6c7caa2ed2a5",
+    "artifacts/previsoes_teste_2024.parquet": "149049a4fde7985c75b79b5c1152737f930647a8635927dc937417b75cbd829a",
+    "reports/calibracao_teste_2024.csv": "06b462c8253694f589f5e1195ac644ed207ebdca3580f0df2a333d4d11d7e366",
+    "data/gold/ml_aluno/ano=2023/alunos.parquet": "a9bfd5749fbbf5cb52b2d3be34650f7021230139286ab95ed51accd127628241",
+    "artifacts/boosting_oof_2023.parquet": "281a20e17bc0d7af9c0fc77af45cf70bec20619cec28e66aa193977f8bd512cf",
+    "config/experimento-boosting.json": "52008d4fbe7a40666530f2cdd82c247268d762af64aa52e262ad8d0d7dec6b51",
+    "config/contrato-ml-aluno.json": "7af52859f26a330fa3a3b0cc7c24dc91c2c0a60861737556ed3fde21e1ff5496",
+    "config/folds-municipios-2023.csv": "ec48d312554e14ec2db0a76383dd93d8c465aa038fd1454b65f474aad6b3e20f",
+    "reports/modelos_comparacao_2023.csv": "162521a3ad4c9b2e35306d5bc63f00fba76016a7bb6975c75003f203fb59b940",
+    "reports/boosting_development.json": "dccca05612c9bc5e788a9fda8aa2f187bed79d693b9993833fab878939e9dd87"
+  },
+  "public_checksums_sha256": "c5dfefe249d54c7d9c0b00ee67523f87b0dafc2a0deea238e210523b0b001e6d"
+}

@@ -16,6 +16,29 @@ ROOT = Path(__file__).resolve().parents[1]
 NAVY, GOLD, GRAY, WHITE = "183650", "B78C31", "596573", "FFFFFF"
 
 
+def markdown_paragraph_lines(markdown: str) -> list[str]:
+    """Reúne quebras suaves sem quebrar ênfase, tabelas ou comandos cercados por fences."""
+    lines: list[str] = []
+    previous_plain, code = False, False
+    for raw in markdown.splitlines():
+        line = raw.strip()
+        fence = line.startswith("```")
+        structural = (
+            not line
+            or code
+            or fence
+            or bool(re.match(r"^(#{1,6}\s|[-*]\s|\d+\.\s|[|!>]|<!--)", line))
+        )
+        if previous_plain and not structural:
+            lines[-1] += " " + line
+        else:
+            lines.append(line)
+        previous_plain = not structural
+        if fence:
+            code = not code
+    return lines
+
+
 class WordDocuments:
     def __init__(self, output: Path, version: str = "1.0") -> None:
         self.output = output
@@ -90,13 +113,26 @@ class WordDocuments:
         field = OxmlElement("w:fldSimple")
         field.set(qn("w:instr"), "PAGE")
         footer._p.append(field)
-        lines = markdown.splitlines()
+        lines = markdown_paragraph_lines(markdown)
         i = 0
         pending_page_break = False
+        code_block = False
         while i < len(lines):
             line = lines[i].strip()
             i += 1
             if not line:
+                continue
+            if line.startswith("```"):
+                code_block = not code_block
+                continue
+            if code_block:
+                paragraph = document.add_paragraph()
+                run = paragraph.add_run(line)
+                run.font.name = "Consolas"
+                run.font.size = Pt(8)
+                if pending_page_break:
+                    paragraph.paragraph_format.page_break_before = True
+                    pending_page_break = False
                 continue
             if line == "<!-- pagebreak -->":
                 pending_page_break = True
@@ -174,6 +210,7 @@ class WordDocuments:
             ["## 7. Interpretação dos resultados"],
             ["## 8. Insights encontrados"],
             ["## 9. Limitações", "## 10. Aplicação prática para políticas públicas"],
+            ["## Demonstração da previsão"],
             ["## 11. Possíveis evoluções futuras", "## Como reproduzir"],
             ["## Referências"],
         ]
@@ -181,17 +218,23 @@ class WordDocuments:
         extras = {
             3: "\n![Escolha do limiar](images/09_limiar_f2_2023.png)\n",
             6: "\n![Erros por região](images/12_regioes_teste_2024.png)\n",
-            9: "\n## Apêndice — perfis regionais\n\n![Perfis regionais](images/14_perfis_regionais_2023.png)\n",
+            10: "\n## Apêndice — perfis regionais\n\n![Perfis regionais](images/14_perfis_regionais_2023.png)\n",
         }
         for index, group in enumerate(groups):
             page = "\n".join(sections[name] for name in group)
             if index == 2:
                 page = page.replace("### 4.2.", "<!-- pagebreak -->\n\n### 4.2.")
-            if index == 8:
-                page = re.sub(r"```.*?```", "", page, flags=re.S)
+                page = page.replace("### 4.4.", "<!-- pagebreak -->\n\n### 4.4.")
+            if index == 0:
+                page = page.replace("## 2.", "<!-- pagebreak -->\n\n## 2.")
+            if index == 9:
+                page = re.sub(r"```text.*?```", "", page, flags=re.S)
             pages.append(page + extras.get(index, ""))
         pages.append(
             "## Apêndice — distribuições do contexto\n\nUma observação por município no desenvolvimento de 2023. A escala log10 desta figura é apenas visual; o modelo logístico utiliza log1p.\n\n![Distribuições do contexto](images/03_contexto_municipal_2023.png)\n"
+        )
+        pages.append(
+            "## Apêndice — linhagem da Gold\n\nA Gold por aluno adapta a granularidade das fontes da Fase 2. A Gold municipal original participa da análise posterior de metas. O ramo educacional utiliza somente desenvolvimento e não substitui o modelo temporalmente avaliado.\n\n![Linhagem da Gold](images/15_linhagem_gold.png)\n\n[Detalhes da pergunta e das origens](docs/Pergunta-e-Linhagem.md).\n"
         )
         markdown = title + abstract + "\n<!-- pagebreak -->\n".join(pages)
         (ROOT / "docs/Relatorio-Tecnico-Fase3.md").write_text(

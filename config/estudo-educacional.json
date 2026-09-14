@@ -1,0 +1,43 @@
+{
+  "version": "1.0-exploratorio",
+  "author": "André Mohallem Ferraz",
+  "question": "Indicadores educacionais históricos acrescentam informação preditiva ao contexto IBGE, rede e UF para estimar a probabilidade de alfabetização?",
+  "development_year": 2023,
+  "reference_experiment": "1.0",
+  "reference_commit": "6d19c7bd60a480866965e49784b193bb6f1f200b",
+  "previous_test_2024_already_observed": true,
+  "new_independent_test_available": false,
+  "status": "protocolo definido antes da comparação complementar",
+  "scope": "Validação cruzada exploratória exclusivamente em 2023; não substitui o experimento temporal 1.0",
+  "external_context_cutoff": "2022-12-31",
+  "join": ["id_municipio", "rede_nome"],
+  "education_features": [
+    "alunos_por_turma_ai_2021",
+    "docentes_superior_ai_2021",
+    "horas_aula_ai_2021"
+  ],
+  "minimum_student_coverage_per_feature": 0.95,
+  "variants": ["ibge", "ibge_inep"],
+  "folds": [0, 1, 2],
+  "max_iter": 100,
+  "max_leaf_nodes": 7,
+  "learning_rate": 0.05,
+  "min_samples_leaf": 100,
+  "l2_regularization": 1.0,
+  "random_state": 42,
+  "threads": 1,
+  "early_stopping": false,
+  "hyperparameter_search": false,
+  "threshold_search": false,
+  "calibration_fit": false,
+  "class_weight": null,
+  "sample_weight_fit": false,
+  "primary_metric": "average_precision_risk",
+  "secondary_metrics": ["roc_auc_risk", "brier_risk"],
+  "interpretation": "Diferenças descritivas entre os mesmos três folds, sem inferência causal, significância estatística ou nova alegação de teste independente",
+  "expected_sha256": {
+    "data/gold/ml_aluno/ano=2023/alunos.parquet": "a9bfd5749fbbf5cb52b2d3be34650f7021230139286ab95ed51accd127628241",
+    "config/folds-municipios-2023.csv": "ec48d312554e14ec2db0a76383dd93d8c465aa038fd1454b65f474aad6b3e20f",
+    "artifacts/boosting_oof_2023.parquet": "281a20e17bc0d7af9c0fc77af45cf70bec20619cec28e66aa193977f8bd512cf"
+  }
+}

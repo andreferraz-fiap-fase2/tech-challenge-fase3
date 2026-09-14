@@ -2,28 +2,56 @@
 
 **Autor: André Mohallem Ferraz**
 
-**FIAP · Tech Challenge Fase 3 · Trabalho individual · Revisão documental 1.1 · 13/09/2026**
+**FIAP · Tech Challenge Fase 3 · Trabalho individual · Revisão documental 1.2 · 13/09/2026**
 
 **Síntese executiva.** O Gradient Boosting supera o baseline no teste temporal, com AP 0,5162 e ROC-AUC 0,6224. Seu limiar acadêmico de F2 sinaliza 96,84% dos alunos. A entrega evidencia potencial para leitura territorial e limites importantes de generalização e seletividade, sem recomendar decisões individuais autônomas.
 
 ## 1. Contexto do problema
 
 A Fase 2 construiu a engenharia de dados do Indicador Criança Alfabetizada (ICA), dos
-territórios e das metas. Esta entrega reconstrói uma Gold por aluno/ano a partir das
-fontes auditadas daquela pipeline e utiliza sua Gold municipal na análise posterior de
-metas. O projeto é independente e preserva a entrega anterior.
+territórios e das metas. Sua Gold municipal reúne indicadores agregados e não preserva
+o desfecho de cada aluno necessário à classificação individual. Esta entrega reconstrói
+uma **Gold por aluno/ano** a partir da Silver e das fontes originais auditadas daquela
+pipeline, aplica os filtros de elegibilidade e acrescenta o contexto do IBGE. A Gold
+municipal original participa da análise posterior de metas. Essa adaptação de grão
+preserva a entrega anterior e explicita a origem dos dados usados no treinamento.
 
-O padrão nacional de alfabetização corresponde a 743 pontos na escala Saeb. A própria
-proficiência define o rótulo e, portanto, não pode ser usada como preditor.
+O critério observado é **proficiência maior ou igual a 743 pontos = alfabetizado**;
+proficiência válida abaixo de 743 = não alfabetizado. A própria nota define o rótulo
+e, portanto, fica fora dos preditores. Ausência na prova ou nota inválida não equivale
+a não alfabetização e leva à exclusão do registro desta população de estudo.
 [Referência: Inep, Avaliação da Alfabetização](https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/avaliacao-da-alfabetizacao).
 
 
+<!-- pagebreak -->
+
 ## 2. Objetivo analítico
 
-Estimar `P(alfabetizado)` para avaliações válidas do 2º ano das redes Estadual e Municipal.
-A classe de interesse na avaliação é não alfabetizado: `p_risco = 1 - P(alfabetizado)`.
-Chave: `(ano, id_aluno)`. Identificadores não permitem acompanhar a mesma criança entre anos.
-Os atributos são contextuais; alunos com os mesmos atributos recebem a mesma probabilidade.
+**Pergunta principal:** qual é a probabilidade estimada de um aluno avaliado do 2º ano
+da rede Estadual ou Municipal ser considerado alfabetizado pelo critério de proficiência
+maior ou igual a 743 pontos, considerando sua rede de ensino e o contexto territorial
+e socioeconômico do município?
+
+O modelo estima `P(alfabetizado)`. A classe de interesse na avaliação é não alfabetizado:
+`p_risco = 1 - P(alfabetizado)`. A classificação binária solicitada pelo desafio é obtida
+aplicando um limiar a essa probabilidade. **O corte de 743 pontos define o alvo observado;
+o limiar de probabilidade define a decisão do modelo.** São critérios distintos.
+
+Na referência de 0,5, `p_risco >= 0,5` resulta em previsão de não alfabetizado; abaixo
+disso, alfabetizado. A política F2 congelada sinaliza risco a partir de
+`p_risco >= 0,15016323973380263`, priorizando a identificação de não alfabetizados.
+Esse limiar tem baixa seletividade e não representa um novo padrão de alfabetização.
+As duas decisões usam as mesmas probabilidades, sem modificar o critério observado.
+
+**Pergunta complementar:** quais variáveis mais contribuem para as estimativas produzidas
+pelo modelo? A importância por permutação descreve contribuição preditiva, sem estabelecer
+que alterar uma variável causará melhora na alfabetização.
+
+A chave é `(ano, id_aluno)`; os identificadores não permitem acompanhar a mesma criança
+entre anos. Os atributos são contextuais: alunos com os mesmos atributos recebem a mesma
+probabilidade. A ampliação com indicadores educacionais do Inep é examinada em estudo
+complementar de 2023, separado do modelo final 1.0 e de seu teste temporal já observado.
+[Pergunta, critérios e linhagem da Gold](../docs/Pergunta-e-Linhagem.md).
 
 
 <!-- pagebreak -->
@@ -65,6 +93,16 @@ Metas, indicadores contemporâneos, proficiência, rótulos, IDs e peso ficam fo
 A Gold municipal da Fase 2 entra somente na leitura posterior das metas, sem orientar o modelo.
 [Contrato](../config/contrato-ml-aluno.json) · [Dicionário](../config/dicionario-variaveis.csv) ·
 [Snapshot de oito arquivos](../config/snapshot.json) · [Preparação das entradas](../data/README.md).
+
+**Expansão educacional complementar — Inep.** Três bases municipais de 2021 acrescentam
+média de alunos por turma, percentual de docentes com curso superior e média de horas
+de aula, para os anos iniciais. As páginas das edições foram publicadas em 31/01/2022.
+A junção por município e rede Estadual/Municipal usa a localização Total e mantém os
+1.502.809 alunos de 2023. A cobertura é 99,9858% para turmas/horas e 99,9885% para docentes.
+Restam 213, 213 e 173 alunos com ausência, respectivamente, tratada dentro dos folds.
+O modelo de referência conserva seus seis atributos; os nove atributos pertencem ao
+estudo complementar. [Fontes e definições](../docs/Fontes-Educacionais.md) ·
+[Manifesto educacional](../config/fontes-educacionais.json).
 
 
 <!-- pagebreak -->
@@ -143,6 +181,44 @@ municipal de não alfabetização: **+0,182** para população, **−0,266** par
 município. Essas associações complementam a interpretação exploratória; não demonstram
 causalidade e não são justificativas retrospectivas para a seleção inicial do modelo.
 [Matriz de correlações](../reports/correlacoes_municipais_2023.csv).
+
+<!-- pagebreak -->
+
+### 4.4. Estudo complementar com indicadores educacionais
+
+A pergunta complementar é se o contexto educacional dos anos iniciais acrescenta
+informação aos seis atributos. O protocolo foi registrado no commit `038bdcd` antes
+da comparação. A EDA dos novos atributos foi gravada antes dos ajustes, com distribuição
+e correlação por município × rede; os alunos e os três folds de 2023 foram preservados.
+
+As duas variantes utilizam o mesmo boosting de sete folhas e 100 iterações. A expansão
+inclui três atributos do Inep e mediana no treino para as ausências residuais. Não houve
+busca, calibração ou escolha de limiar nessa comparação.
+
+| CV exploratória de 2023 | AP média | ROC-AUC média | Brier médio ↓ |
+| --- | ---: | ---: | ---: |
+| IBGE + rede/UF: seis atributos | 0,543776 | 0,642578 | 0,227481 |
+| IBGE + rede/UF + Inep: nove atributos | 0,544307 | 0,643154 | 0,227355 |
+
+O ganho médio de AP foi **+0,000531**, com melhora em dois folds e piora em um.
+O Brier diminuiu **0,000126**, com melhora nos três folds. O ganho é pequeno e não
+há demonstração de significância estatística. A referência de seis atributos reproduziu
+exatamente as 1.502.809 probabilidades de validação originais; as seis pipelines novas
+foram persistidas e suas previsões conferidas após reabertura.
+
+O teste temporal de 2024 já havia sido observado e não foi carregado para esta análise.
+Este estudo reutiliza desenvolvimento conhecido, permanece exploratório e não promove
+a expansão a modelo final. O modelo de referência, o limiar e a avaliação temporal 1.0
+permanecem os mesmos. Os indicadores representam contexto da rede no município;
+não demonstram efeitos causais nem características individuais de cada escola ou aluno.
+
+![Comparação educacional por fold](../images/15_estudo_educacional_2023.png)
+
+[Protocolo](../docs/Protocolo-Estudo-Educacional.md) ·
+[Resultados e diferenças por fold](../reports/estudo_educacional_2023.md) ·
+[EDA anterior ao ajuste](../reports/estudo_educacional_eda_2023.json) ·
+[Distribuições](../reports/estudo_educacional_distribuicoes_2023.csv) ·
+[Registro de integridade](../reports/estudo_educacional_2023.json).
 
 
 <!-- pagebreak -->
@@ -265,12 +341,41 @@ compatíveis com o ciclo e validação temporal adicional.
 
 
 <!-- pagebreak -->
+## Demonstração da previsão
+
+A demonstração recebe município e rede de um perfil histórico válido e executa o modelo
+de referência 1.0. Os hashes são conferidos antes de carregar a pipeline; a consulta
+seleciona apenas atributos contextuais da Gold de 2023.
+
+```bash
+uv run python -m src.usecase.predict_profiles --municipio 3106200 --rede Municipal
+uv run python -m src.usecase.predict_profiles --input examples/perfis-demonstracao.csv
+```
+
+| Perfil histórico | P(alfabetizado) estimada | Referência de risco 0,5 | Política F2 |
+| --- | ---: | --- | --- |
+| Belo Horizonte — Municipal | 58,6568% | Alfabetizado | Sinalizado |
+| Salvador — Municipal | 39,0830% | Não alfabetizado | Sinalizado |
+| Porto Alegre — Estadual | 54,6025% | Alfabetizado | Sinalizado |
+
+As probabilidades são as mesmas nas duas regras de decisão. O baixo limiar F2 explica
+a sinalização de perfis cuja probabilidade estimada de alfabetização supera 50%.
+Esses exemplos demonstram o funcionamento da inferência em contextos conhecidos;
+não são avaliação independente, diagnóstico individual ou previsão para 2026.
+Os indicadores adicionais do Inep não alimentam essa pipeline de referência.
+[Instruções e leitura da saída](../docs/Demonstracao-Previsao.md) ·
+[Entradas públicas dos exemplos](../examples/perfis-demonstracao.csv) ·
+[Resultados completos](../examples/resultado-demonstracao.json).
+
+
+<!-- pagebreak -->
 ## 11. Possíveis evoluções futuras
 
 Validar chaves para incorporar informações escolares anteriores à prova; ampliar ciclos
 e cobertura; estudar calibração fora do teste já observado; escolher políticas de decisão
 com capacidade/custos reais; medir incerteza por município e monitorar erro regional.
-Qualquer novo experimento deve reservar outro teste, mantendo esta versão como registro.
+Uma nova versão candidata ao uso final exige outro teste independente. O estudo educacional
+complementar reutiliza somente desenvolvimento e é identificado como exploratório.
 
 
 ## Como reproduzir
@@ -278,7 +383,12 @@ Qualquer novo experimento deve reservar outro teste, mantendo esta versão como 
 Python 3.12, dependências diretas e transitivas fixadas em `pyproject.toml` e `uv.lock`.
 Com os oito arquivos de entrada descritos em [data/README.md](../data/README.md):
 
-
+```bash
+uv sync --frozen
+uv run pytest -q
+uv run python -m src.pipeline prepare --source "/caminho/para/apoio"
+uv run python -m src.usecase.reproduce_all
+```
 
 O último comando reconstrói a Gold, EDA, baseline, logística, busca de boosting, ajuste
 final e teste em pastas temporárias. Mantém os recibos históricos depois de confrontar
@@ -291,7 +401,20 @@ o teste. `run-all`, `logistic` e `boosting` são bloqueados na raiz congelada pa
 a proveniência; a reprodução completa executa essas funções em uma raiz temporária.
 `interpret`, `strategy` e `final-figures` exportam análises sem retreinar o modelo final.
 
-Verificação: **70 testes aprovados**. Reprodução final com métricas exatamente iguais,
+Para reproduzir a expansão, preparar também os três ZIPs descritos em
+[Fontes Educacionais](../docs/Fontes-Educacionais.md) e executar o estudo em uma **nova pasta
+externa ao projeto**. A rotina recusa sobrescrever resultados e preserva a versão 1.0:
+
+```bash
+uv run python -m src.infrastructure.education_sources download
+uv run python -m src.usecase.education_study --root . --output-root ../estudo-educacional-reproducao
+```
+
+O estudo registra EDA antes do ajuste, cobertura, métricas pareadas, modelos e hashes.
+Seus resultados publicados são exploratórios; não representam novo teste independente.
+
+Verificação atual: **122 testes aprovados**, incluindo fontes educacionais, estudo e
+demonstração. Reprodução final original com métricas exatamente iguais,
 quatro arquivos idênticos por SHA-256 e 1.000 previsões conferidas após reabrir o modelo.
 Veja [reprodução completa](../reports/reproducibilidade_completa.json) e [final](../reports/reproducibilidade_final.json).
 As 14 advertências remanescentes são de depreciação de Matplotlib/Pyparsing.
@@ -311,6 +434,9 @@ não exige os arquivos reais. O vídeo e os documentos finais são publicados co
 - [IBGE: população DOU 2021](https://ftp.ibge.gov.br/Estimativas_de_Populacao/Estimativas_2021/estimativa_dou_2021.ods).
 - [IBGE: PIB dos Municípios, edição 2020](https://ftp.ibge.gov.br/Pib_Municipios/2020/base/base_de_dados_2010_2020_txt.zip).
 - [Inep: ICA e metas](https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/avaliacao-da-alfabetizacao).
+- [Inep: média de alunos por turma, 2021](https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/media-de-alunos-por-turma/2021).
+- [Inep: percentual de docentes com curso superior, 2021](https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/percentual-de-docentes-com-curso-superior/2021).
+- [Inep: média de horas-aula diária, 2021](https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/media-de-horas-aula-diaria/2021).
 - [Scikit-learn 1.7: HistGradientBoostingClassifier](https://scikit-learn.org/1.7/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html).
 
 Os documentos de etapas anteriores registram o estado na data de sua elaboração. Este
@@ -326,3 +452,12 @@ README, o relatório final e a decisão congelada representam o estado da entreg
 Uma observação por município no desenvolvimento de 2023. A escala log10 desta figura é apenas visual; o modelo logístico utiliza log1p.
 
 ![Distribuições do contexto](../images/03_contexto_municipal_2023.png)
+
+<!-- pagebreak -->
+## Apêndice — linhagem da Gold
+
+A Gold por aluno adapta a granularidade das fontes da Fase 2. A Gold municipal original participa da análise posterior de metas. O ramo educacional utiliza somente desenvolvimento e não substitui o modelo temporalmente avaliado.
+
+![Linhagem da Gold](../images/15_linhagem_gold.png)
+
+[Detalhes da pergunta e das origens](../docs/Pergunta-e-Linhagem.md).

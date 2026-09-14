@@ -6,19 +6,19 @@ Essas ferramentas editoriais usam ambiente separado da modelagem. As dependênci
 em `requirements-entrega.txt`. A exportação utiliza Word e PowerPoint instalados no Windows;
 a narração usa a voz genérica Microsoft Maria Desktop (pt-BR), sem imitar a voz do autor.
 
-Para gerar somente a revisão documental do relatório, acrescentar
-`--report-only --report-version 1.1` ao comando abaixo. Essa revisão explicita as fontes
-IBGE e a ligação entre EDA, hipóteses e decisões, preservando o experimento congelado.
+Para gerar somente o relatório, acrescentar `--report-only`. A versão 1.2 inclui a
+pergunta probabilística, a linhagem da Gold, o estudo educacional e a demonstração.
+Gerar em uma nova pasta para preservar os materiais anteriormente publicados.
 
 ```bash
-uv run --no-project --python 3.13 --isolated --with python-docx==1.2.0 --with python-pptx==1.0.2 python tools/gerar_documentos.py --output /caminho/Entrega-Final
+uv run --no-project --python 3.13 --isolated --with python-docx==1.2.0 --with python-pptx==1.0.2 python tools/gerar_documentos.py --report-version 1.2 --output /caminho/Revisao-1.2
 ```
 
-No PowerShell do Windows, executar `powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/exportar-documentos.ps1 -Output <pasta da entrega>`.
+No PowerShell do Windows, executar `powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/exportar-documentos.ps1 -Version 1.2 -Output <pasta da entrega>`.
 O script exporta PDFs, os oito slides em PNG e a narração em WAV. Depois:
 
 ```bash
-uv run --no-project --python 3.13 --isolated --with pymupdf==1.28.2 --with imageio-ffmpeg==0.6.0 python tools/finalizar_midia.py --output /caminho/Entrega-Final
+uv run --no-project --python 3.13 --isolated --with pymupdf==1.28.2 --with imageio-ffmpeg==0.6.0 python tools/finalizar_midia.py --version 1.2 --output /caminho/Revisao-1.2
 ```
 
 A finalização preenche autoria nos PDFs, mede os áudios, recusa duração acima de cinco

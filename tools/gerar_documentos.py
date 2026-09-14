@@ -10,7 +10,7 @@ from documentos_word import WordDocuments
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--report-version", default="1.0", help="Revisão documental N.N")
+    parser.add_argument("--report-version", default="1.0", help="Versão N.N dos entregáveis")
     parser.add_argument(
         "--report-only", action="store_true", help="Gera somente o relatório técnico"
     )
@@ -19,7 +19,7 @@ def main() -> None:
     if args.report_only:
         print("Relatório técnico gerado:", args.output)
         return
-    SlideDocuments(args.output).presentation()
+    SlideDocuments(args.output, args.report_version).presentation()
     print("Documentos e oito slides gerados:", args.output)
 
 

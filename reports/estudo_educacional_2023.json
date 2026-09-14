@@ -1,0 +1,170 @@
+{
+  "author": "André Mohallem Ferraz",
+  "version": "1.0-exploratorio",
+  "completed_at_utc": "2026-09-13T23:34:56.271788+00:00",
+  "protocol_commit": "038bdcd29886909a3450df9c50d4c743c66d75be",
+  "development_year": 2023,
+  "students": 1502809,
+  "municipalities": 4871,
+  "configuration": {
+    "version": "1.0-exploratorio",
+    "author": "André Mohallem Ferraz",
+    "question": "Indicadores educacionais históricos acrescentam informação preditiva ao contexto IBGE, rede e UF para estimar a probabilidade de alfabetização?",
+    "development_year": 2023,
+    "reference_experiment": "1.0",
+    "reference_commit": "6d19c7bd60a480866965e49784b193bb6f1f200b",
+    "previous_test_2024_already_observed": true,
+    "new_independent_test_available": false,
+    "status": "protocolo definido antes da comparação complementar",
+    "scope": "Validação cruzada exploratória exclusivamente em 2023; não substitui o experimento temporal 1.0",
+    "external_context_cutoff": "2022-12-31",
+    "join": [
+      "id_municipio",
+      "rede_nome"
+    ],
+    "education_features": [
+      "alunos_por_turma_ai_2021",
+      "docentes_superior_ai_2021",
+      "horas_aula_ai_2021"
+    ],
+    "minimum_student_coverage_per_feature": 0.95,
+    "variants": [
+      "ibge",
+      "ibge_inep"
+    ],
+    "folds": [
+      0,
+      1,
+      2
+    ],
+    "max_iter": 100,
+    "max_leaf_nodes": 7,
+    "learning_rate": 0.05,
+    "min_samples_leaf": 100,
+    "l2_regularization": 1.0,
+    "random_state": 42,
+    "threads": 1,
+    "early_stopping": false,
+    "hyperparameter_search": false,
+    "threshold_search": false,
+    "calibration_fit": false,
+    "class_weight": null,
+    "sample_weight_fit": false,
+    "primary_metric": "average_precision_risk",
+    "secondary_metrics": [
+      "roc_auc_risk",
+      "brier_risk"
+    ],
+    "interpretation": "Diferenças descritivas entre os mesmos três folds, sem inferência causal, significância estatística ou nova alegação de teste independente",
+    "expected_sha256": {
+      "data/gold/ml_aluno/ano=2023/alunos.parquet": "a9bfd5749fbbf5cb52b2d3be34650f7021230139286ab95ed51accd127628241",
+      "config/folds-municipios-2023.csv": "ec48d312554e14ec2db0a76383dd93d8c465aa038fd1454b65f474aad6b3e20f",
+      "artifacts/boosting_oof_2023.parquet": "281a20e17bc0d7af9c0fc77af45cf70bec20619cec28e66aa193977f8bd512cf"
+    }
+  },
+  "new_independent_test": false,
+  "test_2024_loaded_for_analysis": false,
+  "existing_test_artifacts_checked_by_hash_only": true,
+  "statistical_significance_demonstrated": false,
+  "causal_interpretation": false,
+  "final_model_promoted_or_modified": false,
+  "original_six_feature_oof_reproduced_exactly": true,
+  "summary": [
+    {
+      "variant": "ibge",
+      "average_precision_risk_mean": 0.5437760714358273,
+      "average_precision_risk_std": 0.003986189724522617,
+      "roc_auc_risk_mean": 0.6425777592210276,
+      "roc_auc_risk_std": 0.006533313287683448,
+      "brier_risk_mean": 0.22748105647774275,
+      "brier_risk_std": 0.002696945401299679
+    },
+    {
+      "variant": "ibge_inep",
+      "average_precision_risk_mean": 0.5443068970582471,
+      "average_precision_risk_std": 0.004377041388308079,
+      "roc_auc_risk_mean": 0.6431535849949209,
+      "roc_auc_risk_std": 0.006188336013171222,
+      "brier_risk_mean": 0.2273554236936466,
+      "brier_risk_std": 0.0026756771939990924
+    }
+  ],
+  "paired_deltas": [
+    {
+      "fold": 0,
+      "delta_average_precision_risk": 0.0007554157686950891,
+      "delta_roc_auc_risk": 0.0005354459328582584,
+      "delta_brier_risk": -1.7901034716577557e-05
+    },
+    {
+      "fold": 1,
+      "delta_average_precision_risk": 0.0016025100660626013,
+      "delta_roc_auc_risk": 0.0013280930712353811,
+      "delta_brier_risk": -0.00024894451494131276
+    },
+    {
+      "fold": 2,
+      "delta_average_precision_risk": -0.0007654489674983056,
+      "delta_roc_auc_risk": -0.00013606168241353522,
+      "delta_brier_risk": -0.00011005280263046147
+    }
+  ],
+  "frozen_files_verified_before_and_after": {
+    "artifacts/modelo_final.joblib": "af9c0953a472ef63edc8bae850c88a39c1814c881b87c53b15f6b37c57733331",
+    "reports/ajuste_final.json": "cf38433a4e6b32e5ee6aad1b8ec6693fed5941d9c91cdcb9909a6c7caa2ed2a5",
+    "artifacts/previsoes_teste_2024.parquet": "149049a4fde7985c75b79b5c1152737f930647a8635927dc937417b75cbd829a",
+    "reports/calibracao_teste_2024.csv": "06b462c8253694f589f5e1195ac644ed207ebdca3580f0df2a333d4d11d7e366",
+    "data/gold/ml_aluno/ano=2023/alunos.parquet": "a9bfd5749fbbf5cb52b2d3be34650f7021230139286ab95ed51accd127628241",
+    "artifacts/boosting_oof_2023.parquet": "281a20e17bc0d7af9c0fc77af45cf70bec20619cec28e66aa193977f8bd512cf",
+    "config/experimento-boosting.json": "52008d4fbe7a40666530f2cdd82c247268d762af64aa52e262ad8d0d7dec6b51",
+    "config/contrato-ml-aluno.json": "7af52859f26a330fa3a3b0cc7c24dc91c2c0a60861737556ed3fde21e1ff5496",
+    "config/folds-municipios-2023.csv": "ec48d312554e14ec2db0a76383dd93d8c465aa038fd1454b65f474aad6b3e20f",
+    "reports/modelos_comparacao_2023.csv": "162521a3ad4c9b2e35306d5bc63f00fba76016a7bb6975c75003f203fb59b940",
+    "reports/boosting_development.json": "dccca05612c9bc5e788a9fda8aa2f187bed79d693b9993833fab878939e9dd87",
+    "config/estudo-educacional.json": "2e1e368960a8ef402803e3df05af48f8f2b98bd67a84944b7010cbc77df01625",
+    "docs/Protocolo-Estudo-Educacional.md": "4e50452443c65686a360dc4b6f46ec2a183c305e952f8d56a88b7614e490c416",
+    "config/modelo-final.json": "4458d9b2ed8c3d8fed0f4dca2f8604c661793dc58b9c8a7a860f31b05ae7df33"
+  },
+  "input_sha256": {
+    "config/fontes-educacionais.json": "875799f8f6e834dbe5d72398f5b82d0257729e0f4bdd251b410162a282f9b1d3",
+    "data/input/inep/ATU_2021_MUNICIPIOS.zip": "37b74acc403b8dcb932ebfd81e4732a81298e110327be58d537ff56028872296",
+    "data/input/inep/DSU_2021_MUNICIPIOS.zip": "393830aec52aad754b8e8e2036716ca93757363569971b255673d0a8f6b93bfa",
+    "data/input/inep/HAD_2021_MUNICIPIOS.zip": "23f7b0dd12ea24fc01e0591a355d726db4d5b6b9cbe8ba2891571eaa3255b2d3",
+    "data/input/inep/evidencias/ATU_2021.html": "9fc2b586afa3a99013ccae3a4dfec2f0a26f11bb4825526789a300268e420678",
+    "data/input/inep/evidencias/ATU_HTTP.txt": "aa5d89f2c1c58179b159a1e64eae59c2cc19dad454f3bc612958b1cd18a6d9a2",
+    "data/input/inep/evidencias/DSU_2021.html": "8c47b77be886ecd2e014deda62dc68154644cf1b660b8f41cd8faffe26f405d4",
+    "data/input/inep/evidencias/DSU_HTTP.txt": "d328b0b1737e32be97f8b0dc9a426ce93af0c4b7a8ca6eaf45fea2873729cfe9",
+    "data/input/inep/evidencias/HAD_2021.html": "33020259fd6f266b0d898ebfb8267730b3f30cc19cd3b5621d5d6370c91d3ee5",
+    "data/input/inep/evidencias/HAD_HTTP.txt": "b77b2886d13aab6125b20a7fa49d8b9d3def04670779e0a2201997a7dc17135d"
+  },
+  "generated_sha256": {
+    "artifacts/estudo_educacional/ibge/fold_0.joblib": "50d16ea78611744d27a95896851aff79b940ae239e6adef478f6f0d1b1515312",
+    "artifacts/estudo_educacional/ibge/fold_1.joblib": "8fae2ed4d755c6ea79ee62fe1dc5ed7c2357ca9ae24ea3363f4b20f22fa8331d",
+    "artifacts/estudo_educacional/ibge/fold_2.joblib": "fdecb3364e8046982ead6d6bea53c8c7dd638fb3d24e061b697c384497e4eef3",
+    "artifacts/estudo_educacional/ibge_inep/fold_0.joblib": "23efbe235d85c32ac281e1bf571586dbcf66c81db366d41c0a19a61b0a53d4eb",
+    "artifacts/estudo_educacional/ibge_inep/fold_1.joblib": "e7446151356a744dc36fd19f4357b18244c19cf441b13ed89e23e922939bbdef",
+    "artifacts/estudo_educacional/ibge_inep/fold_2.joblib": "623895b52786d25a54be9c65da063b39a77d9d15b5305cbdeb3ee88c9e46d313",
+    "artifacts/estudo_educacional_oof_2023.parquet": "20e716c25bba8b8dcee082b5d1763e10bf34e07044c1958695c1e9361e072163",
+    "config/estudo-educacional.json": "291a0cf4523021146cb135e2163311256776dfb31a549444f109b76316c6e0ea",
+    "config/fontes-educacionais.json": "875799f8f6e834dbe5d72398f5b82d0257729e0f4bdd251b410162a282f9b1d3",
+    "data/gold/estudo_educacional/ano=2023/alunos.parquet": "7c0fef1ec483853a13719a7068adbe05b1a5982f97ea72cfee2882efba83d19b",
+    "images/15_estudo_educacional_2023.pdf": "143a832ce4d8063f25607627ba7496ce7160c0a884f8133145f9304eba23aebb",
+    "images/15_estudo_educacional_2023.png": "64406b9f113f736fdb801a3b441a63ed71d51c62df3637383a713797804209c9",
+    "reports/estudo_educacional_2023.md": "6af9ab5200b99f9fe62babefd9f720f41cac3bd81865b457ce65942ab0adb579",
+    "reports/estudo_educacional_cobertura_2023.csv": "f7c0aac362a78e6fd564f76bcdba584efe5cf8c2fa7b982f2e796a62be918f8c",
+    "reports/estudo_educacional_correlacoes_2023.csv": "5567a64a8a848b8dcabf1b170182e30b90096992e4a8c30bb3e1d9cd20689210",
+    "reports/estudo_educacional_deltas_2023.csv": "adc444ef364ca1897a012d4fb7d5e2839bacde2cde52057b320a350ae4f3ac23",
+    "reports/estudo_educacional_distribuicoes_2023.csv": "6d9e1281a15248360b158a903cb3ab34fd00a049eba7b4af4f39b7d3ceb51ece",
+    "reports/estudo_educacional_eda_2023.json": "6cb2aa794afee0361cdeb0f5f5e25ad9276710c4e0bdea39160b34f9a685a2b8",
+    "reports/estudo_educacional_folds_2023.csv": "583d3cec233efbb57e49d80d36b244228dd46c9ecfec840ff6cb4cc0e93e6f2b",
+    "reports/estudo_educacional_resumo_2023.csv": "0a75b80bb8ba24a5df565f8ee7ddd58e994724cf9a9bbfc68016b816a0675592"
+  },
+  "dependencies": {
+    "numpy": "2.3.3",
+    "pandas": "2.3.2",
+    "pyarrow": "21.0.0",
+    "scikit-learn": "1.7.2",
+    "openpyxl": "3.1.5",
+    "joblib": "1.6.0"
+  }
+}

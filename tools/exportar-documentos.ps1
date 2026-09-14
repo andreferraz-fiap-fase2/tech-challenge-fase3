@@ -1,12 +1,15 @@
 # Autor: André Mohallem Ferraz
-param([Parameter(Mandatory=$true)][string]$Output)
+param(
+ [Parameter(Mandatory=$true)][string]$Output,
+ [ValidatePattern('^\d+\.\d+$')][string]$Version='1.0'
+)
 $ErrorActionPreference='Stop'
 [Console]::OutputEncoding=New-Object System.Text.UTF8Encoding($false)
 $word=New-Object -ComObject Word.Application
 $word.Visible=$false
 $word.DisplayAlerts=0
 try {
- foreach($name in @('Relatorio-Tecnico-Fase3-v1.0','Roteiro-Video-Fase3-v1.0')){
+ foreach($name in @("Relatorio-Tecnico-Fase3-v$Version","Roteiro-Video-Fase3-v$Version")){
   $document=$null
   try {
    $document=$word.Documents.Open("$output\$name.docx",$false,$true)
@@ -18,8 +21,8 @@ try {
 $ppt=New-Object -ComObject PowerPoint.Application
 $presentation=$null
 try {
- $presentation=$ppt.Presentations.Open("$output\Apresentacao-Executiva-Fase3-v1.0.pptx",$true,$false,$false)
- $presentation.SaveAs("$output\Apresentacao-Executiva-Fase3-v1.0.pdf",32)
+ $presentation=$ppt.Presentations.Open("$output\Apresentacao-Executiva-Fase3-v$Version.pptx",$true,$false,$false)
+ $presentation.SaveAs("$output\Apresentacao-Executiva-Fase3-v$Version.pdf",32)
  [void][IO.Directory]::CreateDirectory("$output\render")
  for($index=1;$index -le $presentation.Slides.Count;$index++){
   $presentation.Slides.Item($index).Export(("$output\render\slide-{0:D2}.png" -f $index),'PNG',1920,1080)

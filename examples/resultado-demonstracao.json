@@ -1,0 +1,99 @@
+{
+  "autor": "André Mohallem Ferraz",
+  "modelo_versao": "1.0",
+  "modelo_sha256": "af9c0953a472ef63edc8bae850c88a39c1814c881b87c53b15f6b37c57733331",
+  "pergunta": "Qual é a probabilidade estimada de alfabetização de um aluno do 2º ano, considerando a rede de ensino e o contexto territorial e socioeconômico?",
+  "criterio_do_alvo_observado": "alfabetizado = 1 quando proficiência >= 743; caso contrário, 0",
+  "limiar_operacional": "F2 definido exclusivamente nas previsões fora da amostra de 2023",
+  "ano_do_perfil": 2023,
+  "referencias_do_contexto": {
+    "populacao": 2021,
+    "pib_e_composicao_economica": 2020
+  },
+  "finalidade": "demonstração de inferência; não constitui nova avaliação de desempenho",
+  "limitacoes": [
+    "Alunos com os mesmos seis atributos recebem a mesma probabilidade contextual.",
+    "A probabilidade é uma estimativa do modelo, sem calibração adicional ou garantia individual.",
+    "O limiar F2 prioriza sensibilidade e sinalizou 96,84% dos alunos no teste de 2024.",
+    "Os perfis demonstrados estavam no desenvolvimento de 2023; não representam teste independente.",
+    "A estimativa usa o contexto histórico; não é uma previsão para 2026 ou anos futuros.",
+    "Indicadores educacionais do estudo complementar não alimentam o modelo 1.0 desta demonstração."
+  ],
+  "previsoes": [
+    {
+      "id_municipio": "3106200",
+      "nome_municipio": "Belo Horizonte",
+      "contexto_utilizado": {
+        "rede_nome": "Municipal",
+        "sigla_uf": "MG",
+        "populacao_2021": 2530701.0,
+        "pib_per_capita_2020": 38670.4,
+        "participacao_agropecuaria_2020": 0.003631897323661781,
+        "participacao_servicos_publicos_2020": 14.3661208237411
+      },
+      "p_alfabetizado": 0.586567542463226,
+      "p_nao_alfabetizado": 0.41343245753677405,
+      "decisao_f2": {
+        "limiar_risco": 0.15016323973380263,
+        "sinalizado_para_atencao": true,
+        "classificacao": "não alfabetizado",
+        "regra": "classificar como não alfabetizado quando P(não alfabetizado) >= limiar"
+      },
+      "referencia_0_5": {
+        "limiar_risco": 0.5,
+        "classificacao": "alfabetizado",
+        "uso": "comparação didática; não substitui a política F2 congelada"
+      }
+    },
+    {
+      "id_municipio": "2927408",
+      "nome_municipio": "Salvador",
+      "contexto_utilizado": {
+        "rede_nome": "Municipal",
+        "sigla_uf": "BA",
+        "populacao_2021": 2900319.0,
+        "pib_per_capita_2020": 20417.14,
+        "participacao_agropecuaria_2020": 0.10702880689638272,
+        "participacao_servicos_publicos_2020": 17.664063781929716
+      },
+      "p_alfabetizado": 0.39083030672174535,
+      "p_nao_alfabetizado": 0.6091696932782547,
+      "decisao_f2": {
+        "limiar_risco": 0.15016323973380263,
+        "sinalizado_para_atencao": true,
+        "classificacao": "não alfabetizado",
+        "regra": "classificar como não alfabetizado quando P(não alfabetizado) >= limiar"
+      },
+      "referencia_0_5": {
+        "limiar_risco": 0.5,
+        "classificacao": "não alfabetizado",
+        "uso": "comparação didática; não substitui a política F2 congelada"
+      }
+    },
+    {
+      "id_municipio": "4314902",
+      "nome_municipio": "Porto Alegre",
+      "contexto_utilizado": {
+        "rede_nome": "Estadual",
+        "sigla_uf": "RS",
+        "populacao_2021": 1492530.0,
+        "pib_per_capita_2020": 51116.72,
+        "participacao_agropecuaria_2020": 0.04366761565614305,
+        "participacao_servicos_publicos_2020": 11.054434918007749
+      },
+      "p_alfabetizado": 0.5460254771203591,
+      "p_nao_alfabetizado": 0.4539745228796409,
+      "decisao_f2": {
+        "limiar_risco": 0.15016323973380263,
+        "sinalizado_para_atencao": true,
+        "classificacao": "não alfabetizado",
+        "regra": "classificar como não alfabetizado quando P(não alfabetizado) >= limiar"
+      },
+      "referencia_0_5": {
+        "limiar_risco": 0.5,
+        "classificacao": "alfabetizado",
+        "uso": "comparação didática; não substitui a política F2 congelada"
+      }
+    }
+  ]
+}

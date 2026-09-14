@@ -1,7 +1,8 @@
 # Autor: André Mohallem Ferraz
 param(
  [Parameter(Mandatory=$true)][string]$Output,
- [ValidatePattern('^\d+\.\d+$')][string]$Version='1.0'
+ [ValidatePattern('^\d+\.\d+$')][string]$Version='1.0',
+ [switch]$GenerateAudio
 )
 $ErrorActionPreference='Stop'
 [Console]::OutputEncoding=New-Object System.Text.UTF8Encoding($false)
@@ -32,6 +33,10 @@ try {
  if($presentation){$presentation.Close()}
  if($ppt.Presentations.Count -eq 0){$ppt.Quit()}
  [void][Runtime.InteropServices.Marshal]::ReleaseComObject($ppt)
+}
+if(-not $GenerateAudio){
+ 'Documentos exportados. Narracao e video existentes preservados.'
+ return
 }
 Add-Type -AssemblyName System.Speech
 $voice=New-Object System.Speech.Synthesis.SpeechSynthesizer

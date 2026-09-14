@@ -139,7 +139,9 @@ class WordDocuments:
                 continue
             image = re.fullmatch(r"!\[.*?\]\((.*?)\)", line)
             if image:
-                document.add_picture(str(ROOT / image[1]), width=Inches(6.65))
+                width = 6.0 if image[1].endswith("02_regioes_2023.png") else 6.65
+                document.add_picture(str(ROOT / image[1]), width=Inches(width))
+                document.paragraphs[-1].alignment = 1
                 continue
             if line.startswith("|"):
                 rows = [line]
@@ -163,7 +165,10 @@ class WordDocuments:
                             shade = OxmlElement("w:shd")
                             shade.set(qn("w:fill"), NAVY)
                             cell._tc.get_or_add_tcPr().append(shade)
-                    table.rows[index]._tr.get_or_add_trPr().append(OxmlElement("w:cantSplit"))
+                    properties = table.rows[index]._tr.get_or_add_trPr()
+                    properties.append(OxmlElement("w:cantSplit"))
+                    if index == 0:
+                        properties.append(OxmlElement("w:tblHeader"))
                 continue
             if line.startswith("### "):
                 paragraph = document.add_paragraph(style="Heading 2")
@@ -204,30 +209,34 @@ class WordDocuments:
         groups = [
             ["## 1. Contexto do problema", "## 2. Objetivo analítico"],
             ["## 3. Base utilizada"],
-            ["## 4. Etapas de modelagem"],
-            ["## 5. Escolha do algoritmo"],
-            ["## 6. Métricas de avaliação"],
-            ["## 7. Interpretação dos resultados"],
-            ["## 8. Insights encontrados"],
-            ["## 9. Limitações", "## 10. Aplicação prática para políticas públicas"],
+            ["## 4. Análise exploratória e entendimento do problema"],
+            ["## 5. Etapas de modelagem"],
+            ["## 6. Escolha do algoritmo"],
+            ["## 7. Métricas de avaliação"],
+            ["## 8. Interpretação dos resultados"],
+            ["## 9. Insights encontrados"],
+            ["## 10. Limitações", "## 11. Aplicação prática para políticas públicas"],
             ["## Demonstração da previsão"],
-            ["## 11. Possíveis evoluções futuras", "## Como reproduzir"],
+            ["## 12. Possíveis evoluções futuras", "## Como reproduzir"],
             ["## Referências"],
         ]
         pages = []
         extras = {
-            3: "\n![Escolha do limiar](images/09_limiar_f2_2023.png)\n",
-            6: "\n![Erros por região](images/12_regioes_teste_2024.png)\n",
-            10: "\n## Apêndice — perfis regionais\n\n![Perfis regionais](images/14_perfis_regionais_2023.png)\n",
+            4: "\n![Escolha do limiar](images/09_limiar_f2_2023.png)\n",
+            7: "\n![Erros por região](images/12_regioes_teste_2024.png)\n",
+            11: "\n## Apêndice — perfis regionais\n\n![Perfis regionais](images/14_perfis_regionais_2023.png)\n",
         }
         for index, group in enumerate(groups):
             page = "\n".join(sections[name] for name in group)
             if index == 2:
                 page = page.replace("### 4.2.", "<!-- pagebreak -->\n\n### 4.2.")
+                page = page.replace("### 4.3.", "<!-- pagebreak -->\n\n### 4.3.")
                 page = page.replace("### 4.4.", "<!-- pagebreak -->\n\n### 4.4.")
+            if index == 3:
+                page = page.replace("### 5.2.", "<!-- pagebreak -->\n\n### 5.2.")
             if index == 0:
                 page = page.replace("## 2.", "<!-- pagebreak -->\n\n## 2.")
-            if index == 9:
+            if index == 10:
                 page = re.sub(r"```text.*?```", "", page, flags=re.S)
             pages.append(page + extras.get(index, ""))
         pages.append(

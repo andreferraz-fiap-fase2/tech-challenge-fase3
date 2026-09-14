@@ -13,14 +13,25 @@ from pptx.util import Inches as PInches
 from pptx.util import Pt as PPt
 
 NARRATIONS = [
-    "Este projeto de André Mohallem Ferraz responde a uma pergunta: qual é a probabilidade estimada de um aluno do segundo ano ser considerado alfabetizado, dado seu contexto? O resultado observado segue o critério de setecentos e quarenta e três pontos de proficiência. O modelo estima uma probabilidade; uma regra de decisão produz a classificação. Essa diferença é importante: mudar o limiar de probabilidade não muda o padrão de alfabetização. A previsão é contextual, sem substituir uma avaliação pedagógica individual.",
-    "A análise utiliza três milhões e trezentas e cinquenta mil avaliações reais elegíveis em dois ciclos. Eventos simulados, ausências e avaliações inválidas foram excluídos. A Gold anterior era municipal. Por isso, reconstruímos uma Gold por aluno a partir da Silver e dos originais da Fase dois, com auditoria e enriquecimento do IBGE. O modelo de referência usa seis atributos: rede, estado e quatro indicadores demográficos e econômicos. A nota da prova determina o alvo e fica fora dos preditores.",
-    "A comparação respeitou uma separação por município. O treinamento e a escolha do modelo usaram somente dois mil e vinte e três, com três divisões fixas. Comparamos uma referência constante, regressão logística e Gradient Boosting. Uma busca limitada escolheu a configuração com melhor ordenação do risco. O modelo e o limiar foram congelados antes de abrir o teste de dois mil e vinte e quatro. Isso permite avaliar a generalização sem adaptar as decisões ao resultado final.",
-    "No teste temporal, a average precision foi de zero vírgula cinco um seis, acima de zero vírgula quatro zero dois da referência constante. Essa métrica avalia a ordenação do risco e não deve ser confundida com acurácia. A capacidade de discriminação é moderada. Nos municípios novos, a performance caiu. Quase todos os alunos desse grupo estão no Acre, Distrito Federal e São Paulo, estados ausentes do desenvolvimento. Isso evidencia o risco de extrapolar o modelo para contextos pouco conhecidos.",
-    "O critério acadêmico de escolha do limiar deu prioridade à recuperação dos casos de não alfabetização. No teste, ele identificou mais de noventa e nove por cento desses casos, mas sinalizou quase noventa e sete por cento de todos os alunos. Assim, há pouca seletividade para uma equipe com capacidade limitada. O limiar de referência, zero vírgula cinco, sinaliza menos alunos, porém recupera apenas um quarto dos casos. A conclusão é que o modelo ainda não serve como triagem individual autônoma.",
-    "A importância por permutação mostra maior dependência do estado. Isso é contribuição preditiva, sem demonstrar causalidade. Os erros variam entre regiões: no Sul, o risco foi subestimado em cerca de sete pontos percentuais; no Centro-Oeste, superestimado em quase seis. As metas municipais da Gold anterior entram somente na análise posterior. O cenário de oitenta por cento mantém o contexto de dois mil e vinte e quatro e não constitui previsão validada para dois mil e trinta.",
-    "Para investigar a dimensão educacional, acrescentamos três indicadores históricos do Inep: tamanho das turmas, funções docentes com curso superior e horas de aula. A cobertura supera noventa e nove vírgula noventa e oito por cento. A comparação exploratória usa os mesmos três grupos municipais de dois mil e vinte e três e passa de seis para nove atributos. O ganho de average precision foi pequeno: melhorou em dois grupos e piorou em um. Esse estudo não tem novo teste independente e não substitui o modelo de referência.",
-    "A entrega também demonstra a previsão em perfis históricos de município e rede. Para Belo Horizonte, rede municipal, o modelo estima cinquenta e oito vírgula sessenta e seis por cento de probabilidade de alfabetização. A regra de cinquenta por cento classifica como alfabetizado, enquanto a política sensível de F dois sinaliza atenção. As probabilidades são iguais; as decisões refletem objetivos diferentes. Para gestores, a recomendação é combinar contexto, volume, cobertura e evidência pedagógica local. Código, fontes, testes e reprodução acompanham os materiais da entrega.",
+    "Este projeto de André Mohallem Ferraz estima a probabilidade de um aluno do segundo ano ser considerado alfabetizado, dado seu contexto. O resultado observado segue o critério de setecentos e quarenta e três pontos de proficiência. O modelo produz uma probabilidade; um limiar transforma essa estimativa em classificação. A previsão contextual apoia a análise territorial, sem substituir a avaliação pedagógica individual.",
+    "A base reúne três milhões e trezentas e cinquenta mil avaliações reais elegíveis em dois ciclos. A Gold por aluno foi reconstruída da Silver e dos originais da Fase dois, com auditoria e enriquecimento do IBGE. A nota define o alvo e fica fora dos preditores. O estudo educacional acrescenta três indicadores do Inep aos seis atributos originais. São mais informações sobre os mesmos alunos de dois mil e vinte e três, sem aumentar a amostra nem incorporar o teste à exploração.",
+    "A exploração encontrou quarenta e um vírgula sessenta e um por cento de não alfabetização, com diferenças entre regiões. População e PIB têm distribuições assimétricas, justificando transformação logarítmica na regressão logística. Apenas cinco mil oitocentos e oitenta e um perfis originais representam um milhão e meio de avaliações. Por isso, os municípios foram mantidos inteiros nas três divisões de validação. Medianas e transformações são aprendidas somente no treino. O relatório relaciona achados, hipóteses e decisões e distingue a exploração inicial das análises complementares realizadas posteriormente.",
+    "Comparamos uma referência constante, regressão logística e Gradient Boosting. Modelo e limiar foram congelados antes do teste temporal de dois mil e vinte e quatro. A average precision do modelo foi zero vírgula cinco um seis, acima de zero vírgula quatro zero dois do baseline. Essa métrica mede ordenação do risco, não acurácia. O desempenho caiu em municípios novos, mostrando limites de generalização para contextos pouco conhecidos.",
+    "O limiar escolhido pela métrica F dois prioriza recuperar casos de não alfabetização. No teste, identificou mais de noventa e nove por cento desses casos, mas sinalizou quase noventa e sete por cento dos alunos. Isso oferece pouca seletividade para uma equipe com capacidade limitada. A referência de cinquenta por cento sinaliza menos alunos, mas recupera apenas um quarto dos casos. O modelo ainda não sustenta uma triagem individual autônoma.",
+    "A exploração educacional usa uma observação por município e rede. As medianas são dezenove vírgula cinco alunos por turma, noventa e quatro vírgula quatro por cento das funções docentes com curso superior e quatro vírgula três horas diárias de aula. A cobertura supera noventa e nove vírgula noventa e oito por cento dos alunos. As associações com alfabetização são modestas, e a de horas de aula é próxima de zero. Essas correlações contextuais não medem efeitos causais.",
+    "A hipótese complementar é que esses indicadores acrescentem informação ao contexto do IBGE. A comparação manteve os mesmos alunos, divisões municipais e parâmetros do modelo. A exploração do Inep foi registrada antes desses ajustes. O ganho de average precision foi pequeno: melhorou em duas divisões e piorou em uma. O estudo reutiliza desenvolvimento conhecido, sem novo teste independente. Por isso, a expansão com nove atributos não substitui o modelo de referência com seis.",
+    "A demonstração recebe perfis históricos de município e rede. Para Belo Horizonte municipal, estima cinquenta e oito vírgula sessenta e seis por cento de probabilidade de alfabetização. A regra de cinquenta por cento classifica como alfabetizado; a política sensível de F dois sinaliza atenção. A probabilidade é a mesma, mas as decisões refletem objetivos diferentes. Para gestores, a recomendação é combinar contexto, volume, cobertura e evidência pedagógica local. Os dados não sustentam uma previsão individual para dois mil e vinte e seis.",
+]
+
+SCRIPT_WINDOWS = [
+    "00:00–00:30",
+    "00:30–01:10",
+    "01:10–01:55",
+    "01:55–02:30",
+    "02:30–03:05",
+    "03:05–03:40",
+    "03:40–04:20",
+    "04:20–05:00",
 ]
 
 
@@ -133,18 +144,18 @@ class SlideDocuments:
             21,
             GRAY,
         )
-        s = self.slide_base(p, "Escolher antes de observar o futuro", 3)
+        s = self.slide_base(p, "A exploração orienta o tratamento e a validação", 3)
         self.cards(
             s,
             [
-                ("Comparar", "Baseline, logística e Gradient Boosting"),
-                ("Congelar", "Municípios separados; modelo e limiar definidos em 2023"),
-                ("Avaliar", "2024 reservado para o teste temporal"),
+                ("41,61%", "Não alfabetizados; classe de risco com volume expressivo"),
+                ("5.881 perfis", "Contextos repetidos: separar municípios inteiros"),
+                ("População/PIB", "Assimetria: log1p na regressão logística"),
             ],
         )
         self.textbox(
             s,
-            "Proficiência, resultados contemporâneos e identificadores ficam fora dos preditores.",
+            "EDA de 2023 · imputação e transformações aprendidas no treino\nModelo e limiar congelados antes de avaliar 2024.",
             0.65,
             5.6,
             12,
@@ -171,7 +182,7 @@ class SlideDocuments:
             21,
             GRAY,
         )
-        s = self.slide_base(p, "O limiar acadêmico tem pouca seletividade", 5)
+        s = self.slide_base(p, "O limiar F2 tem pouca seletividade", 5)
         self.cards(
             s,
             [
@@ -191,14 +202,14 @@ class SlideDocuments:
             NAVY,
             True,
         )
-        s = self.slide_base(p, "UF concentra a influência preditiva", 6)
-        importance = s.shapes.add_picture(
-            str(ROOT / "images/10_importancia_permutacao_2023.png"),
-            PInches(1.1),
-            PInches(2),
-            height=PInches(4.75),
+        s = self.slide_base(p, "Como se distribui o contexto educacional?", 6)
+        distribution = s.shapes.add_picture(
+            str(ROOT / "images/16_eda_inep_2023.png"),
+            PInches(0.65),
+            PInches(2.15),
+            width=PInches(12.0),
         )
-        importance.left = int((p.slide_width - importance.width) / 2)
+        distribution.left = int((p.slide_width - distribution.width) / 2)
         s = self.slide_base(p, "Inep: mais contexto educacional, ganho pequeno", 7)
         self.cards(
             s,
@@ -244,11 +255,14 @@ class SlideDocuments:
         script = (
             "# Roteiro do vídeo executivo — Fase 3\n\n**Autor: "
             + AUTHOR
-            + " · Duração alvo: até 5 minutos**\n\n"
+            + f" · Revisão {self.version} · Duração planejada: 5 minutos**\n\n"
+            + "As janelas abaixo somam 5 minutos e incluem pausas e transições. "
+            + "São uma estimativa para ensaio, não uma duração de gravação medida. "
+            + "Esta revisão atualiza o roteiro e os slides; o vídeo narrado 1.2 permanece preservado.\n\n"
         )
         for i, narration in enumerate(NARRATIONS, 1):
-            script += f"## Slide {i}\n\n{narration}\n\n"
-        script += "## Orientação de apresentação\n\nApresentar como reunião executiva. Explicar AP sem confundir com acurácia; enfatizar a baixa seletividade e os limites de generalização. A versão base usa narração sintética em português; os slides e o roteiro permitem regravar a apresentação com a voz do autor.\n"
+            script += f"## {SCRIPT_WINDOWS[i - 1]} — Slide {i}\n\n{narration}\n\n"
+        script += "## Orientação de apresentação\n\nApresentar como reunião executiva. Ensaiar dentro das janelas de tempo e ajustar as pausas para concluir em até 5 minutos. Explicar AP sem confundir com acurácia e correlação sem atribuir causalidade. Enfatizar a baixa seletividade e os limites de generalização. O vídeo 1.2 corresponde à revisão anterior e não foi regravado para esta atualização documental.\n"
         (ROOT / "docs/Roteiro-Video-Fase3.md").write_text(script)
         (self.output / f"Roteiro-Video-Fase3-v{self.version}.md").write_text(script)
         WordDocuments(self.output, self.version).word(

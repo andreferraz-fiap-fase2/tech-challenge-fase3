@@ -1,0 +1,53 @@
+{
+  "author": "André Mohallem Ferraz",
+  "created_at_utc": "2026-09-14T01:11:00.454577+00:00",
+  "analysis_year": 2023,
+  "kind": "consolidação descritiva posterior de dados e resultados existentes",
+  "counts": {
+    "students": 1502809,
+    "municipalities": 4871,
+    "contexts": 5881
+  },
+  "features_original": 6,
+  "features_enriched": 9,
+  "context_missing_inep": {
+    "alunos_por_turma_ai_2021": 10,
+    "docentes_superior_ai_2021": 9,
+    "horas_aula_ai_2021": 10
+  },
+  "target_orientation": "taxa observada de alfabetização em ambos os painéis",
+  "ibge_method_and_unit": "Spearman, uma observação por município",
+  "inep_method_and_unit": "Pearson, uma observação por município × rede",
+  "pairwise_missing_policy": "pares completos; sem imputação na EDA",
+  "ibge_gdp_public_services_spearman": -0.9349304947272377,
+  "existing_tables_reproduced": true,
+  "model_fit_performed": false,
+  "test_2024_read": false,
+  "causal_inference": false,
+  "chronology": {
+    "initial_eda": "anterior aos modelos; classes, territórios, distribuições, ausências e contextos",
+    "ibge_correlations": "interpretação posterior ao ajuste dos modelos originais",
+    "inep_eda": "distribuições e correlações anteriores aos ajustes do estudo complementar",
+    "these_figures": "consolidação posterior; não justifica retrospectivamente escolhas anteriores"
+  },
+  "inputs_sha256": {
+    "study:reports/estudo_educacional_distribuicoes_2023.csv": "6d9e1281a15248360b158a903cb3ab34fd00a049eba7b4af4f39b7d3ceb51ece",
+    "study:reports/estudo_educacional_cobertura_2023.csv": "f7c0aac362a78e6fd564f76bcdba584efe5cf8c2fa7b982f2e796a62be918f8c",
+    "study:reports/estudo_educacional_correlacoes_2023.csv": "5567a64a8a848b8dcabf1b170182e30b90096992e4a8c30bb3e1d9cd20689210",
+    "project:reports/correlacoes_municipais_2023.csv": "70c390a59dac63a0b7f6239f781d8c8adcb8e8355f3ab779e8e636792ee51330",
+    "study:data/gold/estudo_educacional/ano=2023/alunos.parquet": "7c0fef1ec483853a13719a7068adbe05b1a5982f97ea72cfee2882efba83d19b",
+    "study:reports/estudo_educacional_2023.json": "d6a2bc42f04602de6c2e9ef2b366d69a2f05bff3dc073a43eb713341626ed6e6",
+    "study:reports/estudo_educacional_eda_2023.json": "6cb2aa794afee0361cdeb0f5f5e25ad9276710c4e0bdea39160b34f9a685a2b8"
+  },
+  "generator_sha256": "4f2524daaa5b76eb65b8c7c03f0c2ecddf7a075f4fa0e11f1eade16101dd114e",
+  "generated_sha256": {
+    "images/16_eda_inep_2023.png": "91133aee174bc048246a4a2d0b264a500930119bf628e7f6682477a506b405dd",
+    "images/16_eda_inep_2023.svg": "cc206231500a1d2721893e9a6155f6d783d8bfe19671a61e98128cfab07f7520",
+    "images/17_correlacoes_contextuais_2023.png": "5049d14f92c85d604d09c25ee0f708463d8eebe6319a20eb2afe44b162f306ef",
+    "images/17_correlacoes_contextuais_2023.svg": "64f0f56f21a70fb0ea47d600fb3336bf0d565e73cd4ea7662573166357b06a42",
+    "reports/eda_enriquecida_2023.md": "426d76800368595493b8b7c6e2bc824af5c1fbe44191170c3b93cc612bd71890",
+    "reports/eda_enriquecida_2023_cobertura.csv": "f7c0aac362a78e6fd564f76bcdba584efe5cf8c2fa7b982f2e796a62be918f8c",
+    "reports/eda_enriquecida_2023_correlacoes.csv": "df3d094265338462cdf513cc4e00e56e1346a7a0563294dff2203de706730c85",
+    "reports/eda_enriquecida_2023_distribuicoes.csv": "632d7e7a71699eeef02cc0487694a0c42c14e6db1c95a6e4da812a2fc5ea92f2"
+  }
+}

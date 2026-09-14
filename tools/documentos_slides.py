@@ -253,16 +253,17 @@ class SlideDocuments:
         p.core_properties.title = "Alfabetização: inteligência analítica para decisões territoriais"
         p.save(self.output / f"Apresentacao-Executiva-Fase3-v{self.version}.pptx")
         script = (
-            "# Roteiro do vídeo executivo — Fase 3\n\n**Autor: "
+            "# Roteiro de preparação do vídeo executivo — Fase 3\n\n**Autor: "
             + AUTHOR
             + f" · Revisão {self.version} · Duração planejada: 5 minutos**\n\n"
             + "As janelas abaixo somam 5 minutos e incluem pausas e transições. "
             + "São uma estimativa para ensaio, não uma duração de gravação medida. "
-            + "Esta revisão atualiza o roteiro e os slides; o vídeo narrado 1.2 permanece preservado.\n\n"
+            + "Material de apoio, fora do ZIP e da pasta oficial de entrega. "
+            + "O vídeo oficial deverá ser gravado com a voz do autor.\n\n"
         )
         for i, narration in enumerate(NARRATIONS, 1):
             script += f"## {SCRIPT_WINDOWS[i - 1]} — Slide {i}\n\n{narration}\n\n"
-        script += "## Orientação de apresentação\n\nApresentar como reunião executiva. Ensaiar dentro das janelas de tempo e ajustar as pausas para concluir em até 5 minutos. Explicar AP sem confundir com acurácia e correlação sem atribuir causalidade. Enfatizar a baixa seletividade e os limites de generalização. O vídeo 1.2 corresponde à revisão anterior e não foi regravado para esta atualização documental.\n"
+        script += "## Orientação de apresentação\n\nApresentar como reunião executiva. Ensaiar dentro das janelas de tempo e ajustar as pausas para concluir em até 5 minutos. Explicar AP sem confundir com acurácia e correlação sem atribuir causalidade. Enfatizar a baixa seletividade e os limites de generalização. Gravar com a voz do autor. Narração sintética e versões de ensaio são materiais privados de preparação e não integram a entrega oficial.\n"
         (ROOT / "docs/Roteiro-Video-Fase3.md").write_text(script)
         (self.output / f"Roteiro-Video-Fase3-v{self.version}.md").write_text(script)
         WordDocuments(self.output, self.version).word(

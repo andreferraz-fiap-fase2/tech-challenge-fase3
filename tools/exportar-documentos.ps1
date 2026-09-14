@@ -5,6 +5,9 @@ param(
  [switch]$GenerateAudio
 )
 $ErrorActionPreference='Stop'
+if(([IO.Path]::GetFullPath($Output).Split('\')) -contains 'Entrega-Final'){
+ throw 'Use uma pasta de Preparacao; a exportacao inclui arquivos intermediarios.'
+}
 [Console]::OutputEncoding=New-Object System.Text.UTF8Encoding($false)
 $word=New-Object -ComObject Word.Application
 $word.Visible=$false

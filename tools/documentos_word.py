@@ -109,7 +109,7 @@ class WordDocuments:
         header.runs[0].font.color.rgb = RGBColor.from_string(GOLD)
         footer = section.footer.paragraphs[0]
         footer.alignment = 2
-        footer.add_run(AUTHOR + f" · v{self.version} · 13/09/2026  |  ").font.size = Pt(8)
+        footer.add_run(AUTHOR + f" · v{self.version} · 14/09/2026  |  ").font.size = Pt(8)
         field = OxmlElement("w:fldSimple")
         field.set(qn("w:instr"), "PAGE")
         footer._p.append(field)
@@ -192,8 +192,8 @@ class WordDocuments:
         document.core_properties.author = AUTHOR
         document.core_properties.last_modified_by = AUTHOR
         document.core_properties.title = markdown.splitlines()[0].lstrip("# ")
-        document.core_properties.created = datetime(2026, 9, 13, tzinfo=timezone.utc)
-        document.core_properties.modified = datetime(2026, 9, 13, tzinfo=timezone.utc)
+        document.core_properties.created = datetime(2026, 9, 14, tzinfo=timezone.utc)
+        document.core_properties.modified = datetime(2026, 9, 14, tzinfo=timezone.utc)
         document.save(self.output / filename)
 
     def report(self) -> None:
@@ -203,7 +203,7 @@ class WordDocuments:
         title = (
             "# Relatório técnico — alfabetização no Brasil\n\n**Autor: "
             + AUTHOR
-            + f"**\n\n**FIAP · Tech Challenge Fase 3 · Trabalho individual · Revisão documental {self.version} · 13/09/2026**\n\n"
+            + f"**\n\n**FIAP · Tech Challenge Fase 3 · Trabalho individual · Revisão documental {self.version} · 14/09/2026**\n\n"
         )
         abstract = "**Síntese executiva.** O Gradient Boosting supera o baseline no teste temporal, com AP 0,5162 e ROC-AUC 0,6224. Seu limiar acadêmico de F2 sinaliza 96,84% dos alunos. A entrega evidencia potencial para leitura territorial e limites importantes de generalização e seletividade, sem recomendar decisões individuais autônomas.\n\n"
         groups = [

@@ -3,8 +3,12 @@
 **Autor: André Mohallem Ferraz · Trabalho individual · Prazo informado: 15/09/2026**
 
 [Repositório público](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3) ·
-[Documentos atualizados 1.3](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.3-entrega) ·
-[Vídeo existente 1.2, preservado](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.2-entrega/Video-Executivo-Fase3-v1.2.mp4).
+[Publicação oficial 1.4](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.4-entrega).
+
+A organização segue o formato usado na Fase 2: documento técnico, apresentação e vídeo
+do autor. **O PDF e o PowerPoint estão preparados; a gravação do vídeo com a voz de
+André Mohallem Ferraz, de até cinco minutos, permanece pendente.** O ZIP atual contém
+somente os dois documentos disponíveis.
 
 ## Mapa do enunciado
 
@@ -24,26 +28,31 @@
 | Regiões com perfis semelhantes | [Perfis de 2023](../reports/regioes_semelhantes_2023.csv) |
 | Risco de metas futuras | [Cenários condicionais](../reports/cenarios_metas_2024.csv), [limites e evolução necessária](../README.md) |
 | Documentação técnica e 11 tópicos do README | [Relatório técnico](Relatorio-Tecnico-Fase3.md), [README](../README.md): os 11 tópicos foram preservados e a EDA ganhou uma seção adicional, totalizando 12 seções numeradas |
-| Vídeo executivo de até cinco minutos | [MP4 1.2 existente](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.2-entrega/Video-Executivo-Fase3-v1.2.mp4), com 4min53,10s; apresentação e roteiro atualizados na versão 1.3 |
+| Vídeo executivo de até cinco minutos | Pendente: gravação da apresentação com a voz de André Mohallem Ferraz |
 | Estrutura e versionamento Git | `data/`, `notebooks/`, `src/`, `reports/`, `images/`, `requirements.txt`, `.gitignore`, branches e pull requests |
 
 Scripts executam os experimentos; a pasta `notebooks/` explica essa opção. A interpretação
 utiliza importância por permutação. O cenário de 80% mantém o contexto de 2024 e não é
 previsão validada de 2030 nem probabilidade de descumprimento de meta.
 
-## Arquivos para submissão
+## Arquivos oficiais
 
-- [Relatorio-Tecnico-Fase3-v1.3.pdf](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.3-entrega/Relatorio-Tecnico-Fase3-v1.3.pdf): relatório revisado, com seção própria de EDA; Word disponível na mesma versão.
-- [Apresentacao-Executiva-Fase3-v1.3.pptx](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.3-entrega/Apresentacao-Executiva-Fase3-v1.3.pptx): apresentação atualizada, com roteiro nas notas.
-- [Video-Executivo-Fase3-v1.2.mp4](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.2-entrega/Video-Executivo-Fase3-v1.2.mp4): vídeo existente, com narração sintética em português, preservado sem regeneração.
-- [Roteiro-Video-Fase3-v1.3.pdf](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.3-entrega/Roteiro-Video-Fase3-v1.3.pdf): roteiro atualizado para apresentação de até cinco minutos. Os novos trechos de EDA não integram o vídeo 1.2 já gravado.
-- Pacote completo privado: código, entradas auditadas, Gold, modelos e entregáveis.
-  Dados individuais e modelos serializados não integram o repositório público.
+| Arquivo | Conteúdo |
+| --- | --- |
+| [VisaoTecnica-TechChallengeFase3.pdf](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.4-entrega/VisaoTecnica-TechChallengeFase3.pdf) | Relatório técnico com problema, EDA, modelagem, resultados e limitações. |
+| [Apresentacao-TechChallenge-Fase3.pptx](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.4-entrega/Apresentacao-TechChallenge-Fase3.pptx) | Apresentação executiva para exposição do trabalho pelo autor. |
+| [TechChallenge-Fase3.zip](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.4-entrega/TechChallenge-Fase3.zip) | Contém exclusivamente o PDF técnico e o PowerPoint acima. |
 
-O repositório e a versão publicada fornecem os links de acesso aos avaliadores. A submissão
-no portal da FIAP precisa ser realizada pelo autor até o prazo da turma. Os documentos de
-planejamento anteriores são históricos; utilizar os documentos de `Entrega-Final/Revisao-1.3`
-e o vídeo preservado de `Entrega-Final/Revisao-1.2`. A entrega 1.3 dá maior visibilidade
-à EDA dos dados enriquecidos, mantendo o experimento validado 1.0, o estudo complementar
-exploratório e a demonstração. Essas finalidades estão identificadas nos materiais;
-nenhum modelo ou resultado temporal foi alterado por esta revisão documental.
+Esses três arquivos compõem a pasta `Entrega-Final`. O ZIP é uma alternativa para obter
+os dois documentos juntos. Código e evidências analíticas continuam disponíveis no
+repositório público. Fontes, Gold, modelos, roteiros, narrações, guias e verificadores
+ficam no arquivo de `Preparacao`, fora da pasta e do ZIP oficiais.
+
+O material para ensaiar a apresentação permanece disponível ao autor em `Preparacao`.
+Após gravar o vídeo com sua voz, será necessário conferir duração de até cinco minutos
+e completar a submissão no portal da FIAP até o prazo da turma. O pacote atual não é
+apresentado como atendimento concluído ao requisito de vídeo.
+
+A organização 1.4 preserva o experimento validado 1.0, a EDA dos dados enriquecidos,
+o estudo educacional exploratório e a demonstração. Nenhum modelo, limiar ou resultado
+temporal foi alterado para organizar os arquivos oficiais.

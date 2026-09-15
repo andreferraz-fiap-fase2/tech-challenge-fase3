@@ -7,13 +7,13 @@ em `requirements-entrega.txt`. A exportação utiliza Word e PowerPoint instalad
 Estas ferramentas geram editáveis, roteiros, renderizações e recibos em `Preparacao`.
 A saída em `Entrega-Final` é bloqueada para impedir a mistura com materiais oficiais.
 O ZIP oficial contém somente a visão técnica em PDF e a apresentação em PowerPoint,
-sem notas de narração. O vídeo oficial de até cinco minutos depende de gravação pelo autor.
+sem notas de narração; o roteiro correspondente fica em `docs/Roteiro-Video-Fase3.md`.
 
 Para gerar somente o relatório, acrescentar `--report-only`. A visão técnica inclui uma seção
 própria à análise exploratória com IBGE e Inep, com gráficos, hipóteses e limites.
 O roteiro distribui os dez slides em janelas que somam 5 minutos; a duração é planejada
-para ensaio, sem gravação nesta revisão. Roteiros, áudios, vídeos de ensaio e versões
-anteriores permanecem na preparação privada, fora do ZIP e da pasta oficial.
+para ensaio. Roteiros, áudios, vídeos de ensaio e versões anteriores permanecem na
+preparação privada, fora do ZIP e da pasta oficial.
 Gerar em uma nova pasta de preparação para preservar os materiais anteriores.
 Os slides 6–8 explicitam as cinco perguntas estratégicas do enunciado, distinguindo
 associações, importância preditiva e cenários de metas. O PDF identifica o repositório

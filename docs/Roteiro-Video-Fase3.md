@@ -2,7 +2,7 @@
 
 **Autor: André Mohallem Ferraz · Revisão 1.7 · Duração planejada: até 5 minutos**
 
-As janelas somam 5 minutos e incluem pausas e transições. São uma estimativa para ensaio, não uma duração de gravação medida. Material de apoio, fora do ZIP e da pasta oficial. O vídeo oficial deverá ser gravado com a voz do autor. As notas do PowerPoint permanecem vazias.
+As janelas somam 5 minutos e incluem pausas e transições. São uma estimativa para ensaio, não uma duração de gravação medida. Material de apoio, fora do ZIP e da pasta oficial. A apresentação é conduzida pelo autor; as notas do PowerPoint permanecem vazias.
 
 ## 00:00–00:25 — Slide 1
 

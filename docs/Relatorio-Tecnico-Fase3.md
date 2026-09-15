@@ -724,7 +724,6 @@ oficial. As fontes originais são públicas, mas este snapshot precisa ser prepa
 conforme o manifesto; executar os testes não exige os arquivos reais.
 
 A pasta oficial reúne o PDF técnico, o PowerPoint e o ZIP com esses dois documentos.
-O vídeo executivo de até cinco minutos, com a voz do autor, permanece pendente.
 Roteiros, narrações, guias de preparação e verificadores ficam em `Preparacao`.
 
 

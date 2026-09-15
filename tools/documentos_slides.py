@@ -49,8 +49,8 @@ def video_script(version: str) -> str:
         + f" · Revisão {version} · Duração planejada: até 5 minutos**\n\n"
         + "As janelas somam 5 minutos e incluem pausas e transições. São uma estimativa "
         + "para ensaio, não uma duração de gravação medida. Material de apoio, fora do ZIP "
-        + "e da pasta oficial. O vídeo oficial deverá ser gravado com a voz do autor. "
-        + "As notas do PowerPoint permanecem vazias.\n\n"
+        + "e da pasta oficial. A apresentação é conduzida pelo autor; as notas do "
+        + "PowerPoint permanecem vazias.\n\n"
     )
     for index, narration in enumerate(NARRATIONS, 1):
         script += f"## {SCRIPT_WINDOWS[index - 1]} — Slide {index}\n\n{narration}\n\n"

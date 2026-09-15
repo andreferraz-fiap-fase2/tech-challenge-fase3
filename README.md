@@ -25,10 +25,6 @@ sobre o baseline: o que ele ordena é, em boa parte, diferença entre estados.
 - [Demonstração da probabilidade](docs/Demonstracao-Previsao.md) e [protocolo do estudo educacional complementar](docs/Protocolo-Estudo-Educacional.md).
 - [Protocolo antes do teste](reports/protocolo-final.md), [resultado temporal](reports/teste_temporal_2024.json) e [reprodução completa](reports/reproducibilidade_completa.json).
 
-**Pendente para concluir a submissão:** gravar o vídeo executivo com a voz de André
-Mohallem Ferraz, com duração de até cinco minutos. O código e as evidências analíticas
-estão neste repositório; os materiais de preparação ficam fora da pasta e do ZIP oficiais.
-
 ## 1. Contexto do problema
 
 A Fase 2 construiu a engenharia de dados do Indicador Criança Alfabetizada (ICA), dos
@@ -712,7 +708,6 @@ oficial. As fontes originais são públicas, mas este snapshot precisa ser prepa
 conforme o manifesto; executar os testes não exige os arquivos reais.
 
 A pasta oficial reúne o PDF técnico, o PowerPoint e o ZIP com esses dois documentos.
-O vídeo executivo de até cinco minutos, com a voz do autor, permanece pendente.
 Roteiros, narrações, guias de preparação e verificadores ficam em `Preparacao`.
 
 ## Referências

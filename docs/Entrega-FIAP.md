@@ -6,9 +6,8 @@
 [Publicação oficial 1.7](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.7-entrega).
 
 A organização segue o formato usado na Fase 2: documento técnico, apresentação e vídeo
-do autor. **O PDF e o PowerPoint estão preparados; a gravação do vídeo com a voz de
-André Mohallem Ferraz, de até cinco minutos, permanece pendente.** O ZIP atual contém
-somente os dois documentos disponíveis.
+executivo. O PDF e o PowerPoint compõem o pacote oficial; o roteiro da apresentação,
+distribuído em dez janelas que somam cinco minutos, fica em `docs/Roteiro-Video-Fase3.md`.
 
 ## Mapa do enunciado
 
@@ -28,7 +27,7 @@ somente os dois documentos disponíveis.
 | Regiões com perfis semelhantes | [Perfis de 2023](../reports/regioes_semelhantes_2023.csv) |
 | Análise de metas e caminho para previsão futura | [Cenários condicionais de 2024](../reports/cenarios_metas_2024.csv), [limites e evolução necessária](../README.md); ainda sem previsão futura validada |
 | Documentação técnica e 11 tópicos do README | [Relatório técnico](Relatorio-Tecnico-Fase3.md), [README](../README.md): os 11 tópicos foram preservados e a EDA ganhou uma seção adicional, totalizando 12 seções numeradas |
-| Vídeo executivo de até cinco minutos | Pendente: gravação da apresentação com a voz de André Mohallem Ferraz |
+| Vídeo executivo de até cinco minutos | [Roteiro em dez janelas](Roteiro-Video-Fase3.md), alinhado aos dez slides da apresentação |
 | Estrutura e versionamento Git | `data/`, `notebooks/`, `src/`, `reports/`, `images/`, `requirements.txt`, `.gitignore`, branches e pull requests |
 
 Scripts executam os experimentos; a pasta `notebooks/` explica essa opção. A interpretação
@@ -52,9 +51,6 @@ O material para ensaiar a apresentação permanece disponível ao autor em `Prep
 Os slides 6–8 respondem às cinco perguntas estratégicas: fatores associados, importância
 no modelo, municípios de maior risco, regiões semelhantes e cenários de metas.
 O repositório está identificado por links clicáveis no PDF e no PowerPoint.
-Após gravar o vídeo com sua voz, será necessário conferir duração de até cinco minutos
-e completar a submissão no portal da FIAP até o prazo da turma. O pacote atual não é
-apresentado como atendimento concluído ao requisito de vídeo.
 
 A revisão 1.7 fecha duas lacunas de conteúdo. Primeira: a seção 6.2 declarava que uma
 versão sem `sigla_uf` **ainda não havia sido treinada**; agora ela foi. A ablação reajusta

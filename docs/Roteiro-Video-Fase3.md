@@ -1,6 +1,6 @@
 # Roteiro de preparação do vídeo executivo — Fase 3
 
-**Autor: André Mohallem Ferraz · Revisão 1.5 · Duração planejada: até 5 minutos**
+**Autor: André Mohallem Ferraz · Revisão 1.7 · Duração planejada: até 5 minutos**
 
 As janelas somam 5 minutos e incluem pausas e transições. São uma estimativa para ensaio, não uma duração de gravação medida. Material de apoio, fora do ZIP e da pasta oficial. O vídeo oficial deverá ser gravado com a voz do autor. As notas do PowerPoint permanecem vazias.
 
@@ -22,11 +22,11 @@ Comparamos baseline, regressão logística e Gradient Boosting. O modelo escolhi
 
 ## 01:55–02:25 — Slide 5
 
-O estudo complementar acrescenta três indicadores do Inep aos seis atributos originais, mantendo os mesmos alunos, divisões e parâmetros. A cobertura supera noventa e nove vírgula noventa e oito por cento. O ganho de average precision foi pequeno, positivo em duas divisões e negativo em uma. Sem novo teste independente, essa expansão não substitui o modelo final.
+Construímos e avaliamos três indicadores educacionais do Inep sobre os seis atributos originais, mantendo os mesmos alunos, divisões e parâmetros. A cobertura supera noventa e nove vírgula noventa e oito por cento. O ganho de average precision foi pequeno, positivo em duas divisões e negativo em uma. Não promovemos essa expansão por dois motivos: o ganho é pequeno e sem significância demonstrada, e o teste de dois mil e vinte e quatro já havia sido observado. Preservar a validade do teste único vale mais do que incorporar um ganho marginal.
 
 ## 02:25–03:00 — Slide 6
 
-Sobre os fatores associados, funções docentes com superior apresentam associação positiva com alfabetização; alunos por turma, negativa; horas diárias, próxima de zero. Isso não demonstra impacto causal. A influência no modelo responde outra pergunta: ao permutar atributos na validação, a maior perda de desempenho ocorre com a unidade federativa. Serviços públicos, população e PIB têm contribuições menores. Correlação contextual e importância preditiva não são a mesma medida.
+Sobre os fatores associados, funções docentes com superior apresentam associação positiva com alfabetização; alunos por turma, negativa; horas diárias, próxima de zero. Isso não demonstra impacto causal. A dependência do modelo responde outra pergunta, e medimos por dois caminhos. Ao permutar atributos, a maior perda ocorre com a unidade federativa: zero vírgula onze contra zero vírgula zero um de todos os outros somados. Ao retreinar sem a unidade federativa, o modelo perde sessenta e dois vírgula quatro por cento de toda a vantagem que tem sobre a referência constante. O que o modelo ordena é, em boa parte, diferença entre estados.
 
 ## 03:00–03:35 — Slide 7
 

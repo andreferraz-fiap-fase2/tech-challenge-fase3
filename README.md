@@ -2,15 +2,25 @@
 
 **Autor: André Mohallem Ferraz · FIAP, Tech Challenge Fase 3 · Trabalho individual · Entrega: 15/09/2026**
 
-Organização da entrega 1.6. Modelo de referência 1.0, limiar e avaliação temporal concluídos. O modelo supera
+Organização da entrega 1.7. Modelo de referência 1.0, limiar e avaliação temporal concluídos. O modelo supera
 uma referência constante, mas seu poder de discriminação é moderado e o limiar de F2
 sinaliza quase toda a população. A aplicação proposta é apoio exploratório ao planejamento
 territorial, com validação local antes de qualquer uso operacional.
 
-- [Visão técnica em PDF](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.6-entrega/VisaoTecnica-TechChallengeFase3.pdf) e [relatório no repositório](docs/Relatorio-Tecnico-Fase3.md).
-- [Apresentação em PowerPoint](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.6-entrega/Apresentacao-TechChallenge-Fase3.pptx).
-- [Pacote oficial TechChallenge-Fase3.zip](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.6-entrega/TechChallenge-Fase3.zip), contendo somente o PDF e o PowerPoint; [publicação 1.6](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.6-entrega).
+**Duas leituras que delimitam o alcance do modelo.** A base foi enriquecida em dois
+movimentos: quatro atributos econômicos do IBGE, que entram no modelo congelado, e três
+indicadores educacionais do Inep — alunos por turma, docentes com curso superior e
+horas-aula diárias — construídos, avaliados nos mesmos folds e **conscientemente não
+promovidos**, porque o ganho foi pequeno e o teste de 2024 já havia sido observado
+([seção 3](#3-base-utilizada) e [seção 5.2](#52-estudo-complementar-com-indicadores-educacionais)).
+E a ablação da seção 6.2 mostra que remover a UF custa 62,4% de toda a vantagem do modelo
+sobre o baseline: o que ele ordena é, em boa parte, diferença entre estados.
+
+- [Visão técnica em PDF](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.7-entrega/VisaoTecnica-TechChallengeFase3.pdf) e [relatório no repositório](docs/Relatorio-Tecnico-Fase3.md).
+- [Apresentação em PowerPoint](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.7-entrega/Apresentacao-TechChallenge-Fase3.pptx).
+- [Pacote oficial TechChallenge-Fase3.zip](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.7-entrega/TechChallenge-Fase3.zip), contendo somente o PDF e o PowerPoint; [publicação 1.7](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.7-entrega).
 - [Análise exploratória dos dados enriquecidos](#4-análise-exploratória-e-entendimento-do-problema), com distribuições, cobertura, associações e hipóteses.
+- [Enriquecimento educacional do Inep](#3-base-utilizada) e seu [estudo comparativo](#52-estudo-complementar-com-indicadores-educacionais); [ablação da UF](reports/ablacao_uf_2023.md).
 - [Demonstração da probabilidade](docs/Demonstracao-Previsao.md) e [protocolo do estudo educacional complementar](docs/Protocolo-Estudo-Educacional.md).
 - [Protocolo antes do teste](reports/protocolo-final.md), [resultado temporal](reports/teste_temporal_2024.json) e [reprodução completa](reports/reproducibilidade_completa.json).
 
@@ -77,6 +87,12 @@ Os dez campos de origem auditados da Silver batch foram confrontados com os orig
 As primeiras estimativas dos documentos de planejamento 01/02 foram corrigidas na definição
 analítica 03 e na construção da Gold. A contagem acima é a versão válida da entrega.
 
+**A base foi enriquecida em dois movimentos, com destinos diferentes.** O primeiro traz
+quatro atributos econômicos do IBGE e **entra no modelo congelado**. O segundo traz três
+indicadores educacionais do Inep e **permanece em estudo comparativo**, pelos motivos
+registrados ao final desta seção e detalhados na seção 5.2. Os dois estão documentados,
+com manifesto de fontes, hashes e cobertura aferida.
+
 **Enriquecimento com bases externas do IBGE.** A base de alunos da Fase 2 foi cruzada
 com duas bases públicas do Instituto Brasileiro de Geografia e Estatística (IBGE):
 
@@ -107,9 +123,21 @@ de aula, para os anos iniciais. As páginas das edições foram publicadas em 31
 A junção por município e rede Estadual/Municipal usa a localização Total e mantém os
 1.502.809 alunos de 2023. A cobertura é 99,9858% para turmas/horas e 99,9885% para docentes.
 Restam 213, 213 e 173 alunos com ausência, respectivamente, tratada dentro dos folds.
-O modelo de referência conserva seus seis atributos; os nove atributos pertencem ao
-estudo complementar. [Fontes e definições](docs/Fontes-Educacionais.md) ·
-[Manifesto educacional](config/fontes-educacionais.json).
+
+**Por que esses três atributos não entram no modelo final.** A comparação foi executada
+nos mesmos alunos, folds e hiperparâmetros: o ganho de AP média foi de **+0,000531**,
+positivo em dois folds e negativo em um. Dois motivos impedem a promoção. O ganho é pequeno
+e sem demonstração de significância; e o teste temporal de 2024 **já havia sido observado**
+quando o estudo foi feito, de modo que promover a expansão exigiria um recorte independente
+que não existe. Preferiu-se preservar a validade do teste único a incorporar um ganho
+marginal. Por isso o modelo de referência conserva seus seis atributos, e os nove pertencem
+ao estudo comparativo da [seção 5.2](#52-estudo-complementar-com-indicadores-educacionais).
+Também ficam fora os indicadores educacionais **da Gold municipal da Fase 2** —
+`taxa_alfabetizacao`, `media_portugues`, `gap_meta` e `atingiu_meta` —, por motivo distinto
+e mais forte: são desfechos contemporâneos ao alvo e usá-los seria vazamento direto.
+[Fontes e definições](docs/Fontes-Educacionais.md) ·
+[Manifesto educacional](config/fontes-educacionais.json) ·
+[Resultados por fold](reports/estudo_educacional_2023.md).
 
 ## 4. Análise exploratória e entendimento do problema
 
@@ -385,10 +413,32 @@ A diferença é pequena; não foi demonstrada superioridade estatística. Os par
 detalhados e a regra de seleção estão no [protocolo da busca](reports/boosting_protocolo.md).
 
 UF é uma informação territorial conhecida antes da avaliação. Sua inclusão permite ao
-modelo aprender diferenças entre estados, sem revelar o resultado do aluno. As duas
-versões da logística e do boosting incluem UF: **ainda não foi treinada uma versão
-equivalente sem ela**. A importância por permutação da seção 8 mede dependência do modelo
-atual; não identifica causas da alfabetização nem substitui essa comparação adicional.
+modelo aprender diferenças entre estados, sem revelar o resultado do aluno. Para medir
+quanto do resultado depende dela, o modelo congelado foi **reajustado sem `sigla_uf`**,
+nos mesmos três folds, com os mesmos alunos e hiperparâmetros idênticos:
+
+| Variante em CV 2023 | AP média | ROC-AUC média | Brier médio ↓ |
+| --- | ---: | ---: | ---: |
+| Seis atributos, modelo congelado | **0,543776** | **0,642578** | **0,227481** |
+| Cinco atributos, sem UF | 0,464124 | 0,557526 | 0,240775 |
+
+Remover a UF custa **0,079652 de AP média** — o equivalente a **62,4% de toda a vantagem**
+do modelo sobre o baseline de prevalência (0,416142). A perda é negativa nos três folds,
+entre −0,063269 e −0,108590. Sem UF, a ROC-AUC cai de 0,642578 para 0,557526, aproximando-se
+da ordenação ao acaso. **A maior parte do que o modelo ordena é diferença entre estados**,
+não distinção entre municípios ou entre alunos de um mesmo estado.
+
+Essa leitura é consistente com a importância por permutação da seção 8, em que UF responde
+por queda de AP de 0,114826 contra 0,014413 somando os outros cinco atributos. Nenhuma das
+duas análises identifica causas da alfabetização: a UF resume diferenças de rede, política
+e composição que este recorte não separa. A ablação é interpretativa, foi executada depois
+de 2024 já ter sido observado e **não promove nova candidata**; o modelo final, o limiar e
+a avaliação temporal 1.0 permanecem os mesmos.
+Na rodada da ablação, a referência de seis atributos reproduziu exatamente as métricas
+publicadas, fold a fold, o que confirma que a diferença vem da remoção do atributo.
+[Ablação da UF](reports/ablacao_uf_2023.md) · [Protocolo](config/experimento-ablacao-uf.json).
+
+![Ablação da UF em 2023](images/18_ablacao_uf_2023.png)
 
 Os mesmos grupos participaram da busca e da confirmação: a CV não é aninhada e suas
 métricas podem ser otimistas. Depois da escolha, o ajuste final usou todos os alunos de 2023.
@@ -456,6 +506,13 @@ marginal próxima de zero (−0,000494). Nenhum atributo foi retirado após olha
 Atributos territoriais foram permutados por município; rede, por aluno. Correlações e
 combinações pouco plausíveis geradas pela permutação limitam a leitura. Os desvios entre
 repetições não são intervalos de confiança. Importância não é efeito causal.
+
+A permutação e a **ablação da seção 6.2** concordam por caminhos independentes: a primeira
+atribui à UF queda de AP de 0,114826 contra 0,014413 dos outros cinco atributos somados;
+a segunda mostra que retreinar sem UF custa 0,079652 de AP, ou 62,4% da vantagem sobre o
+baseline. Permutar um atributo e removê-lo do treinamento medem coisas diferentes — a
+segunda permite ao modelo recompor o que puder com os atributos restantes — e ainda assim
+apontam a mesma dependência dominante.
 
 ![Importância por permutação](images/10_importancia_permutacao_2023.png)
 
@@ -561,6 +618,17 @@ o teste. `run-all`, `logistic` e `boosting` são bloqueados na raiz congelada pa
 a proveniência; a reprodução completa executa essas funções em uma raiz temporária.
 `interpret`, `strategy` e `final-figures` exportam análises sem retreinar o modelo final.
 
+A ablação da UF reajusta as duas variantes na Gold de 2023 e recusa sobrescrever suas
+próprias saídas, preservando a proveniência da execução publicada:
+
+```bash
+uv run python -m src.pipeline ablacao-uf
+```
+
+A rodada confere que a variante de seis atributos reproduz, fold a fold, as métricas de
+`reports/modelos_comparacao_2023.csv`, e interrompe se houver divergência. Ela não lê a
+Gold de 2024, não escolhe limiar e não altera `config/modelo-final.json`.
+
 Para reproduzir a expansão, preparar também os três ZIPs descritos em
 [Fontes Educacionais](docs/Fontes-Educacionais.md) e executar o estudo em uma **nova pasta
 externa ao projeto**. A rotina recusa sobrescrever resultados e preserva a versão 1.0:
@@ -573,8 +641,8 @@ uv run python -m src.usecase.education_study --root . --output-root ../estudo-ed
 O estudo registra EDA antes do ajuste, cobertura, métricas pareadas, modelos e hashes.
 Seus resultados publicados são exploratórios; não representam novo teste independente.
 
-Verificação atual: **122 testes aprovados**, incluindo fontes educacionais, estudo e
-demonstração. Reprodução final original com métricas exatamente iguais,
+Verificação atual: **134 testes aprovados**, incluindo fontes educacionais, estudo,
+ablação da UF e demonstração. Reprodução final original com métricas exatamente iguais,
 quatro arquivos idênticos por SHA-256 e 1.000 previsões conferidas após reabrir o modelo.
 Veja [reprodução completa](reports/reproducibilidade_completa.json) e [final](reports/reproducibilidade_final.json).
 As 14 advertências remanescentes são de depreciação de Matplotlib/Pyparsing.

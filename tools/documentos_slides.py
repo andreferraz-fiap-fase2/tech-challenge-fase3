@@ -19,8 +19,8 @@ NARRATIONS = [
     "A base reúne avaliações reais em dois ciclos. Reconstruímos a Gold por aluno a partir da Silver e dos originais da Fase dois, com enriquecimento do IBGE. A nota define o alvo e fica fora dos preditores. Usamos três divisões por município em dois mil e vinte e três, com pré-processamento aprendido no treino, e teste separado em dois mil e vinte e quatro.",
     "A exploração encontrou quarenta e um vírgula sessenta e um por cento de não alfabetização e contextos repetidos, justificando validação municipal. No Inep, as medianas são dezenove vírgula cinco alunos por turma, noventa e quatro vírgula quatro por cento de funções docentes com superior e quatro vírgula três horas diárias. Cada histograma conta uma vez cada município e rede, sem multiplicar contextos pelos alunos.",
     "Comparamos baseline, regressão logística e Gradient Boosting. O modelo escolhido alcançou average precision de zero vírgula cinco um seis, contra zero vírgula quatro zero dois da referência. Essa métrica mede ordenação do risco. O limiar F dois recupera noventa e nove vírgula trinta por cento dos casos, mas sinaliza noventa e seis vírgula oitenta e quatro por cento dos alunos. A seletividade é baixa para triagem autônoma.",
-    "O estudo complementar acrescenta três indicadores do Inep aos seis atributos originais, mantendo os mesmos alunos, divisões e parâmetros. A cobertura supera noventa e nove vírgula noventa e oito por cento. O ganho de average precision foi pequeno, positivo em duas divisões e negativo em uma. Sem novo teste independente, essa expansão não substitui o modelo final.",
-    "Sobre os fatores associados, funções docentes com superior apresentam associação positiva com alfabetização; alunos por turma, negativa; horas diárias, próxima de zero. Isso não demonstra impacto causal. A influência no modelo responde outra pergunta: ao permutar atributos na validação, a maior perda de desempenho ocorre com a unidade federativa. Serviços públicos, população e PIB têm contribuições menores. Correlação contextual e importância preditiva não são a mesma medida.",
+    "Construímos e avaliamos três indicadores educacionais do Inep sobre os seis atributos originais, mantendo os mesmos alunos, divisões e parâmetros. A cobertura supera noventa e nove vírgula noventa e oito por cento. O ganho de average precision foi pequeno, positivo em duas divisões e negativo em uma. Não promovemos essa expansão por dois motivos: o ganho é pequeno e sem significância demonstrada, e o teste de dois mil e vinte e quatro já havia sido observado. Preservar a validade do teste único vale mais do que incorporar um ganho marginal.",
+    "Sobre os fatores associados, funções docentes com superior apresentam associação positiva com alfabetização; alunos por turma, negativa; horas diárias, próxima de zero. Isso não demonstra impacto causal. A dependência do modelo responde outra pergunta, e medimos por dois caminhos. Ao permutar atributos, a maior perda ocorre com a unidade federativa: zero vírgula onze contra zero vírgula zero um de todos os outros somados. Ao retreinar sem a unidade federativa, o modelo perde sessenta e dois vírgula quatro por cento de toda a vantagem que tem sobre a referência constante. O que o modelo ordena é, em boa parte, diferença entre estados.",
     "Entre municípios com pelo menos cem avaliações, Aracaju e Nossa Senhora do Socorro apresentam os maiores riscos médios previstos: aproximadamente sessenta e oito e sessenta e sete por cento. Os dez primeiros estão em Sergipe, evidenciando dependência estadual. Nos perfis econômicos de dois mil e vinte e três, Centro-Oeste e Sul são os mais próximos. Isso não implica taxas de alfabetização iguais nem constitui agrupamento automático de alunos.",
     "Para metas, mil quinhentos e noventa e dois municípios ficam abaixo da referência de dois mil e vinte e quatro. No cenário de oitenta por cento, são dois mil setecentos e sessenta e sete. Comparamos médias ponderadas das probabilidades mantendo a composição observada. Esses cenários não preveem dois mil e trinta nem estimam a probabilidade de descumprimento. Uma previsão futura exige novos ciclos e avaliação independente.",
     "A demonstração para o perfil histórico de Belo Horizonte municipal estima cinquenta e oito vírgula sessenta e seis por cento de alfabetização. A referência de cinquenta por cento classifica como alfabetizado; a política F dois sinaliza atenção. A probabilidade é a mesma, com decisões diferentes. O exemplo não é uma previsão individual para dois mil e vinte e seis.",
@@ -224,7 +224,7 @@ class SlideDocuments:
             "AP não é acurácia; o limiar não sustenta triagem individual autônoma.",
         )
 
-        s = self.slide_base(p, "Inep: mais contexto, ganho preditivo pequeno", 5)
+        s = self.slide_base(p, "Inep: contexto construído, avaliado e não promovido", 5)
         self.cards(
             s,
             [
@@ -235,9 +235,9 @@ class SlideDocuments:
         )
         self.wide(
             s,
-            "Mesmos alunos, folds municipais e parâmetros em 2023; EDA antes dos ajustes.\n"
-            "Estudo exploratório, sem novo teste independente ou significância demonstrada.\n"
-            "A expansão não substitui o modelo final de seis atributos.",
+            "Mesmos alunos, folds municipais e parâmetros em 2023; EDA registrada antes dos ajustes.\n"
+            "Não promovido por dois motivos: ganho pequeno, sem significância demonstrada,\n"
+            "e teste de 2024 já observado. Preservar o teste único vale mais que o ganho marginal.",
         )
 
         s = self.slide_base(p, "Fatores associados e variáveis influentes", 6)
@@ -261,12 +261,11 @@ class SlideDocuments:
             18,
             GRAY,
         )
-        self.textbox(
-            s, "Influência no modelo original", 6.85, 2.15, 5.75, 0.75, 24, GOLD, True
-        )
+        self.textbox(s, "Quanto o modelo depende da UF", 6.85, 2.15, 5.75, 0.75, 24, GOLD, True)
         self.textbox(
             s,
-            "UF: queda de AP de 0,114826\nServiços públicos/VAB: 0,004855\nPopulação: 0,004705\nPIB per capita: 0,003733",
+            "Permutar UF: queda de AP de 0,114826\nOutros cinco atributos somados: 0,014413\n"
+            "Retreinar sem UF: perde 62,4% da\nvantagem sobre o baseline",
             6.85,
             2.85,
             5.7,
@@ -275,7 +274,7 @@ class SlideDocuments:
         )
         self.textbox(
             s,
-            "Permutação em 2023 · seis atributos\nMaior queda = maior dependência preditiva",
+            "Permutação e ablação em 2023 · seis atributos\nSem UF, a ROC-AUC cai de 0,6426 para 0,5575",
             6.85,
             5.1,
             5.75,

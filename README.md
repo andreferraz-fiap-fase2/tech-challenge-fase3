@@ -2,14 +2,14 @@
 
 **Autor: André Mohallem Ferraz · FIAP, Tech Challenge Fase 3 · Trabalho individual · Entrega: 15/09/2026**
 
-Organização da entrega 1.4. Modelo de referência 1.0, limiar e avaliação temporal concluídos. O modelo supera
+Organização da entrega 1.5. Modelo de referência 1.0, limiar e avaliação temporal concluídos. O modelo supera
 uma referência constante, mas seu poder de discriminação é moderado e o limiar de F2
 sinaliza quase toda a população. A aplicação proposta é apoio exploratório ao planejamento
 territorial, com validação local antes de qualquer uso operacional.
 
-- [Visão técnica em PDF](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.4-entrega/VisaoTecnica-TechChallengeFase3.pdf) e [relatório no repositório](docs/Relatorio-Tecnico-Fase3.md).
-- [Apresentação em PowerPoint](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.4-entrega/Apresentacao-TechChallenge-Fase3.pptx).
-- [Pacote oficial TechChallenge-Fase3.zip](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.4-entrega/TechChallenge-Fase3.zip), contendo somente o PDF e o PowerPoint; [publicação 1.4](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.4-entrega).
+- [Visão técnica em PDF](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.5-entrega/VisaoTecnica-TechChallengeFase3.pdf) e [relatório no repositório](docs/Relatorio-Tecnico-Fase3.md).
+- [Apresentação em PowerPoint](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.5-entrega/Apresentacao-TechChallenge-Fase3.pptx).
+- [Pacote oficial TechChallenge-Fase3.zip](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.5-entrega/TechChallenge-Fase3.zip), contendo somente o PDF e o PowerPoint; [publicação 1.5](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.5-entrega).
 - [Análise exploratória dos dados enriquecidos](#4-análise-exploratória-e-entendimento-do-problema), com distribuições, cobertura, associações e hipóteses.
 - [Demonstração da probabilidade](docs/Demonstracao-Previsao.md) e [protocolo do estudo educacional complementar](docs/Protocolo-Estudo-Educacional.md).
 - [Protocolo antes do teste](reports/protocolo-final.md), [resultado temporal](reports/teste_temporal_2024.json) e [reprodução completa](reports/reproducibilidade_completa.json).

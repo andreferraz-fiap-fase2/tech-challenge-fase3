@@ -23,7 +23,7 @@ def main() -> None:
         print("Relatório técnico gerado:", args.output)
         return
     SlideDocuments(args.output, args.report_version).presentation()
-    print("Documentos e oito slides gerados:", args.output)
+    print("Documentos e apresentação gerados:", args.output)
 
 
 if __name__ == "__main__":

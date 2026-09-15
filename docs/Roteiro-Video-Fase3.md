@@ -1,41 +1,51 @@
 # Roteiro de preparação do vídeo executivo — Fase 3
 
-**Autor: André Mohallem Ferraz · Revisão 1.4 · Duração planejada: 5 minutos**
+**Autor: André Mohallem Ferraz · Revisão 1.5 · Duração planejada: até 5 minutos**
 
-As janelas abaixo somam 5 minutos e incluem pausas e transições. São uma estimativa para ensaio, não uma duração de gravação medida. Material de apoio, fora do ZIP e da pasta oficial de entrega. O vídeo oficial deverá ser gravado com a voz do autor.
+As janelas somam 5 minutos e incluem pausas e transições. São uma estimativa para ensaio, não uma duração de gravação medida. Material de apoio, fora do ZIP e da pasta oficial. O vídeo oficial deverá ser gravado com a voz do autor. As notas do PowerPoint permanecem vazias.
 
-## 00:00–00:30 — Slide 1
+## 00:00–00:25 — Slide 1
 
-Este projeto de André Mohallem Ferraz estima a probabilidade de um aluno do segundo ano ser considerado alfabetizado, dado seu contexto. O resultado observado segue o critério de setecentos e quarenta e três pontos de proficiência. O modelo produz uma probabilidade; um limiar transforma essa estimativa em classificação. A previsão contextual apoia a análise territorial, sem substituir a avaliação pedagógica individual.
+Este projeto de André Mohallem Ferraz estima a probabilidade de alfabetização de um aluno do segundo ano, considerando seu contexto. O resultado observado segue o critério de setecentos e quarenta e três pontos de proficiência. A estimativa apoia perguntas sobre fatores associados, territórios, semelhanças regionais e metas, sem substituir a avaliação pedagógica individual.
 
-## 00:30–01:10 — Slide 2
+## 00:25–00:55 — Slide 2
 
-A base reúne três milhões e trezentas e cinquenta mil avaliações reais elegíveis em dois ciclos. A Gold por aluno foi reconstruída da Silver e dos originais da Fase dois, com auditoria e enriquecimento do IBGE. A nota define o alvo e fica fora dos preditores. O estudo educacional acrescenta três indicadores do Inep aos seis atributos originais. São mais informações sobre os mesmos alunos de dois mil e vinte e três, sem aumentar a amostra nem incorporar o teste à exploração.
+A base reúne avaliações reais em dois ciclos. Reconstruímos a Gold por aluno a partir da Silver e dos originais da Fase dois, com enriquecimento do IBGE. A nota define o alvo e fica fora dos preditores. Usamos três divisões por município em dois mil e vinte e três, com pré-processamento aprendido no treino, e teste separado em dois mil e vinte e quatro.
 
-## 01:10–01:55 — Slide 3
+## 00:55–01:25 — Slide 3
 
-A exploração encontrou quarenta e um vírgula sessenta e um por cento de não alfabetização, com diferenças entre regiões. População e PIB têm distribuições assimétricas, justificando transformação logarítmica na regressão logística. Apenas cinco mil oitocentos e oitenta e um perfis originais representam um milhão e meio de avaliações. Por isso, os municípios foram mantidos inteiros nas três divisões de validação. Medianas e transformações são aprendidas somente no treino. O relatório relaciona achados, hipóteses e decisões e distingue a exploração inicial das análises complementares realizadas posteriormente.
+A exploração encontrou quarenta e um vírgula sessenta e um por cento de não alfabetização e contextos repetidos, justificando validação municipal. No Inep, as medianas são dezenove vírgula cinco alunos por turma, noventa e quatro vírgula quatro por cento de funções docentes com superior e quatro vírgula três horas diárias. Cada histograma conta uma vez cada município e rede, sem multiplicar contextos pelos alunos.
 
-## 01:55–02:30 — Slide 4
+## 01:25–01:55 — Slide 4
 
-Comparamos uma referência constante, regressão logística e Gradient Boosting. Modelo e limiar foram congelados antes do teste temporal de dois mil e vinte e quatro. A average precision do modelo foi zero vírgula cinco um seis, acima de zero vírgula quatro zero dois do baseline. Essa métrica mede ordenação do risco, não acurácia. O desempenho caiu em municípios novos, mostrando limites de generalização para contextos pouco conhecidos.
+Comparamos baseline, regressão logística e Gradient Boosting. O modelo escolhido alcançou average precision de zero vírgula cinco um seis, contra zero vírgula quatro zero dois da referência. Essa métrica mede ordenação do risco. O limiar F dois recupera noventa e nove vírgula trinta por cento dos casos, mas sinaliza noventa e seis vírgula oitenta e quatro por cento dos alunos. A seletividade é baixa para triagem autônoma.
 
-## 02:30–03:05 — Slide 5
+## 01:55–02:25 — Slide 5
 
-O limiar escolhido pela métrica F dois prioriza recuperar casos de não alfabetização. No teste, identificou mais de noventa e nove por cento desses casos, mas sinalizou quase noventa e sete por cento dos alunos. Isso oferece pouca seletividade para uma equipe com capacidade limitada. A referência de cinquenta por cento sinaliza menos alunos, mas recupera apenas um quarto dos casos. O modelo ainda não sustenta uma triagem individual autônoma.
+O estudo complementar acrescenta três indicadores do Inep aos seis atributos originais, mantendo os mesmos alunos, divisões e parâmetros. A cobertura supera noventa e nove vírgula noventa e oito por cento. O ganho de average precision foi pequeno, positivo em duas divisões e negativo em uma. Sem novo teste independente, essa expansão não substitui o modelo final.
 
-## 03:05–03:40 — Slide 6
+## 02:25–03:00 — Slide 6
 
-A exploração educacional usa uma observação por município e rede. As medianas são dezenove vírgula cinco alunos por turma, noventa e quatro vírgula quatro por cento das funções docentes com curso superior e quatro vírgula três horas diárias de aula. A cobertura supera noventa e nove vírgula noventa e oito por cento dos alunos. As associações com alfabetização são modestas, e a de horas de aula é próxima de zero. Essas correlações contextuais não medem efeitos causais.
+Sobre os fatores associados, funções docentes com superior apresentam associação positiva com alfabetização; alunos por turma, negativa; horas diárias, próxima de zero. Isso não demonstra impacto causal. A influência no modelo responde outra pergunta: ao permutar atributos na validação, a maior perda de desempenho ocorre com a unidade federativa. Serviços públicos, população e PIB têm contribuições menores. Correlação contextual e importância preditiva não são a mesma medida.
 
-## 03:40–04:20 — Slide 7
+## 03:00–03:35 — Slide 7
 
-A hipótese complementar é que esses indicadores acrescentem informação ao contexto do IBGE. A comparação manteve os mesmos alunos, divisões municipais e parâmetros do modelo. A exploração do Inep foi registrada antes desses ajustes. O ganho de average precision foi pequeno: melhorou em duas divisões e piorou em uma. O estudo reutiliza desenvolvimento conhecido, sem novo teste independente. Por isso, a expansão com nove atributos não substitui o modelo de referência com seis.
+Entre municípios com pelo menos cem avaliações, Aracaju e Nossa Senhora do Socorro apresentam os maiores riscos médios previstos: aproximadamente sessenta e oito e sessenta e sete por cento. Os dez primeiros estão em Sergipe, evidenciando dependência estadual. Nos perfis econômicos de dois mil e vinte e três, Centro-Oeste e Sul são os mais próximos. Isso não implica taxas de alfabetização iguais nem constitui agrupamento automático de alunos.
 
-## 04:20–05:00 — Slide 8
+## 03:35–04:05 — Slide 8
 
-A demonstração recebe perfis históricos de município e rede. Para Belo Horizonte municipal, estima cinquenta e oito vírgula sessenta e seis por cento de probabilidade de alfabetização. A regra de cinquenta por cento classifica como alfabetizado; a política sensível de F dois sinaliza atenção. A probabilidade é a mesma, mas as decisões refletem objetivos diferentes. Para gestores, a recomendação é combinar contexto, volume, cobertura e evidência pedagógica local. Os dados não sustentam uma previsão individual para dois mil e vinte e seis.
+Para metas, mil quinhentos e noventa e dois municípios ficam abaixo da referência de dois mil e vinte e quatro. No cenário de oitenta por cento, são dois mil setecentos e sessenta e sete. Comparamos médias ponderadas das probabilidades mantendo a composição observada. Esses cenários não preveem dois mil e trinta nem estimam a probabilidade de descumprimento. Uma previsão futura exige novos ciclos e avaliação independente.
+
+## 04:05–04:30 — Slide 9
+
+A demonstração para o perfil histórico de Belo Horizonte municipal estima cinquenta e oito vírgula sessenta e seis por cento de alfabetização. A referência de cinquenta por cento classifica como alfabetizado; a política F dois sinaliza atenção. A probabilidade é a mesma, com decisões diferentes. O exemplo não é uma previsão individual para dois mil e vinte e seis.
+
+## 04:30–05:00 — Slide 10
+
+A recomendação é investigar territórios combinando risco, volume, cobertura e evidências pedagógicas locais. Para avançar em metas futuras, precisamos ampliar ciclos, obter atributos anteriores ao período previsto e reservar avaliação independente. O repositório indicado reúne código, métodos e resultados verificáveis. A contribuição é apoiar decisões com evidências e limites claros, distinguindo associação, previsão e causalidade.
 
 ## Orientação de apresentação
 
-Apresentar como reunião executiva. Ensaiar dentro das janelas de tempo e ajustar as pausas para concluir em até 5 minutos. Explicar AP sem confundir com acurácia e correlação sem atribuir causalidade. Enfatizar a baixa seletividade e os limites de generalização. Gravar com a voz do autor. Narração sintética e versões de ensaio são materiais privados de preparação e não integram a entrega oficial.
+Ensaiar como reunião executiva e concluir em até 5 minutos. As cinco perguntas estratégicas são respondidas nos slides 6 a 8: fatores associados, influência no modelo, municípios de maior risco, semelhanças regionais e metas futuras. Distinguir associação de causalidade, semelhança contextual de agrupamento e cenário de previsão futura. Explicar AP sem confundir com acurácia. Não afirmar que o cenário de 80% prevê 2030.
+
+[Repositório do projeto](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3).

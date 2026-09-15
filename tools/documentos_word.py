@@ -204,6 +204,7 @@ class WordDocuments:
             "# Relatório técnico — alfabetização no Brasil\n\n**Autor: "
             + AUTHOR
             + f"**\n\n**FIAP · Tech Challenge Fase 3 · Trabalho individual · Revisão documental {self.version} · 14/09/2026**\n\n"
+            + "**Repositório do projeto:** [github.com/andreferraz-fiap-fase2/tech-challenge-fase3](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3).\n\n"
         )
         abstract = "**Síntese executiva.** O Gradient Boosting supera o baseline no teste temporal, com AP 0,5162 e ROC-AUC 0,6224. Seu limiar acadêmico de F2 sinaliza 96,84% dos alunos. A entrega evidencia potencial para leitura territorial e limites importantes de generalização e seletividade, sem recomendar decisões individuais autônomas.\n\n"
         groups = [

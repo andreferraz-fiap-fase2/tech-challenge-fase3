@@ -11,20 +11,23 @@ sem notas de narração. O vídeo oficial de até cinco minutos depende de grava
 
 Para gerar somente o relatório, acrescentar `--report-only`. A visão técnica inclui uma seção
 própria à análise exploratória com IBGE e Inep, com gráficos, hipóteses e limites.
-O roteiro distribui os oito slides em janelas que somam 5 minutos; a duração é planejada
+O roteiro distribui os dez slides em janelas que somam 5 minutos; a duração é planejada
 para ensaio, sem gravação nesta revisão. Roteiros, áudios, vídeos de ensaio e versões
 anteriores permanecem na preparação privada, fora do ZIP e da pasta oficial.
 Gerar em uma nova pasta de preparação para preservar os materiais anteriores.
+Os slides 6–8 explicitam as cinco perguntas estratégicas do enunciado, distinguindo
+associações, importância preditiva e cenários de metas. O PDF identifica o repositório
+na primeira página; o PowerPoint contém links clicáveis no rodapé e no encerramento.
 
 ```bash
-uv run --no-project --python 3.13 --isolated --with python-docx==1.2.0 --with python-pptx==1.0.2 python tools/gerar_documentos.py --report-version 1.4 --output /caminho/Preparacao/documentos-1.4
+uv run --no-project --python 3.13 --isolated --with python-docx==1.2.0 --with python-pptx==1.0.2 python tools/gerar_documentos.py --report-version 1.5 --output /caminho/Preparacao/documentos-1.5
 ```
 
-No PowerShell do Windows, executar `powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/exportar-documentos.ps1 -Version 1.4 -Output <pasta de preparacao>`.
-O script exporta PDFs e os oito slides em PNG. Depois, conferir a autoria dos PDFs:
+No PowerShell do Windows, executar `powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/exportar-documentos.ps1 -Version 1.5 -Output <pasta de preparacao>`.
+O script exporta PDFs e os dez slides em PNG. Depois, conferir a autoria dos PDFs:
 
 ```bash
-uv run --no-project --python 3.13 --isolated --with pymupdf==1.28.2 --with imageio-ffmpeg==0.6.0 python tools/finalizar_midia.py --version 1.4 --output /caminho/Preparacao/documentos-1.4
+uv run --no-project --python 3.13 --isolated --with pymupdf==1.28.2 --with imageio-ffmpeg==0.6.0 python tools/finalizar_midia.py --version 1.5 --output /caminho/Preparacao/documentos-1.5
 ```
 
 A finalização registra a autoria e as páginas em `verificacao-documentos.json`.

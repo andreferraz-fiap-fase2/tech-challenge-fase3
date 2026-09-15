@@ -1,4 +1,4 @@
-"""Autor: André Mohallem Ferraz. Slides e roteiro executivo."""
+"""Autor: André Mohallem Ferraz. Slides de decisão e roteiro externo de preparação."""
 
 import json
 from pathlib import Path
@@ -12,27 +12,58 @@ from pptx.slide import Slide
 from pptx.util import Inches as PInches
 from pptx.util import Pt as PPt
 
+REPOSITORY = "https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3"
+
 NARRATIONS = [
-    "Este projeto de André Mohallem Ferraz estima a probabilidade de um aluno do segundo ano ser considerado alfabetizado, dado seu contexto. O resultado observado segue o critério de setecentos e quarenta e três pontos de proficiência. O modelo produz uma probabilidade; um limiar transforma essa estimativa em classificação. A previsão contextual apoia a análise territorial, sem substituir a avaliação pedagógica individual.",
-    "A base reúne três milhões e trezentas e cinquenta mil avaliações reais elegíveis em dois ciclos. A Gold por aluno foi reconstruída da Silver e dos originais da Fase dois, com auditoria e enriquecimento do IBGE. A nota define o alvo e fica fora dos preditores. O estudo educacional acrescenta três indicadores do Inep aos seis atributos originais. São mais informações sobre os mesmos alunos de dois mil e vinte e três, sem aumentar a amostra nem incorporar o teste à exploração.",
-    "A exploração encontrou quarenta e um vírgula sessenta e um por cento de não alfabetização, com diferenças entre regiões. População e PIB têm distribuições assimétricas, justificando transformação logarítmica na regressão logística. Apenas cinco mil oitocentos e oitenta e um perfis originais representam um milhão e meio de avaliações. Por isso, os municípios foram mantidos inteiros nas três divisões de validação. Medianas e transformações são aprendidas somente no treino. O relatório relaciona achados, hipóteses e decisões e distingue a exploração inicial das análises complementares realizadas posteriormente.",
-    "Comparamos uma referência constante, regressão logística e Gradient Boosting. Modelo e limiar foram congelados antes do teste temporal de dois mil e vinte e quatro. A average precision do modelo foi zero vírgula cinco um seis, acima de zero vírgula quatro zero dois do baseline. Essa métrica mede ordenação do risco, não acurácia. O desempenho caiu em municípios novos, mostrando limites de generalização para contextos pouco conhecidos.",
-    "O limiar escolhido pela métrica F dois prioriza recuperar casos de não alfabetização. No teste, identificou mais de noventa e nove por cento desses casos, mas sinalizou quase noventa e sete por cento dos alunos. Isso oferece pouca seletividade para uma equipe com capacidade limitada. A referência de cinquenta por cento sinaliza menos alunos, mas recupera apenas um quarto dos casos. O modelo ainda não sustenta uma triagem individual autônoma.",
-    "A exploração educacional usa uma observação por município e rede. As medianas são dezenove vírgula cinco alunos por turma, noventa e quatro vírgula quatro por cento das funções docentes com curso superior e quatro vírgula três horas diárias de aula. A cobertura supera noventa e nove vírgula noventa e oito por cento dos alunos. As associações com alfabetização são modestas, e a de horas de aula é próxima de zero. Essas correlações contextuais não medem efeitos causais.",
-    "A hipótese complementar é que esses indicadores acrescentem informação ao contexto do IBGE. A comparação manteve os mesmos alunos, divisões municipais e parâmetros do modelo. A exploração do Inep foi registrada antes desses ajustes. O ganho de average precision foi pequeno: melhorou em duas divisões e piorou em uma. O estudo reutiliza desenvolvimento conhecido, sem novo teste independente. Por isso, a expansão com nove atributos não substitui o modelo de referência com seis.",
-    "A demonstração recebe perfis históricos de município e rede. Para Belo Horizonte municipal, estima cinquenta e oito vírgula sessenta e seis por cento de probabilidade de alfabetização. A regra de cinquenta por cento classifica como alfabetizado; a política sensível de F dois sinaliza atenção. A probabilidade é a mesma, mas as decisões refletem objetivos diferentes. Para gestores, a recomendação é combinar contexto, volume, cobertura e evidência pedagógica local. Os dados não sustentam uma previsão individual para dois mil e vinte e seis.",
+    "Este projeto de André Mohallem Ferraz estima a probabilidade de alfabetização de um aluno do segundo ano, considerando seu contexto. O resultado observado segue o critério de setecentos e quarenta e três pontos de proficiência. A estimativa apoia perguntas sobre fatores associados, territórios, semelhanças regionais e metas, sem substituir a avaliação pedagógica individual.",
+    "A base reúne avaliações reais em dois ciclos. Reconstruímos a Gold por aluno a partir da Silver e dos originais da Fase dois, com enriquecimento do IBGE. A nota define o alvo e fica fora dos preditores. Usamos três divisões por município em dois mil e vinte e três, com pré-processamento aprendido no treino, e teste separado em dois mil e vinte e quatro.",
+    "A exploração encontrou quarenta e um vírgula sessenta e um por cento de não alfabetização e contextos repetidos, justificando validação municipal. No Inep, as medianas são dezenove vírgula cinco alunos por turma, noventa e quatro vírgula quatro por cento de funções docentes com superior e quatro vírgula três horas diárias. Cada histograma conta uma vez cada município e rede, sem multiplicar contextos pelos alunos.",
+    "Comparamos baseline, regressão logística e Gradient Boosting. O modelo escolhido alcançou average precision de zero vírgula cinco um seis, contra zero vírgula quatro zero dois da referência. Essa métrica mede ordenação do risco. O limiar F dois recupera noventa e nove vírgula trinta por cento dos casos, mas sinaliza noventa e seis vírgula oitenta e quatro por cento dos alunos. A seletividade é baixa para triagem autônoma.",
+    "O estudo complementar acrescenta três indicadores do Inep aos seis atributos originais, mantendo os mesmos alunos, divisões e parâmetros. A cobertura supera noventa e nove vírgula noventa e oito por cento. O ganho de average precision foi pequeno, positivo em duas divisões e negativo em uma. Sem novo teste independente, essa expansão não substitui o modelo final.",
+    "Sobre os fatores associados, funções docentes com superior apresentam associação positiva com alfabetização; alunos por turma, negativa; horas diárias, próxima de zero. Isso não demonstra impacto causal. A influência no modelo responde outra pergunta: ao permutar atributos na validação, a maior perda de desempenho ocorre com a unidade federativa. Serviços públicos, população e PIB têm contribuições menores. Correlação contextual e importância preditiva não são a mesma medida.",
+    "Entre municípios com pelo menos cem avaliações, Aracaju e Nossa Senhora do Socorro apresentam os maiores riscos médios previstos: aproximadamente sessenta e oito e sessenta e sete por cento. Os dez primeiros estão em Sergipe, evidenciando dependência estadual. Nos perfis econômicos de dois mil e vinte e três, Centro-Oeste e Sul são os mais próximos. Isso não implica taxas de alfabetização iguais nem constitui agrupamento automático de alunos.",
+    "Para metas, mil quinhentos e noventa e dois municípios ficam abaixo da referência de dois mil e vinte e quatro. No cenário de oitenta por cento, são dois mil setecentos e sessenta e sete. Comparamos médias ponderadas das probabilidades mantendo a composição observada. Esses cenários não preveem dois mil e trinta nem estimam a probabilidade de descumprimento. Uma previsão futura exige novos ciclos e avaliação independente.",
+    "A demonstração para o perfil histórico de Belo Horizonte municipal estima cinquenta e oito vírgula sessenta e seis por cento de alfabetização. A referência de cinquenta por cento classifica como alfabetizado; a política F dois sinaliza atenção. A probabilidade é a mesma, com decisões diferentes. O exemplo não é uma previsão individual para dois mil e vinte e seis.",
+    "A recomendação é investigar territórios combinando risco, volume, cobertura e evidências pedagógicas locais. Para avançar em metas futuras, precisamos ampliar ciclos, obter atributos anteriores ao período previsto e reservar avaliação independente. O repositório indicado reúne código, métodos e resultados verificáveis. A contribuição é apoiar decisões com evidências e limites claros, distinguindo associação, previsão e causalidade.",
 ]
 
 SCRIPT_WINDOWS = [
-    "00:00–00:30",
-    "00:30–01:10",
-    "01:10–01:55",
-    "01:55–02:30",
-    "02:30–03:05",
-    "03:05–03:40",
-    "03:40–04:20",
-    "04:20–05:00",
+    "00:00–00:25",
+    "00:25–00:55",
+    "00:55–01:25",
+    "01:25–01:55",
+    "01:55–02:25",
+    "02:25–03:00",
+    "03:00–03:35",
+    "03:35–04:05",
+    "04:05–04:30",
+    "04:30–05:00",
 ]
+
+
+def video_script(version: str) -> str:
+    """Roteiro externo; o PowerPoint contém notas vazias e nenhum áudio incorporado."""
+    script = (
+        "# Roteiro de preparação do vídeo executivo — Fase 3\n\n**Autor: "
+        + AUTHOR
+        + f" · Revisão {version} · Duração planejada: até 5 minutos**\n\n"
+        + "As janelas somam 5 minutos e incluem pausas e transições. São uma estimativa "
+        + "para ensaio, não uma duração de gravação medida. Material de apoio, fora do ZIP "
+        + "e da pasta oficial. O vídeo oficial deverá ser gravado com a voz do autor. "
+        + "As notas do PowerPoint permanecem vazias.\n\n"
+    )
+    for index, narration in enumerate(NARRATIONS, 1):
+        script += f"## {SCRIPT_WINDOWS[index - 1]} — Slide {index}\n\n{narration}\n\n"
+    return script + (
+        "## Orientação de apresentação\n\n"
+        "Ensaiar como reunião executiva e concluir em até 5 minutos. As cinco perguntas "
+        "estratégicas são respondidas nos slides 6 a 8: fatores associados, influência no "
+        "modelo, municípios de maior risco, semelhanças regionais e metas futuras. "
+        "Distinguir associação de causalidade, semelhança contextual de agrupamento e "
+        "cenário de previsão futura. Explicar AP sem confundir com acurácia. "
+        "Não afirmar que o cenário de 80% prevê 2030.\n\n"
+        f"[Repositório do projeto]({REPOSITORY}).\n"
+    )
 
 
 class SlideDocuments:
@@ -52,18 +83,29 @@ class SlideDocuments:
         size: int = 24,
         color: str = NAVY,
         bold: bool = False,
+        link: str | None = None,
     ) -> None:
         shape = slide.shapes.add_textbox(PInches(x), PInches(y), PInches(w), PInches(h))
-        tf = shape.text_frame
-        tf.word_wrap = True
+        shape.text_frame.word_wrap = True
         for index, line in enumerate(text.split("\n")):
-            p = tf.paragraphs[0] if index == 0 else tf.add_paragraph()
-            p.text = line
-            p.font.name = "Aptos"
-            p.font.size = PPt(size)
-            p.font.bold = bold
-            p.font.color.rgb = PColor.from_string(color)
-            p.space_after = PPt(8)
+            paragraph = (
+                shape.text_frame.paragraphs[0] if index == 0 else shape.text_frame.add_paragraph()
+            )
+            paragraph.text = line
+            paragraph.font.name = "Aptos"
+            paragraph.font.size = PPt(size)
+            paragraph.font.bold = bold
+            paragraph.font.color.rgb = PColor.from_string(color)
+            paragraph.space_after = PPt(8)
+            if link:
+                for run in paragraph.runs:
+                    run.hyperlink.address = link
+                    run.font.underline = True
+
+    def wide(
+        self, slide: Slide, text: str, y: float = 5.25, size: int = 20, color: str = GRAY
+    ) -> None:
+        self.textbox(slide, text, 0.65, y, 12, 1.35, size, color)
 
     def slide_base(self, presentation: PresentationType, title: str, number: int) -> Slide:
         slide = presentation.slides.add_slide(presentation.slide_layouts[6])
@@ -84,10 +126,21 @@ class SlideDocuments:
         )
         self.textbox(slide, title, 0.55, 0.9, 12.2, 1.15, 31, NAVY, True)
         self.textbox(
-            slide, AUTHOR + "  ·  Fase 3  ·  Setembro de 2026", 0.55, 7.05, 11, 0.3, 10, GRAY
+            slide, AUTHOR + "  ·  Fase 3  ·  Setembro de 2026", 0.55, 7.05, 7.5, 0.3, 10, GRAY
+        )
+        self.textbox(
+            slide,
+            "GitHub · tech-challenge-fase3",
+            8.4,
+            7.03,
+            3.4,
+            0.3,
+            10,
+            GOLD,
+            link=REPOSITORY,
         )
         self.textbox(slide, f"{number:02d}", 12.1, 7.03, 0.6, 0.3, 11, GOLD, True)
-        slide.notes_slide.notes_text_frame.text = NARRATIONS[number - 1]
+        slide.notes_slide.notes_text_frame.text = ""
         return slide
 
     def cards(self, slide: Slide, items: list[tuple[str, str]], y: float = 2.35) -> None:
@@ -111,168 +164,227 @@ class SlideDocuments:
         p = Presentation()
         p.slide_width = PInches(13.333)
         p.slide_height = PInches(7.5)
+
         s = self.slide_base(p, "Qual é a probabilidade de alfabetização?", 1)
         self.textbox(
             s,
             "Critério observado: proficiência ≥743 pontos\nEstimativa condicionada ao contexto do aluno",
             0.65,
-            2.5,
+            2.45,
             11.8,
-            1.8,
+            1.9,
             34,
-            NAVY,
         )
-        self.textbox(
-            s, "Uma evolução da engenharia de dados da Fase 2", 0.65, 5.3, 11.8, 0.7, 22, GOLD
-        )
-        s = self.slide_base(p, "Uma base auditada, com teste temporal separado", 2)
-        self.cards(
+        self.wide(
             s,
-            [
-                ("3,35 milhões", "avaliações reais elegíveis nos dois ciclos"),
-                ("2023", "1,50 milhão para desenvolvimento"),
-                ("2024", "1,85 milhão para teste final"),
-            ],
-        )
-        self.textbox(
-            s,
-            "Gold por aluno reconstruída das fontes da Fase 2 + IBGE · seis atributos\nGold municipal original utilizada na análise posterior de metas",
-            0.65,
-            5.5,
-            12,
-            1,
-            21,
-            GRAY,
-        )
-        s = self.slide_base(p, "A exploração orienta o tratamento e a validação", 3)
-        self.cards(
-            s,
-            [
-                ("41,61%", "Não alfabetizados; classe de risco com volume expressivo"),
-                ("5.881 perfis", "Contextos repetidos: separar municípios inteiros"),
-                ("População/PIB", "Assimetria: log1p na regressão logística"),
-            ],
-        )
-        self.textbox(
-            s,
-            "EDA de 2023 · imputação e transformações aprendidas no treino\nModelo e limiar congelados antes de avaliar 2024.",
-            0.65,
-            5.6,
-            12,
-            0.9,
-            21,
-            GRAY,
-        )
-        s = self.slide_base(p, "Há ganho preditivo, com generalização moderada", 4)
-        self.cards(
-            s,
-            [
-                ("0,516", "AP do modelo no teste de 2024"),
-                ("0,402", "AP da referência constante"),
-                ("0,456", "AP em municípios novos"),
-            ],
-        )
-        self.textbox(
-            s,
-            "AP mede ordenação do risco; não é acurácia.\nNovas UFs concentram quase todos os alunos de municípios novos.",
-            0.65,
-            5.5,
-            12,
-            1,
-            21,
-            GRAY,
-        )
-        s = self.slide_base(p, "O limiar F2 tem pouca seletividade", 5)
-        self.cards(
-            s,
-            [
-                ("99,30%", "dos casos de não alfabetização recuperados"),
-                ("96,84%", "de todos os alunos sinalizados"),
-                ("41,24%", "de precisão entre os sinalizados"),
-            ],
-        )
-        self.textbox(
-            s,
-            "Conclusão: não usar como triagem individual autônoma\ncom capacidade de atendimento limitada.",
-            0.65,
-            5.5,
-            12,
-            1,
+            "Fatores associados · territórios · semelhanças · metas\nUma evolução da engenharia de dados da Fase 2",
+            5.15,
             23,
-            NAVY,
-            True,
+            GOLD,
         )
-        s = self.slide_base(p, "Como se distribui o contexto educacional?", 6)
-        distribution = s.shapes.add_picture(
+
+        s = self.slide_base(p, "Uma base auditada e uma pipeline reproduzível", 2)
+        self.cards(
+            s,
+            [
+                ("2023", "1,50 milhão de avaliações\npara desenvolvimento"),
+                ("3 folds", "Municípios inteiros\nem treino ou validação"),
+                ("2024", "1,85 milhão de avaliações\npara teste separado"),
+            ],
+        )
+        self.wide(
+            s,
+            "Gold por aluno: Silver e originais da Fase 2 + IBGE; nota fora dos preditores.\n"
+            "Imputação e encoding dentro da pipeline, aprendidos somente no treino.\n"
+            "Modelo e limiar congelados antes do teste de 2024.",
+        )
+
+        s = self.slide_base(p, "EDA: conhecer a população e o contexto", 3)
+        picture = s.shapes.add_picture(
             str(ROOT / "images/16_eda_inep_2023.png"),
             PInches(0.65),
             PInches(2.15),
-            width=PInches(12.0),
+            width=PInches(12),
         )
-        distribution.left = int((p.slide_width - distribution.width) / 2)
-        s = self.slide_base(p, "Inep: mais contexto educacional, ganho pequeno", 7)
+        picture.left = int((p.slide_width - picture.width) / 2)
+
+        s = self.slide_base(p, "O modelo distingue risco, com pouca seletividade", 4)
         self.cards(
             s,
             [
-                ("3 indicadores", "Turmas, funções docentes com nível superior e horas de aula"),
-                (">99,98%", "Cobertura dos alunos no desenvolvimento de 2023"),
-                ("+0,000531", "Ganho médio de AP; melhora em dois dos três folds"),
+                ("0,516", "AP do Gradient Boosting\nno teste de 2024"),
+                ("0,402", "AP da referência\nconstante"),
+                ("0,622", "ROC-AUC no teste;\ngeneralização limitada"),
             ],
+        )
+        self.wide(
+            s,
+            "Comparados: baseline, logística e boosting. AP em municípios novos: 0,456.\n"
+            "F2: recupera 99,30% dos casos e sinaliza 96,84% dos alunos.\n"
+            "AP não é acurácia; o limiar não sustenta triagem individual autônoma.",
+        )
+
+        s = self.slide_base(p, "Inep: mais contexto, ganho preditivo pequeno", 5)
+        self.cards(
+            s,
+            [
+                ("6 → 9", "Atributos: acrescentar\nturmas, formação e jornada"),
+                (">99,98%", "Cobertura dos alunos\nno desenvolvimento"),
+                ("+0,000531", "Ganho médio de AP;\nmelhora em 2 dos 3 folds"),
+            ],
+        )
+        self.wide(
+            s,
+            "Mesmos alunos, folds municipais e parâmetros em 2023; EDA antes dos ajustes.\n"
+            "Estudo exploratório, sem novo teste independente ou significância demonstrada.\n"
+            "A expansão não substitui o modelo final de seis atributos.",
+        )
+
+        s = self.slide_base(p, "Fatores associados e variáveis influentes", 6)
+        self.textbox(s, "Associações com alfabetização", 0.7, 2.15, 5.7, 0.5, 24, GOLD, True)
+        self.textbox(
+            s,
+            "Funções docentes com superior: +0,204\nAlunos por turma: −0,155\nHoras de aula: −0,025",
+            0.7,
+            2.85,
+            5.75,
+            2.1,
+            22,
         )
         self.textbox(
             s,
-            "Estudo exploratório: seis versus nove atributos nos mesmos folds de 2023.\nSem novo teste independente; o modelo de referência permanece 1.0.",
-            0.65,
-            5.5,
-            12,
-            1,
-            21,
+            "Inep · Pearson em 2023\nUma observação por município × rede",
+            0.7,
+            5.1,
+            5.75,
+            0.9,
+            18,
             GRAY,
         )
-        s = self.slide_base(p, "Demonstrar a probabilidade e interpretar a decisão", 8)
-        self.cards(
-            s,
-            [
-                ("58,66%", "P(alfabetizado) no perfil histórico Belo Horizonte / Municipal"),
-                ("Probabilidade", "Mesma estimativa; classificação depende do limiar adotado"),
-                ("Aplicação", "Combinar contexto, volume e evidência pedagógica local"),
-            ],
+        self.textbox(
+            s, "Influência no modelo original", 6.85, 2.15, 5.75, 0.75, 24, GOLD, True
         )
         self.textbox(
             s,
-            "Demonstração contextual do modelo 1.0; não é previsão para 2026.\nAutoria: " + AUTHOR,
-            0.65,
-            5.45,
+            "UF: queda de AP de 0,114826\nServiços públicos/VAB: 0,004855\nPopulação: 0,004705\nPIB per capita: 0,003733",
+            6.85,
+            2.85,
+            5.7,
+            2.1,
+            22,
+        )
+        self.textbox(
+            s,
+            "Permutação em 2023 · seis atributos\nMaior queda = maior dependência preditiva",
+            6.85,
+            5.1,
+            5.75,
+            0.9,
+            18,
+            GRAY,
+        )
+        self.textbox(
+            s,
+            "Associação não demonstra impacto causal; correlação não é importância do modelo.",
+            0.7,
+            6.3,
             12,
-            1,
+            0.5,
             20,
             NAVY,
+            True,
+        )
+
+        s = self.slide_base(p, "Municípios de maior risco e regiões semelhantes", 7)
+        self.cards(
+            s,
+            [
+                ("67,81%", "Aracaju/SE\n3.664 avaliações"),
+                ("66,95%", "Nossa Senhora do Socorro/SE\n1.785 avaliações"),
+                ("0,381", "Centro-Oeste e Sul:\nperfis mais próximos"),
+            ],
+        )
+        self.wide(
+            s,
+            "Risco médio de não alfabetização previsto em 2024 · n ≥100 · 10 maiores em Sergipe.\n"
+            "Semelhança econômica em 2023: distância padronizada, com igual peso municipal.\n"
+            "Não é ranking oficial, cluster de alunos ou evidência de alfabetização igual.",
+        )
+
+        s = self.slide_base(p, "Metas: cenário de 2024 e previsão futura", 8)
+        self.cards(
+            s,
+            [
+                (
+                    "1.592 / 2.819",
+                    "Abaixo da meta municipal de 2024,\nentre municípios com meta disponível",
+                ),
+                ("2.767 / 2.924", "Abaixo de 80% no cenário\nque mantém a composição de 2024"),
+            ],
+        )
+        self.wide(
+            s,
+            "Média ponderada de P(alfabetizado), municípios com ≥100 avaliações.\n"
+            "Não é previsão de 2030 nem probabilidade de descumprimento de meta.\n"
+            "Projetar o futuro exige novos ciclos, atributos anteriores e teste independente.",
+            color=NAVY,
+        )
+
+        s = self.slide_base(p, "Demonstrar a probabilidade e interpretar a decisão", 9)
+        self.cards(
+            s,
+            [
+                ("58,66%", "P(alfabetizado): perfil\nBelo Horizonte / Municipal"),
+                ("Referência 0,5", "Classificação prevista:\nalfabetizado"),
+                ("Política F2", "Sinaliza atenção\ncom a mesma probabilidade"),
+            ],
+        )
+        self.wide(
+            s,
+            "Demonstração histórica do modelo 1.0, com seis atributos contextuais.\n"
+            "O limiar muda a decisão; não muda a probabilidade nem o critério de 743 pontos.\n"
+            "O exemplo não é uma previsão individual para 2026.",
+        )
+
+        s = self.slide_base(p, "Decisões apoiadas por evidências e próximos passos", 10)
+        self.cards(
+            s,
+            [
+                ("Investigar", "Combinar risco, volume,\ncobertura e evidência local"),
+                ("Ampliar", "Novos ciclos e atributos\nconhecidos antes da previsão"),
+                ("Validar", "Reservar novo teste\npara projeções futuras"),
+            ],
+        )
+        self.wide(s, "Código, métodos, resultados e limites documentados:", 5.35, 23, NAVY)
+        self.textbox(
+            s,
+            "github.com/andreferraz-fiap-fase2/tech-challenge-fase3",
+            0.65,
+            5.95,
+            12,
+            0.55,
+            21,
+            GOLD,
+            True,
+            link=REPOSITORY,
         )
         p.core_properties.author = AUTHOR
         p.core_properties.last_modified_by = AUTHOR
         p.core_properties.title = "Alfabetização: inteligência analítica para decisões territoriais"
         p.save(self.output / f"Apresentacao-Executiva-Fase3-v{self.version}.pptx")
-        script = (
-            "# Roteiro de preparação do vídeo executivo — Fase 3\n\n**Autor: "
-            + AUTHOR
-            + f" · Revisão {self.version} · Duração planejada: 5 minutos**\n\n"
-            + "As janelas abaixo somam 5 minutos e incluem pausas e transições. "
-            + "São uma estimativa para ensaio, não uma duração de gravação medida. "
-            + "Material de apoio, fora do ZIP e da pasta oficial de entrega. "
-            + "O vídeo oficial deverá ser gravado com a voz do autor.\n\n"
+        script = video_script(self.version)
+        (ROOT / "docs/Roteiro-Video-Fase3.md").write_text(script, encoding="utf-8")
+        (self.output / f"Roteiro-Video-Fase3-v{self.version}.md").write_text(
+            script, encoding="utf-8"
         )
-        for i, narration in enumerate(NARRATIONS, 1):
-            script += f"## {SCRIPT_WINDOWS[i - 1]} — Slide {i}\n\n{narration}\n\n"
-        script += "## Orientação de apresentação\n\nApresentar como reunião executiva. Ensaiar dentro das janelas de tempo e ajustar as pausas para concluir em até 5 minutos. Explicar AP sem confundir com acurácia e correlação sem atribuir causalidade. Enfatizar a baixa seletividade e os limites de generalização. Gravar com a voz do autor. Narração sintética e versões de ensaio são materiais privados de preparação e não integram a entrega oficial.\n"
-        (ROOT / "docs/Roteiro-Video-Fase3.md").write_text(script)
-        (self.output / f"Roteiro-Video-Fase3-v{self.version}.md").write_text(script)
         WordDocuments(self.output, self.version).word(
             script, f"Roteiro-Video-Fase3-v{self.version}.docx"
         )
         (self.output / "narracao.json").write_text(
             json.dumps(
-                [{"slide": i, "text": t} for i, t in enumerate(NARRATIONS, 1)],
+                [{"slide": index, "text": text} for index, text in enumerate(NARRATIONS, 1)],
                 ensure_ascii=False,
                 indent=2,
-            )
+            ),
+            encoding="utf-8",
         )

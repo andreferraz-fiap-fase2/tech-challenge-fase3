@@ -2,7 +2,9 @@
 
 **Autor: André Mohallem Ferraz**
 
-**FIAP · Tech Challenge Fase 3 · Trabalho individual · Revisão documental 1.4 · 14/09/2026**
+**FIAP · Tech Challenge Fase 3 · Trabalho individual · Revisão documental 1.5 · 14/09/2026**
+
+**Repositório do projeto:** [github.com/andreferraz-fiap-fase2/tech-challenge-fase3](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3).
 
 **Síntese executiva.** O Gradient Boosting supera o baseline no teste temporal, com AP 0,5162 e ROC-AUC 0,6224. Seu limiar acadêmico de F2 sinaliza 96,84% dos alunos. A entrega evidencia potencial para leitura territorial e limites importantes de generalização e seletividade, sem recomendar decisões individuais autônomas.
 

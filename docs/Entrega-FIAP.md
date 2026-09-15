@@ -3,7 +3,7 @@
 **Autor: André Mohallem Ferraz · Trabalho individual · Prazo informado: 15/09/2026**
 
 [Repositório público](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3) ·
-[Publicação oficial 1.4](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.4-entrega).
+[Publicação oficial 1.5](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.5-entrega).
 
 A organização segue o formato usado na Fase 2: documento técnico, apresentação e vídeo
 do autor. **O PDF e o PowerPoint estão preparados; a gravação do vídeo com a voz de
@@ -26,7 +26,7 @@ somente os dois documentos disponíveis.
 | Interpretação dos fatores | [Permutação em validação](../reports/importancia_permutacao_2023.csv), [figura](../images/10_importancia_permutacao_2023.png) |
 | Municípios com maior risco | [Tabela municipal, n ≥ 100](../reports/municipios_risco_2024.csv) |
 | Regiões com perfis semelhantes | [Perfis de 2023](../reports/regioes_semelhantes_2023.csv) |
-| Risco de metas futuras | [Cenários condicionais](../reports/cenarios_metas_2024.csv), [limites e evolução necessária](../README.md) |
+| Análise de metas e caminho para previsão futura | [Cenários condicionais de 2024](../reports/cenarios_metas_2024.csv), [limites e evolução necessária](../README.md); ainda sem previsão futura validada |
 | Documentação técnica e 11 tópicos do README | [Relatório técnico](Relatorio-Tecnico-Fase3.md), [README](../README.md): os 11 tópicos foram preservados e a EDA ganhou uma seção adicional, totalizando 12 seções numeradas |
 | Vídeo executivo de até cinco minutos | Pendente: gravação da apresentação com a voz de André Mohallem Ferraz |
 | Estrutura e versionamento Git | `data/`, `notebooks/`, `src/`, `reports/`, `images/`, `requirements.txt`, `.gitignore`, branches e pull requests |
@@ -39,9 +39,9 @@ previsão validada de 2030 nem probabilidade de descumprimento de meta.
 
 | Arquivo | Conteúdo |
 | --- | --- |
-| [VisaoTecnica-TechChallengeFase3.pdf](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.4-entrega/VisaoTecnica-TechChallengeFase3.pdf) | Relatório técnico com problema, EDA, modelagem, resultados e limitações. |
-| [Apresentacao-TechChallenge-Fase3.pptx](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.4-entrega/Apresentacao-TechChallenge-Fase3.pptx) | Apresentação executiva para exposição do trabalho pelo autor. |
-| [TechChallenge-Fase3.zip](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.4-entrega/TechChallenge-Fase3.zip) | Contém exclusivamente o PDF técnico e o PowerPoint acima. |
+| [VisaoTecnica-TechChallengeFase3.pdf](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.5-entrega/VisaoTecnica-TechChallengeFase3.pdf) | Relatório técnico com problema, EDA, modelagem, resultados e limitações. |
+| [Apresentacao-TechChallenge-Fase3.pptx](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.5-entrega/Apresentacao-TechChallenge-Fase3.pptx) | Apresentação executiva para exposição do trabalho pelo autor. |
+| [TechChallenge-Fase3.zip](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.5-entrega/TechChallenge-Fase3.zip) | Contém exclusivamente o PDF técnico e o PowerPoint acima. |
 
 Esses três arquivos compõem a pasta `Entrega-Final`. O ZIP é uma alternativa para obter
 os dois documentos juntos. Código e evidências analíticas continuam disponíveis no
@@ -49,10 +49,13 @@ repositório público. Fontes, Gold, modelos, roteiros, narrações, guias e ver
 ficam no arquivo de `Preparacao`, fora da pasta e do ZIP oficiais.
 
 O material para ensaiar a apresentação permanece disponível ao autor em `Preparacao`.
+Os slides 6–8 respondem às cinco perguntas estratégicas: fatores associados, importância
+no modelo, municípios de maior risco, regiões semelhantes e cenários de metas.
+O repositório está identificado por links clicáveis no PDF e no PowerPoint.
 Após gravar o vídeo com sua voz, será necessário conferir duração de até cinco minutos
 e completar a submissão no portal da FIAP até o prazo da turma. O pacote atual não é
 apresentado como atendimento concluído ao requisito de vídeo.
 
-A organização 1.4 preserva o experimento validado 1.0, a EDA dos dados enriquecidos,
+A organização 1.5 preserva o experimento validado 1.0, a EDA dos dados enriquecidos,
 o estudo educacional exploratório e a demonstração. Nenhum modelo, limiar ou resultado
 temporal foi alterado para organizar os arquivos oficiais.

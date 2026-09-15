@@ -17,6 +17,7 @@ from src.usecase.logistic import run_logistic
 from src.usecase.prepare import build_all_gold, import_snapshot
 from src.usecase.strategy import run_strategy
 from src.usecase.temporal import run_temporal
+from src.usecase.uf_ablation import run_uf_ablation
 
 
 def argument_parser() -> argparse.ArgumentParser:
@@ -51,6 +52,9 @@ def argument_parser() -> argparse.ArgumentParser:
         "strategy", help="Leitura territorial do teste congelado e metas de referência"
     )
     subparsers.add_parser("final-figures", help="Exporta as figuras finais do experimento")
+    subparsers.add_parser(
+        "ablacao-uf", help="Reajusta o modelo congelado sem sigla_uf nos folds de 2023"
+    )
     return parser
 
 
@@ -82,6 +86,7 @@ def main() -> None:
             "interpret": run_interpretation,
             "strategy": run_strategy,
             "final-figures": run_final_figures,
+            "ablacao-uf": run_uf_ablation,
         }
     )
     for command in commands:

@@ -209,6 +209,7 @@ class WordDocuments:
         abstract = (
             "**Síntese executiva.** O Gradient Boosting supera o baseline no teste temporal, com AP 0,5162 e ROC-AUC 0,6224. Seu limiar acadêmico de F2 sinaliza 96,84% dos alunos. A entrega evidencia potencial para leitura territorial e limites importantes de generalização e seletividade, sem recomendar decisões individuais autônomas.\n\n"
             "**Duas leituras delimitam esse alcance.** A ablação da seção 8.1 reajusta o modelo sem a UF e mostra que **62,4% de toda a vantagem sobre o baseline depende desse único atributo**: o que o modelo ordena é, em boa parte, diferença entre estados. E o enriquecimento educacional do Inep — alunos por turma, docentes com curso superior e horas-aula — foi construído, avaliado nos mesmos folds e **conscientemente não promovido** ao modelo final, porque o ganho foi pequeno e o teste de 2024 já havia sido observado (seções 3 e 5.2).\n\n"
+            "**O uso defensável é a ordenação.** O limiar de F2 sinaliza 96,84% dos alunos e entrega lift de 1,03× — degenera porque a prevalência é alta e a discriminação, moderada. Fixando a capacidade de atendimento em 10% dos alunos, o grupo priorizado tem **63,34% de não alfabetizados contra 41,61% na população** (seção 6.3). O limiar congelado não foi alterado.\n\n"
         )
         groups = [
             ["## 1. Contexto do problema", "## 2. Objetivo analítico"],

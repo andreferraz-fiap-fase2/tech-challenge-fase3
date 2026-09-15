@@ -18,7 +18,7 @@ A exploração encontrou quarenta e um vírgula sessenta e um por cento de não 
 
 ## 01:25–01:55 — Slide 4
 
-Comparamos baseline, regressão logística e Gradient Boosting. O modelo escolhido alcançou average precision de zero vírgula cinco um seis, contra zero vírgula quatro zero dois da referência. Essa métrica mede ordenação do risco. O limiar F dois recupera noventa e nove vírgula trinta por cento dos casos, mas sinaliza noventa e seis vírgula oitenta e quatro por cento dos alunos. A seletividade é baixa para triagem autônoma.
+Comparamos baseline, regressão logística e Gradient Boosting. O modelo escolhido alcançou average precision de zero vírgula cinco um seis, contra zero vírgula quatro zero dois da referência. Essa métrica mede ordenação do risco. O limiar F dois recupera noventa e nove vírgula trinta por cento dos casos, mas sinaliza noventa e seis vírgula oitenta e quatro por cento dos alunos: não seleciona ninguém na prática. O valor está na ordenação. Se a capacidade permite atender dez por cento dos alunos, o grupo priorizado tem sessenta e três por cento de não alfabetizados, contra quarenta e dois por cento na população.
 
 ## 01:55–02:25 — Slide 5
 

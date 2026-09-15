@@ -18,7 +18,7 @@ NARRATIONS = [
     "Este projeto de André Mohallem Ferraz estima a probabilidade de alfabetização de um aluno do segundo ano, considerando seu contexto. O resultado observado segue o critério de setecentos e quarenta e três pontos de proficiência. A estimativa apoia perguntas sobre fatores associados, territórios, semelhanças regionais e metas, sem substituir a avaliação pedagógica individual.",
     "A base reúne avaliações reais em dois ciclos. Reconstruímos a Gold por aluno a partir da Silver e dos originais da Fase dois, com enriquecimento do IBGE. A nota define o alvo e fica fora dos preditores. Usamos três divisões por município em dois mil e vinte e três, com pré-processamento aprendido no treino, e teste separado em dois mil e vinte e quatro.",
     "A exploração encontrou quarenta e um vírgula sessenta e um por cento de não alfabetização e contextos repetidos, justificando validação municipal. No Inep, as medianas são dezenove vírgula cinco alunos por turma, noventa e quatro vírgula quatro por cento de funções docentes com superior e quatro vírgula três horas diárias. Cada histograma conta uma vez cada município e rede, sem multiplicar contextos pelos alunos.",
-    "Comparamos baseline, regressão logística e Gradient Boosting. O modelo escolhido alcançou average precision de zero vírgula cinco um seis, contra zero vírgula quatro zero dois da referência. Essa métrica mede ordenação do risco. O limiar F dois recupera noventa e nove vírgula trinta por cento dos casos, mas sinaliza noventa e seis vírgula oitenta e quatro por cento dos alunos. A seletividade é baixa para triagem autônoma.",
+    "Comparamos baseline, regressão logística e Gradient Boosting. O modelo escolhido alcançou average precision de zero vírgula cinco um seis, contra zero vírgula quatro zero dois da referência. Essa métrica mede ordenação do risco. O limiar F dois recupera noventa e nove vírgula trinta por cento dos casos, mas sinaliza noventa e seis vírgula oitenta e quatro por cento dos alunos: não seleciona ninguém na prática. O valor está na ordenação. Se a capacidade permite atender dez por cento dos alunos, o grupo priorizado tem sessenta e três por cento de não alfabetizados, contra quarenta e dois por cento na população.",
     "Construímos e avaliamos três indicadores educacionais do Inep sobre os seis atributos originais, mantendo os mesmos alunos, divisões e parâmetros. A cobertura supera noventa e nove vírgula noventa e oito por cento. O ganho de average precision foi pequeno, positivo em duas divisões e negativo em uma. Não promovemos essa expansão por dois motivos: o ganho é pequeno e sem significância demonstrada, e o teste de dois mil e vinte e quatro já havia sido observado. Preservar a validade do teste único vale mais do que incorporar um ganho marginal.",
     "Sobre os fatores associados, funções docentes com superior apresentam associação positiva com alfabetização; alunos por turma, negativa; horas diárias, próxima de zero. Isso não demonstra impacto causal. A dependência do modelo responde outra pergunta, e medimos por dois caminhos. Ao permutar atributos, a maior perda ocorre com a unidade federativa: zero vírgula onze contra zero vírgula zero um de todos os outros somados. Ao retreinar sem a unidade federativa, o modelo perde sessenta e dois vírgula quatro por cento de toda a vantagem que tem sobre a referência constante. O que o modelo ordena é, em boa parte, diferença entre estados.",
     "Entre municípios com pelo menos cem avaliações, Aracaju e Nossa Senhora do Socorro apresentam os maiores riscos médios previstos: aproximadamente sessenta e oito e sessenta e sete por cento. Os dez primeiros estão em Sergipe, evidenciando dependência estadual. Nos perfis econômicos de dois mil e vinte e três, Centro-Oeste e Sul são os mais próximos. Isso não implica taxas de alfabetização iguais nem constitui agrupamento automático de alunos.",
@@ -208,20 +208,20 @@ class SlideDocuments:
         )
         picture.left = int((p.slide_width - picture.width) / 2)
 
-        s = self.slide_base(p, "O modelo distingue risco, com pouca seletividade", 4)
+        s = self.slide_base(p, "O modelo ordena risco; o alerta binário não seleciona", 4)
         self.cards(
             s,
             [
                 ("0,516", "AP do Gradient Boosting\nno teste de 2024"),
                 ("0,402", "AP da referência\nconstante"),
-                ("0,622", "ROC-AUC no teste;\ngeneralização limitada"),
+                ("1,52×", "Lift no decil de maior\nrisco: 63% vs 42%"),
             ],
         )
         self.wide(
             s,
-            "Comparados: baseline, logística e boosting. AP em municípios novos: 0,456.\n"
-            "F2: recupera 99,30% dos casos e sinaliza 96,84% dos alunos.\n"
-            "AP não é acurácia; o limiar não sustenta triagem individual autônoma.",
+            "Comparados: baseline, logística e boosting. ROC-AUC 0,622; municípios novos 0,456.\n"
+            "O limiar F2 recupera 99,30% dos casos, mas sinaliza 96,84% dos alunos: lift de 1,03×.\n"
+            "Usar como ordenação para priorizar onde investigar, não como triagem individual.",
         )
 
         s = self.slide_base(p, "Inep: contexto construído, avaliado e não promovido", 5)

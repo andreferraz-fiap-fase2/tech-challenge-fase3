@@ -14,6 +14,7 @@ from src.usecase.final_fit import run_final_fit
 from src.usecase.freeze import run_freeze
 from src.usecase.interpretation import run_interpretation
 from src.usecase.logistic import run_logistic
+from src.usecase.operating_points import run_operating_points
 from src.usecase.prepare import build_all_gold, import_snapshot
 from src.usecase.strategy import run_strategy
 from src.usecase.temporal import run_temporal
@@ -55,6 +56,9 @@ def argument_parser() -> argparse.ArgumentParser:
     subparsers.add_parser(
         "ablacao-uf", help="Reajusta o modelo congelado sem sigla_uf nos folds de 2023"
     )
+    subparsers.add_parser(
+        "pontos-operacao", help="Tabula recall e precisao por capacidade de atendimento em 2023"
+    )
     return parser
 
 
@@ -87,6 +91,7 @@ def main() -> None:
             "strategy": run_strategy,
             "final-figures": run_final_figures,
             "ablacao-uf": run_uf_ablation,
+            "pontos-operacao": run_operating_points,
         }
     )
     for command in commands:

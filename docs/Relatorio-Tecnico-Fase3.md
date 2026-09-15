@@ -10,6 +10,8 @@
 
 **Duas leituras delimitam esse alcance.** A ablação da seção 8.1 reajusta o modelo sem a UF e mostra que **62,4% de toda a vantagem sobre o baseline depende desse único atributo**: o que o modelo ordena é, em boa parte, diferença entre estados. E o enriquecimento educacional do Inep — alunos por turma, docentes com curso superior e horas-aula — foi construído, avaliado nos mesmos folds e **conscientemente não promovido** ao modelo final, porque o ganho foi pequeno e o teste de 2024 já havia sido observado (seções 3 e 5.2).
 
+**O uso defensável é a ordenação.** O limiar de F2 sinaliza 96,84% dos alunos e entrega lift de 1,03× — degenera porque a prevalência é alta e a discriminação, moderada. Fixando a capacidade de atendimento em 10% dos alunos, o grupo priorizado tem **63,34% de não alfabetizados contra 41,61% na população** (seção 6.3). O limiar congelado não foi alterado.
+
 ## 1. Contexto do problema
 
 A Fase 2 construiu a engenharia de dados do Indicador Criança Alfabetizada (ICA), dos
@@ -445,6 +447,37 @@ eram não alfabetizados. Portanto, recupera quase todos os casos, mas seleciona 
 aproximadamente 96 de cada 100 alunos recebem alerta. Não é uma regra pronta para
 priorizar atendimento individual com recursos limitados. O teste de 2024 aparece na seção 7.
 
+**Por que o F2 degenerou aqui.** A regra trivial de sinalizar todos os alunos tem F2 de
+**0,780881** em 2023; o limiar escolhido chega a **0,785237**. O ganho é de **+0,004356**,
+na quarta casa decimal. Com prevalência alta — 41,61% de não alfabetizados — e discriminação
+moderada, o β=2 pesa o recall quatro vezes mais que a precisão e empurra o ótimo para perto
+do classificador trivial. O topo da curva é plano: os cinco melhores limiares diferem na
+quarta casa e todos sinalizam entre 96% e 96,2%. O β=2 também não deriva de nenhuma
+restrição declarada de orçamento ou capacidade.
+
+**O que o modelo entrega quando o corte vem da capacidade de atendimento.** A tabela abaixo
+usa a mesma curva de validação de 2023 e nenhuma informação de 2024. Em vez de maximizar
+F2, fixa quantos alunos se pretende sinalizar e lê o que se obtém. O **lift** compara a
+precisão do grupo sinalizado com a prevalência de 41,61% da população.
+
+| Critério em 2023 | Limiar | Sinalizados | Recall | Precisão | Lift |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Sinalizar 5% | 0,624487 | 5,17% | 8,07% | **64,94%** | **1,56×** |
+| Sinalizar 10% | 0,604634 | 10,01% | 15,24% | **63,34%** | **1,52×** |
+| Sinalizar 20% | 0,522669 | 20,01% | 28,81% | 59,93% | 1,44× |
+| Sinalizar 30% | 0,469405 | 30,02% | 40,47% | 56,09% | 1,35× |
+| Limiar F2 congelado | 0,150163 | 95,94% | 99,03% | 42,95% | 1,03× |
+
+Selecionando o decil de maior risco, **63,34% são não alfabetizados contra 41,61% na
+população**. Essa é a forma útil de usar o modelo: como **ordenação** para priorizar
+investigação onde a capacidade é limitada, não como alerta binário para todos. O limiar F2
+entrega lift de 1,03×, que é praticamente a população inteira.
+
+O limiar congelado **não foi alterado**. Escolhê-lo de novo agora, depois de 2024 já ter
+sido observado, seria seleção post-hoc e invalidaria o teste único. Esta tabela é
+descritiva, calculada apenas com 2023, e não define nova política.
+[Pontos de operação](../reports/pontos_operacao_2023.csv) · [Curva completa](../reports/limiar_f2_2023.csv).
+
 **Como ler o gráfico:** o eixo horizontal varia o limiar de risco. A linha amarela mostra
 a proporção dos casos de não alfabetização identificados (recall); a cinza, a proporção
 de todos os alunos sinalizados; a azul, o valor de F2. A linha tracejada marca o limiar
@@ -571,6 +604,13 @@ Usar as tabelas para levantar hipóteses territoriais, verificar cobertura e pla
 investigação pedagógica. Combinar risco, volume de alunos, evidências locais e capacidade
 de atendimento. Prioridades de orçamento ou decisões individuais exigem validação adicional.
 
+**O uso defensável é a ordenação, não o alerta binário.** Os
+[pontos de operação da seção 6.3](../#63-quando-a-probabilidade-gera-um-alerta) mostram que,
+fixando a capacidade em 10% dos alunos, o grupo priorizado tem 63,34% de não alfabetizados
+contra 41,61% na população. O ganho é real, porém modesto, e vem sobretudo da diferença
+entre estados (seção 8.1) — serve para escolher **onde investigar primeiro**, não para
+diagnosticar uma criança.
+
 Para metas, a média ponderada de `P(alfabetizado)` é comparada à referência da Gold Fase 2:
 1.592 dos 2.819 municípios com n ≥ 100 e meta de 2024 ficam abaixo dessa referência.
 É uma comparação no recorte modelado, não reprodução do indicador oficial.
@@ -648,11 +688,15 @@ próprias saídas, preservando a proveniência da execução publicada:
 
 ```bash
 uv run python -m src.pipeline ablacao-uf
+uv run python -m src.pipeline pontos-operacao
 ```
 
 A rodada confere que a variante de seis atributos reproduz, fold a fold, as métricas de
 `reports/modelos_comparacao_2023.csv`, e interrompe se houver divergência. Ela não lê a
 Gold de 2024, não escolhe limiar e não altera `config/modelo-final.json`.
+
+`pontos-operacao` apenas tabula a curva já publicada em `reports/limiar_f2_2023.csv` por
+capacidade de atendimento; não retreina, não lê 2024 e não redefine o limiar congelado.
 
 Para reproduzir a expansão, preparar também os três ZIPs descritos em
 [Fontes Educacionais](../docs/Fontes-Educacionais.md) e executar o estudo em uma **nova pasta
@@ -666,8 +710,8 @@ uv run python -m src.usecase.education_study --root . --output-root ../estudo-ed
 O estudo registra EDA antes do ajuste, cobertura, métricas pareadas, modelos e hashes.
 Seus resultados publicados são exploratórios; não representam novo teste independente.
 
-Verificação atual: **134 testes aprovados**, incluindo fontes educacionais, estudo,
-ablação da UF e demonstração. Reprodução final original com métricas exatamente iguais,
+Verificação atual: **143 testes aprovados**, incluindo fontes educacionais, estudo,
+ablação da UF, pontos de operação e demonstração. Reprodução final original com métricas exatamente iguais,
 quatro arquivos idênticos por SHA-256 e 1.000 previsões conferidas após reabrir o modelo.
 Veja [reprodução completa](../reports/reproducibilidade_completa.json) e [final](../reports/reproducibilidade_final.json).
 As 14 advertências remanescentes são de depreciação de Matplotlib/Pyparsing.

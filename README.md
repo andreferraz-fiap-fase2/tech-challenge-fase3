@@ -13,7 +13,7 @@ indicadores educacionais do Inep — alunos por turma, docentes com curso superi
 horas-aula diárias — construídos, avaliados nos mesmos folds e **conscientemente não
 promovidos**, porque o ganho foi pequeno e o teste de 2024 já havia sido observado
 ([seção 3](#3-base-utilizada) e [seção 5.2](#52-estudo-complementar-com-indicadores-educacionais)).
-E a ablação da seção 6.2 mostra que remover a UF custa 62,4% de toda a vantagem do modelo
+E a ablação da seção 8.1 mostra que remover a UF custa 62,4% de toda a vantagem do modelo
 sobre o baseline: o que ele ordena é, em boa parte, diferença entre estados.
 
 - [Visão técnica em PDF](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.7-entrega/VisaoTecnica-TechChallengeFase3.pdf) e [relatório no repositório](docs/Relatorio-Tecnico-Fase3.md).
@@ -414,31 +414,9 @@ detalhados e a regra de seleção estão no [protocolo da busca](reports/boostin
 
 UF é uma informação territorial conhecida antes da avaliação. Sua inclusão permite ao
 modelo aprender diferenças entre estados, sem revelar o resultado do aluno. Para medir
-quanto do resultado depende dela, o modelo congelado foi **reajustado sem `sigla_uf`**,
-nos mesmos três folds, com os mesmos alunos e hiperparâmetros idênticos:
-
-| Variante em CV 2023 | AP média | ROC-AUC média | Brier médio ↓ |
-| --- | ---: | ---: | ---: |
-| Seis atributos, modelo congelado | **0,543776** | **0,642578** | **0,227481** |
-| Cinco atributos, sem UF | 0,464124 | 0,557526 | 0,240775 |
-
-Remover a UF custa **0,079652 de AP média** — o equivalente a **62,4% de toda a vantagem**
-do modelo sobre o baseline de prevalência (0,416142). A perda é negativa nos três folds,
-entre −0,063269 e −0,108590. Sem UF, a ROC-AUC cai de 0,642578 para 0,557526, aproximando-se
-da ordenação ao acaso. **A maior parte do que o modelo ordena é diferença entre estados**,
-não distinção entre municípios ou entre alunos de um mesmo estado.
-
-Essa leitura é consistente com a importância por permutação da seção 8, em que UF responde
-por queda de AP de 0,114826 contra 0,014413 somando os outros cinco atributos. Nenhuma das
-duas análises identifica causas da alfabetização: a UF resume diferenças de rede, política
-e composição que este recorte não separa. A ablação é interpretativa, foi executada depois
-de 2024 já ter sido observado e **não promove nova candidata**; o modelo final, o limiar e
-a avaliação temporal 1.0 permanecem os mesmos.
-Na rodada da ablação, a referência de seis atributos reproduziu exatamente as métricas
-publicadas, fold a fold, o que confirma que a diferença vem da remoção do atributo.
-[Ablação da UF](reports/ablacao_uf_2023.md) · [Protocolo](config/experimento-ablacao-uf.json).
-
-![Ablação da UF em 2023](images/18_ablacao_uf_2023.png)
+quanto do resultado depende dela, o modelo congelado foi reajustado sem `sigla_uf` nos
+mesmos folds: remover o atributo custa 0,079652 de AP média, e a leitura completa está
+na [seção 8](#8-interpretação-dos-resultados), junto da importância por permutação.
 
 Os mesmos grupos participaram da busca e da confirmação: a CV não é aninhada e suas
 métricas podem ser otimistas. Depois da escolha, o ajuste final usou todos os alunos de 2023.
@@ -507,14 +485,40 @@ Atributos territoriais foram permutados por município; rede, por aluno. Correla
 combinações pouco plausíveis geradas pela permutação limitam a leitura. Os desvios entre
 repetições não são intervalos de confiança. Importância não é efeito causal.
 
-A permutação e a **ablação da seção 6.2** concordam por caminhos independentes: a primeira
-atribui à UF queda de AP de 0,114826 contra 0,014413 dos outros cinco atributos somados;
-a segunda mostra que retreinar sem UF custa 0,079652 de AP, ou 62,4% da vantagem sobre o
-baseline. Permutar um atributo e removê-lo do treinamento medem coisas diferentes — a
-segunda permite ao modelo recompor o que puder com os atributos restantes — e ainda assim
-apontam a mesma dependência dominante.
-
 ![Importância por permutação](images/10_importancia_permutacao_2023.png)
+
+### 8.1. Ablação: o que o modelo perde sem a UF
+
+A permutação embaralha um atributo num modelo já treinado. A **ablação** faz a pergunta
+complementar: retirar o atributo do treinamento e deixar o modelo recompor o que puder
+com os demais. O modelo congelado foi reajustado sem `sigla_uf`, nos mesmos três folds,
+com os mesmos 1.502.809 alunos e hiperparâmetros idênticos.
+
+| Variante em CV 2023 | AP média | ROC-AUC média | Brier médio ↓ |
+| --- | ---: | ---: | ---: |
+| Seis atributos, modelo congelado | **0,543776** | **0,642578** | **0,227481** |
+| Cinco atributos, sem UF | 0,464124 | 0,557526 | 0,240775 |
+
+Remover a UF custa **0,079652 de AP média** — o equivalente a **62,4% de toda a vantagem**
+do modelo sobre o baseline de prevalência (0,416142). A perda é negativa nos três folds,
+entre −0,063269 e −0,108590. Sem UF, a ROC-AUC cai de 0,642578 para 0,557526, aproximando-se
+da ordenação ao acaso. **A maior parte do que o modelo ordena é diferença entre estados**,
+não distinção entre municípios ou entre alunos de um mesmo estado.
+
+As duas medidas concordam por caminhos independentes: a permutação atribui à UF queda de
+AP de 0,114826 contra 0,014413 somando os outros cinco atributos; a ablação mostra que,
+mesmo podendo recompor o sinal com população, PIB e composição econômica, o modelo recupera
+pouco. Nenhuma das duas identifica causas da alfabetização: a UF resume diferenças de rede,
+política e composição que este recorte não separa.
+
+A ablação é interpretativa, foi executada depois de 2024 já ter sido observado e
+**não promove nova candidata**; o modelo final, o limiar e a avaliação temporal 1.0
+permanecem os mesmos. Na sua execução, a referência de seis atributos foi reajustada do
+zero e reproduziu exatamente as métricas publicadas, fold a fold, o que confirma que a
+diferença vem da remoção do atributo e não do procedimento.
+[Ablação da UF](reports/ablacao_uf_2023.md) · [Protocolo](config/experimento-ablacao-uf.json).
+
+![Ablação da UF em 2023](images/18_ablacao_uf_2023.png)
 
 ## 9. Insights encontrados
 

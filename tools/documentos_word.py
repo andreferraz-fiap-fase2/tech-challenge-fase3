@@ -208,7 +208,7 @@ class WordDocuments:
         )
         abstract = (
             "**Síntese executiva.** O Gradient Boosting supera o baseline no teste temporal, com AP 0,5162 e ROC-AUC 0,6224. Seu limiar acadêmico de F2 sinaliza 96,84% dos alunos. A entrega evidencia potencial para leitura territorial e limites importantes de generalização e seletividade, sem recomendar decisões individuais autônomas.\n\n"
-            "**Duas leituras delimitam esse alcance.** A ablação da seção 6.2 reajusta o modelo sem a UF e mostra que **62,4% de toda a vantagem sobre o baseline depende desse único atributo**: o que o modelo ordena é, em boa parte, diferença entre estados. E o enriquecimento educacional do Inep — alunos por turma, docentes com curso superior e horas-aula — foi construído, avaliado nos mesmos folds e **conscientemente não promovido** ao modelo final, porque o ganho foi pequeno e o teste de 2024 já havia sido observado (seções 3 e 5.2).\n\n"
+            "**Duas leituras delimitam esse alcance.** A ablação da seção 8.1 reajusta o modelo sem a UF e mostra que **62,4% de toda a vantagem sobre o baseline depende desse único atributo**: o que o modelo ordena é, em boa parte, diferença entre estados. E o enriquecimento educacional do Inep — alunos por turma, docentes com curso superior e horas-aula — foi construído, avaliado nos mesmos folds e **conscientemente não promovido** ao modelo final, porque o ganho foi pequeno e o teste de 2024 já havia sido observado (seções 3 e 5.2).\n\n"
         )
         groups = [
             ["## 1. Contexto do problema", "## 2. Objetivo analítico"],
@@ -238,8 +238,10 @@ class WordDocuments:
             if index == 3:
                 page = page.replace("### 5.2.", "<!-- pagebreak -->\n\n### 5.2.")
             if index == 4:
-                page = page.replace("### 6.2.", "<!-- pagebreak -->\n\n### 6.2.")
+                # 6.2 encolheu quando a ablação migrou para a 8.1; cabe junto da 6.1.
                 page = page.replace("### 6.3.", "<!-- pagebreak -->\n\n### 6.3.")
+            if index == 6:
+                page = page.replace("### 8.1.", "<!-- pagebreak -->\n\n### 8.1.")
             if index == 0:
                 page = page.replace("## 2.", "<!-- pagebreak -->\n\n## 2.")
             if index == 10:

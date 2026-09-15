@@ -72,7 +72,7 @@ def ablation_markdown(table: pd.DataFrame, deltas: pd.DataFrame, report: JsonObj
         [
             "# Ablação da UF · desenvolvimento de 2023",
             "",
-            "Responde a lacuna registrada na seção 6.2 do README: quanto da ordenação do risco "
+            "Responde a lacuna registrada na seção 6.2 do README, hoje detalhada na 8.1: quanto da ordenação do risco "
             "depende da sigla da unidade federativa. As duas variantes usam os mesmos três folds "
             "municipais, os mesmos 1.502.809 alunos e hiperparâmetros idênticos aos do modelo "
             "congelado 1.0. A única diferença é a remoção de `sigla_uf` dos preditores.",

@@ -223,7 +223,6 @@ class WordDocuments:
         ]
         pages = []
         extras = {
-            4: "\n![Escolha do limiar](images/09_limiar_f2_2023.png)\n",
             7: "\n![Erros por região](images/12_regioes_teste_2024.png)\n",
             11: "\n## Apêndice — perfis regionais\n\n![Perfis regionais](images/14_perfis_regionais_2023.png)\n",
         }
@@ -235,6 +234,9 @@ class WordDocuments:
                 page = page.replace("### 4.4.", "<!-- pagebreak -->\n\n### 4.4.")
             if index == 3:
                 page = page.replace("### 5.2.", "<!-- pagebreak -->\n\n### 5.2.")
+            if index == 4:
+                page = page.replace("### 6.2.", "<!-- pagebreak -->\n\n### 6.2.")
+                page = page.replace("### 6.3.", "<!-- pagebreak -->\n\n### 6.3.")
             if index == 0:
                 page = page.replace("## 2.", "<!-- pagebreak -->\n\n## 2.")
             if index == 10:

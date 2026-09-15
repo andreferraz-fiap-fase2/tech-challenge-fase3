@@ -5,9 +5,9 @@
 [Repositório público](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3) ·
 [Publicação oficial 1.7](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.7-entrega).
 
-A organização segue o formato usado na Fase 2: documento técnico, apresentação e vídeo
-executivo. O PDF e o PowerPoint compõem o pacote oficial; o roteiro da apresentação,
-distribuído em dez janelas que somam cinco minutos, fica em `docs/Roteiro-Video-Fase3.md`.
+A organização segue o formato usado na Fase 2. Este repositório reúne o código, os
+manifestos, a documentação técnica e os resultados agregados; os arquivos distribuídos
+como pacote oficial ficam na publicação da versão correspondente.
 
 ## Mapa do enunciado
 
@@ -27,7 +27,7 @@ distribuído em dez janelas que somam cinco minutos, fica em `docs/Roteiro-Video
 | Regiões com perfis semelhantes | [Perfis de 2023](../reports/regioes_semelhantes_2023.csv) |
 | Análise de metas e caminho para previsão futura | [Cenários condicionais de 2024](../reports/cenarios_metas_2024.csv), [limites e evolução necessária](../README.md); ainda sem previsão futura validada |
 | Documentação técnica e 11 tópicos do README | [Relatório técnico](Relatorio-Tecnico-Fase3.md), [README](../README.md): os 11 tópicos foram preservados e a EDA ganhou uma seção adicional, totalizando 12 seções numeradas |
-| Vídeo executivo de até cinco minutos | [Roteiro em dez janelas](Roteiro-Video-Fase3.md), alinhado aos dez slides da apresentação |
+| Vídeo executivo de até cinco minutos | [Publicação da versão](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.7-entrega) |
 | Estrutura e versionamento Git | `data/`, `notebooks/`, `src/`, `reports/`, `images/`, `requirements.txt`, `.gitignore`, branches e pull requests |
 
 Scripts executam os experimentos; a pasta `notebooks/` explica essa opção. A interpretação

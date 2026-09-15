@@ -1,0 +1,37 @@
+{
+  "version": "1.0",
+  "author": "André Mohallem Ferraz",
+  "question": "quanto da ordenação do risco depende da sigla_uf",
+  "development_year": 2023,
+  "previous_test_2024_already_observed": true,
+  "new_independent_test_available": false,
+  "removed_feature": "sigla_uf",
+  "variants": [
+    "completa",
+    "sem_uf"
+  ],
+  "folds": [
+    0,
+    1,
+    2
+  ],
+  "max_iter": 100,
+  "max_leaf_nodes": 7,
+  "learning_rate": 0.05,
+  "min_samples_leaf": 100,
+  "l2_regularization": 1.0,
+  "random_state": 42,
+  "threads": 1,
+  "early_stopping": false,
+  "hyperparameter_search": false,
+  "threshold_search": false,
+  "calibration_fit": false,
+  "class_weight": null,
+  "sample_weight_fit": false,
+  "primary_metric": "average_precision_risk",
+  "secondary_metrics": [
+    "roc_auc_risk",
+    "brier_risk"
+  ],
+  "reference_reproduces_published_boosting_completa": true
+}

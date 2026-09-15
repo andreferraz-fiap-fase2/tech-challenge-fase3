@@ -3,7 +3,7 @@
 **Autor: André Mohallem Ferraz · Trabalho individual · Prazo informado: 15/09/2026**
 
 [Repositório público](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3) ·
-[Publicação oficial 1.5](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.5-entrega).
+[Publicação oficial 1.6](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.6-entrega).
 
 A organização segue o formato usado na Fase 2: documento técnico, apresentação e vídeo
 do autor. **O PDF e o PowerPoint estão preparados; a gravação do vídeo com a voz de
@@ -39,9 +39,9 @@ previsão validada de 2030 nem probabilidade de descumprimento de meta.
 
 | Arquivo | Conteúdo |
 | --- | --- |
-| [VisaoTecnica-TechChallengeFase3.pdf](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.5-entrega/VisaoTecnica-TechChallengeFase3.pdf) | Relatório técnico com problema, EDA, modelagem, resultados e limitações. |
-| [Apresentacao-TechChallenge-Fase3.pptx](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.5-entrega/Apresentacao-TechChallenge-Fase3.pptx) | Apresentação executiva para exposição do trabalho pelo autor. |
-| [TechChallenge-Fase3.zip](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.5-entrega/TechChallenge-Fase3.zip) | Contém exclusivamente o PDF técnico e o PowerPoint acima. |
+| [VisaoTecnica-TechChallengeFase3.pdf](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.6-entrega/VisaoTecnica-TechChallengeFase3.pdf) | Relatório técnico com problema, EDA, modelagem, resultados e limitações. |
+| [Apresentacao-TechChallenge-Fase3.pptx](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.6-entrega/Apresentacao-TechChallenge-Fase3.pptx) | Apresentação executiva para exposição do trabalho pelo autor. |
+| [TechChallenge-Fase3.zip](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.6-entrega/TechChallenge-Fase3.zip) | Contém exclusivamente o PDF técnico e o PowerPoint acima. |
 
 Esses três arquivos compõem a pasta `Entrega-Final`. O ZIP é uma alternativa para obter
 os dois documentos juntos. Código e evidências analíticas continuam disponíveis no
@@ -56,6 +56,7 @@ Após gravar o vídeo com sua voz, será necessário conferir duração de até 
 e completar a submissão no portal da FIAP até o prazo da turma. O pacote atual não é
 apresentado como atendimento concluído ao requisito de vídeo.
 
-A organização 1.5 preserva o experimento validado 1.0, a EDA dos dados enriquecidos,
-o estudo educacional exploratório e a demonstração. Nenhum modelo, limiar ou resultado
-temporal foi alterado para organizar os arquivos oficiais.
+A revisão 1.6 esclarece a seção 6 do PDF: comparação dos modelos, papel da UF e
+escolha do limiar de alerta. Preserva o experimento validado 1.0, a EDA dos dados
+enriquecidos, o estudo educacional e a demonstração. O PowerPoint e o roteiro da
+revisão 1.5 permanecem iguais. Nenhum modelo, limiar ou resultado foi alterado.

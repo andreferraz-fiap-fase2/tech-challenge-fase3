@@ -2,14 +2,14 @@
 
 **Autor: André Mohallem Ferraz · FIAP, Tech Challenge Fase 3 · Trabalho individual · Entrega: 15/09/2026**
 
-Organização da entrega 1.5. Modelo de referência 1.0, limiar e avaliação temporal concluídos. O modelo supera
+Organização da entrega 1.6. Modelo de referência 1.0, limiar e avaliação temporal concluídos. O modelo supera
 uma referência constante, mas seu poder de discriminação é moderado e o limiar de F2
 sinaliza quase toda a população. A aplicação proposta é apoio exploratório ao planejamento
 territorial, com validação local antes de qualquer uso operacional.
 
-- [Visão técnica em PDF](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.5-entrega/VisaoTecnica-TechChallengeFase3.pdf) e [relatório no repositório](docs/Relatorio-Tecnico-Fase3.md).
-- [Apresentação em PowerPoint](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.5-entrega/Apresentacao-TechChallenge-Fase3.pptx).
-- [Pacote oficial TechChallenge-Fase3.zip](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.5-entrega/TechChallenge-Fase3.zip), contendo somente o PDF e o PowerPoint; [publicação 1.5](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.5-entrega).
+- [Visão técnica em PDF](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.6-entrega/VisaoTecnica-TechChallengeFase3.pdf) e [relatório no repositório](docs/Relatorio-Tecnico-Fase3.md).
+- [Apresentação em PowerPoint](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.6-entrega/Apresentacao-TechChallenge-Fase3.pptx).
+- [Pacote oficial TechChallenge-Fase3.zip](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.6-entrega/TechChallenge-Fase3.zip), contendo somente o PDF e o PowerPoint; [publicação 1.6](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.6-entrega).
 - [Análise exploratória dos dados enriquecidos](#4-análise-exploratória-e-entendimento-do-problema), com distribuições, cobertura, associações e hipóteses.
 - [Demonstração da probabilidade](docs/Demonstracao-Previsao.md) e [protocolo do estudo educacional complementar](docs/Protocolo-Estudo-Educacional.md).
 - [Protocolo antes do teste](reports/protocolo-final.md), [resultado temporal](reports/teste_temporal_2024.json) e [reprodução completa](reports/reproducibilidade_completa.json).
@@ -340,10 +340,34 @@ não demonstram efeitos causais nem características individuais de cada escola 
 
 ## 6. Escolha do algoritmo
 
-A logística foi comparada com rede/UF e com todos os seis atributos. O boosting passou
-por seis configurações por variante, com 150.000 alunos selecionados por hash da chave
-(50.000 por fold), sem consultar rótulos. Busca: 7/15/31 folhas × 100/200 iterações;
-learning rate 0,05, mínimo de 100 alunos por folha, L2=1, semente 42 e uma thread.
+Esta etapa reúne duas decisões: **qual modelo ordena melhor o risco estimado** e
+**a partir de qual risco emitir um alerta**. A escolha do algoritmo usa AP; a escolha
+do limiar usa F2. Essas métricas respondem a perguntas diferentes.
+
+### 6.1. Como os modelos foram comparados
+
+O baseline é uma referência constante, sem aprender diferenças entre os alunos.
+A regressão logística e o boosting foram comparados em duas versões: **rede/UF**,
+com esses dois atributos, e **completa**, com os mesmos dois mais quatro atributos
+do IBGE. Aqui, "completa" significa **seis atributos**; a expansão com nove atributos,
+incluindo Inep, pertence ao estudo separado da seção 5.2.
+
+A validação cruzada (CV) de 2023 usa três grupos, chamados folds. A cada rodada,
+o modelo aprende com dois grupos e é avaliado no terceiro. Todos os alunos de um
+município ficam no mesmo grupo, evitando que ele apareça simultaneamente no treino
+e na validação.
+
+Na busca de configurações do boosting, usamos **150.000 alunos**, 50.000 por fold,
+selecionados de forma reproduzível pela chave, sem consultar os rótulos. Foram testadas
+seis combinações por versão: 7, 15 ou 31 folhas máximas por árvore e 100 ou 200 rodadas
+de aprendizado. A tabela abaixo resume a confirmação nos folds completos, com
+**1.502.809 alunos de 2023**, após essa busca.
+
+**AP (average precision)** resume a qualidade da ordenação pelo risco de não alfabetização;
+quanto maior, melhor nesta comparação. **AP de 0,543776 não significa 54,38% de acertos.**
+ROC-AUC é uma medida complementar de discriminação: 0,5 indica ordenação ao acaso e
+1,0, separação perfeita. As duas colunas mostram médias entre os três folds,
+calculadas sem ponderação por `peso_aluno`.
 
 | Modelo | AP média em CV 2023 | ROC-AUC média |
 | --- | ---: | ---: |
@@ -353,13 +377,51 @@ learning rate 0,05, mínimo de 100 alunos por folha, L2=1, semente 42 e uma thre
 | Boosting rede/UF | 0,533581 | 0,636780 |
 | Boosting completo | **0,543776** | **0,642578** |
 
-Selecionado o boosting completo, com 7 folhas e 100 iterações, por maior AP média.
-O limiar **0,15016323973380263** maximiza F2 nas previsões fora de fold de 2023.
-Configuração e ajuste final foram registrados no commit `e9d5708`, antes do teste de 2024.
-A CV não é aninhada, pois a busca reutiliza amostra dos folds; seus resultados podem ser
-otimistas. O teste temporal ficou fora de qualquer seleção, inclusive de limiar e calibração.
+### 6.2. Modelo escolhido e papel da UF
+
+Foi escolhido o **boosting completo**, com no máximo 7 folhas por árvore e 100 rodadas,
+por apresentar a maior AP média: **0,543776**, frente a **0,538103** da logística completa.
+A diferença é pequena; não foi demonstrada superioridade estatística. Os parâmetros
+detalhados e a regra de seleção estão no [protocolo da busca](reports/boosting_protocolo.md).
+
+UF é uma informação territorial conhecida antes da avaliação. Sua inclusão permite ao
+modelo aprender diferenças entre estados, sem revelar o resultado do aluno. As duas
+versões da logística e do boosting incluem UF: **ainda não foi treinada uma versão
+equivalente sem ela**. A importância por permutação da seção 8 mede dependência do modelo
+atual; não identifica causas da alfabetização nem substitui essa comparação adicional.
+
+Os mesmos grupos participaram da busca e da confirmação: a CV não é aninhada e suas
+métricas podem ser otimistas. Depois da escolha, o ajuste final usou todos os alunos de 2023.
+Modelo e limiar foram registrados no commit `e9d5708` antes do teste de 2024,
+reservado para avaliação independente, sem orientar seleção ou calibração.
+
+### 6.3. Quando a probabilidade gera um alerta
+
+O risco é **1 − P(alfabetizado)**. Para transformar essa estimativa em alerta, foi escolhido
+o limiar que maximiza **F2**, métrica que dá mais peso a identificar os casos de não
+alfabetização do que à precisão dos alertas. **F2 não se refere à Fase 2 do Tech Challenge.**
+
+O limiar registrado é aproximadamente **15,02% de risco de não alfabetização**.
+Por exemplo, um risco estimado de 20% já gera alerta. Esse limiar não modifica o critério
+observado de alfabetização: proficiência maior ou igual a **743 pontos na escala Saeb**,
+padrão oficial do Inep para o final do segundo ano. Esse número representa um nível
+de habilidades de leitura e escrita, não uma porcentagem de acertos.
+O valor completo, sem arredondamento, está na [decisão final](config/modelo-final.json).
+
+Nas previsões reunidas de validação de 2023, essa regra identificou **99,03%** dos casos de não
+alfabetização, mas sinalizou **95,94%** de todos os alunos. Entre os sinalizados, **42,95%**
+eram não alfabetizados. Portanto, recupera quase todos os casos, mas seleciona pouco:
+aproximadamente 96 de cada 100 alunos recebem alerta. Não é uma regra pronta para
+priorizar atendimento individual com recursos limitados. O teste de 2024 aparece na seção 7.
+
+**Como ler o gráfico:** o eixo horizontal varia o limiar de risco. A linha amarela mostra
+a proporção dos casos de não alfabetização identificados (recall); a cinza, a proporção
+de todos os alunos sinalizados; a azul, o valor de F2. A linha tracejada marca o limiar
+escolhido. A figura trata exclusivamente da validação de **2023**.
 
 [Busca e configuração](reports/boosting_protocolo.md) · [Decisão final](config/modelo-final.json).
+
+![Escolha do limiar em 2023](images/09_limiar_f2_2023.png)
 
 ## 7. Métricas de avaliação
 

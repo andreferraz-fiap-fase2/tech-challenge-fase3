@@ -694,7 +694,7 @@ As 14 advertências remanescentes são de depreciação de Matplotlib/Pyparsing.
 config/          Contrato, snapshot, folds e decisão congelada
 src/             Domínio, I/O, preprocessing, modeling, evaluation, visualization e usecase
 reports/         Métricas e tabelas agregadas; protocolo e reprodução
-docs/            Relatório, roteiro e mapa dos entregáveis
+docs/            Relatório técnico, linhagem e mapa do enunciado
 images/          Figuras da EDA, modelagem, linhagem e estudo complementar
 examples/        Perfis contextuais e exemplos de inferência
 notebooks/       Orientações; os experimentos utilizam scripts
@@ -707,8 +707,6 @@ modelos e materiais de apoio ficam no arquivo privado de preparação, fora da e
 oficial. As fontes originais são públicas, mas este snapshot precisa ser preparado
 conforme o manifesto; executar os testes não exige os arquivos reais.
 
-A pasta oficial reúne o PDF técnico, o PowerPoint e o ZIP com esses dois documentos.
-Roteiros, narrações, guias de preparação e verificadores ficam em `Preparacao`.
 
 ## Referências
 

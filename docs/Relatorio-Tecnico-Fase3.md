@@ -723,8 +723,6 @@ modelos e materiais de apoio ficam no arquivo privado de preparação, fora da e
 oficial. As fontes originais são públicas, mas este snapshot precisa ser preparado
 conforme o manifesto; executar os testes não exige os arquivos reais.
 
-A pasta oficial reúne o PDF técnico, o PowerPoint e o ZIP com esses dois documentos.
-Roteiros, narrações, guias de preparação e verificadores ficam em `Preparacao`.
 
 
 <!-- pagebreak -->

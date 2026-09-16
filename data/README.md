@@ -16,9 +16,9 @@ Para preparar um clone de código, montar uma pasta `apoio` com `fontes-fase2/` 
 | `fontes-fase2/diretorio_uf.parquet` | `data/real/diretorio_uf.parquet` |
 | `fontes-fase2/ml_features.parquet` | `data/gold/ml_features.parquet` |
 
-Copiar os dois arquivos de `G:\Meu Drive\FIAP\Fase3\Preparacao\fontes-externas`
-para `apoio/fontes-externas/`: `pib-municipios-2010-2020.zip` e
-`populacao-dou-2021.ods`. URLs e hashes estão em `config/`.
+Baixar os dois arquivos externos para `apoio/fontes-externas/`:
+`pib-municipios-2010-2020.zip` e `populacao-dou-2021.ods`. As URLs de origem e os
+hashes SHA-256 esperados estão em [`config/fontes-externas.json`](../config/fontes-externas.json).
 
 Na raiz do projeto:
 

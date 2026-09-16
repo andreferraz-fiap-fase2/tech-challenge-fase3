@@ -5,9 +5,8 @@
 [Repositório público](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3) ·
 [Publicação oficial 1.7](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/tag/v1.7-entrega).
 
-A organização segue o formato usado na Fase 2. Este repositório reúne o código, os
-manifestos, a documentação técnica e os resultados agregados; os arquivos distribuídos
-como pacote oficial ficam na publicação da versão correspondente.
+Este repositório reúne o código, os manifestos, a documentação técnica e os resultados
+agregados que sustentam cada item pedido no enunciado.
 
 ## Mapa do enunciado
 
@@ -34,23 +33,7 @@ Scripts executam os experimentos; a pasta `notebooks/` explica essa opção. A i
 utiliza importância por permutação. O cenário de 80% mantém o contexto de 2024 e não é
 previsão validada de 2030 nem probabilidade de descumprimento de meta.
 
-## Arquivos oficiais
-
-| Arquivo | Conteúdo |
-| --- | --- |
-| [VisaoTecnica-TechChallengeFase3.pdf](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.7-entrega/VisaoTecnica-TechChallengeFase3.pdf) | Relatório técnico com problema, EDA, modelagem, resultados e limitações. |
-| [Apresentacao-TechChallenge-Fase3.pptx](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.7-entrega/Apresentacao-TechChallenge-Fase3.pptx) | Apresentação executiva para exposição do trabalho pelo autor. |
-| [TechChallenge-Fase3.zip](https://github.com/andreferraz-fiap-fase2/tech-challenge-fase3/releases/download/v1.7-entrega/TechChallenge-Fase3.zip) | Contém exclusivamente o PDF técnico e o PowerPoint acima. |
-
-Esses três arquivos compõem a pasta `Entrega-Final`. O ZIP é uma alternativa para obter
-os dois documentos juntos. Código e evidências analíticas continuam disponíveis no
-repositório público. Fontes, Gold, modelos, roteiros, narrações, guias e verificadores
-ficam no arquivo de `Preparacao`, fora da pasta e do ZIP oficiais.
-
-O material para ensaiar a apresentação permanece disponível ao autor em `Preparacao`.
-Os slides 6–8 respondem às cinco perguntas estratégicas: fatores associados, importância
-no modelo, municípios de maior risco, regiões semelhantes e cenários de metas.
-O repositório está identificado por links clicáveis no PDF e no PowerPoint.
+## Revisões
 
 A revisão 1.7 fecha duas lacunas de conteúdo. Primeira: a seção 6.2 declarava que uma
 versão sem `sigla_uf` **ainda não havia sido treinada**; agora ela foi. A ablação reajusta
